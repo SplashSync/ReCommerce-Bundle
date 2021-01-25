@@ -1,0 +1,9 @@
+/var/
+/src/.php_cs.cache
+/vendor/
+/nbproject/
+/.php_cs.cache
+/reboot.sh
+/.gh-pages/
+/.idea/
+/public/
