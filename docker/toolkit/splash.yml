@@ -21,7 +21,7 @@ splash:
         
         ########################################################################
         # Recommerce SandBox
-        ReCommerce SandBox:
+        ReCommerce-SandBox:
             id:                 ThisIsSandBoxWsId
             key:                ThisIsNotASecretKeyForSandBox
             name:               ReCommerce Sandbox
@@ -32,3 +32,17 @@ splash:
             config:
                 WsHost:         http://sandbox.recommerce.local:8000
                 ApiKey:         ThisIsSecretApiKey
+
+        ########################################################################
+        # Recommerce Staging
+#        ReCommerce-Staging:
+#            id:                 ThisIsStagingWsId
+#            key:                ThisIsNotASecretKeyForStaging
+#            name:               ReCommerce Staging
+#            connector:          recommerce
+#            ########################################################################
+#            # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN RECOMMERCE CONTACT
+#            ########################################################################
+#            config:
+#                WsHost:         https://stage-processing-shipment-api.stage-api.recommerce.cloud
+#                ApiKey:         a0e2cfefdb9946be8402673fc7ceaad5

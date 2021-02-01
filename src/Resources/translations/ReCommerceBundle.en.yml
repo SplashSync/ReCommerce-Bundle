@@ -3,24 +3,24 @@
 var:
     apiurl:
         label:  Webservice Url
-        desc:   "Geolie Webservice Url to Use."
+        desc:   "Your ReCommerce API Url to Use."
 
     apikey:
         label:  API Key
-        desc:   "Webservice API keys provide full access to your account, so keep them safe."
+        desc:   "API keys provide full access to your account, so keep them safe."
 
-### Node Profile
-#profile:
-#    connection:
-#        title: API Connection
-#    card:
-#        title:  Optilog REST API V2
-#        label:  Connect your Shops with Optilog to Manage your Customers Deliveries
+## Node Profile
+profile:
+    connection:
+        title: API Connection
+    card:
+        title:  ReCommerce Open API V2.8
+        label:  Connect your Splash account with ReCommerce API
 
 ### Node Api Actions
-#admin:
-#    selftest:   Optilog Connector Configuration
-#    connect:    Connect to Optilog API
+admin:
+    selftest:   ReCommerce Connector Configuration
+    connect:    Connect to ReCommerce API
 #    webhooks:
 #        label:  Update of WebHooks
 #        desc:   Detect & Update Splash Sync WebHooks Configuration

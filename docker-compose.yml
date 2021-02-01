@@ -42,6 +42,7 @@ services:
             - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
             # Uncomment to use Local Sources instead of Release
             - './src/:/app/vendor/splash/recommerce/src/:ro'
+            - './vendor/splash/openapi/:/app/vendor/splash/openapi/:ro'
         hostname:           toolkit.recommerce.local
         networks:
             recommerce:     { ipv4_address: 172.107.0.100, aliases: [ toolkit.recommerce.local ] }
@@ -55,6 +56,7 @@ services:
         volumes:
             # Specify API Entities to Use
             - './sandbox/Entity:/srv/api/src/Entity:ro'
+            - './sandbox/recommerce.yml:/srv/api/config/packages/recommerce.yml:ro'
         hostname:           sandbox.recommerce.local
         networks:
             recommerce:     { ipv4_address: 172.107.0.200, aliases: [ sandbox.recommerce.local ] }

@@ -1,0 +1,19 @@
+api_platform:
+    title:  ReCommerce API SandBox
+    formats:
+        json:
+            mime_types:
+                - application/json
+        jsonhal:
+            mime_types:
+                - application/hal+json
+        html:
+            mime_types:
+                - text/html
+    swagger:
+        api_keys:
+            - { name: "api-key", type: "header" }
+    collection:
+        pagination:
+            client_items_per_page: true                     # Disabled by default
+            items_per_page_parameter_name: limit            # Default value
