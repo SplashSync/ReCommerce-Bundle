@@ -134,7 +134,6 @@ class Shipment
      * @var Address
      *
      * @Assert\Type("App\Entity\Address")
-     * @ApiSubresource()
      * @Groups({"read", "write"})
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade="all")
@@ -183,7 +182,6 @@ class Shipment
      * @Assert\All({
      *   @Assert\Type("App\Entity\Line")
      * })
-     * @ApiSubresource()
      * @Groups({"read"})
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Line", mappedBy="shipment", cascade="all")

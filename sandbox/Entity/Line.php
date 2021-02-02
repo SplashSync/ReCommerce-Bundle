@@ -13,11 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Class representing the Line model.
  *
- * @ApiResource(
- *     collectionOperations={},
- *     itemOperations={"get"},
- * )
- *
  * @ORM\Entity
  */
 class Line

@@ -12,11 +12,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Class representing the Address model.
  *
- * @ApiResource(
- *     collectionOperations={},
- *     itemOperations={"get"},
- * )
- *
  * @ORM\Entity
  */
 class Address
