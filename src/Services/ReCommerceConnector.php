@@ -31,6 +31,8 @@ use Splash\OpenApi\Connexion\JsonHalConnexion;
 use Splash\OpenApi\Helpers\ApiObjectVisitor;
 use Splash\OpenApi\Hydrator\Hydrator;
 use Splash\OpenApi\Models\Connexion\ConnexionInterface;
+use Splash\Connectors\ReCommerce\Objects;
+use Splash\Connectors\ReCommerce\Widgets;
 
 /**
  * ReCommerce REST API Connector for Splash
@@ -45,10 +47,10 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     /**
      * Objects Type Class Map
      *
-     * @var array
+     * @var array<string, class-string>
      */
     protected static $objectsMap = array(
-        "Order" => "Splash\\Connectors\\ReCommerce\\Objects\\Order",
+        "Order" => Objects\Order::class,
     );
 
     /**
@@ -57,7 +59,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
      * @var array
      */
     protected static $widgetsMap = array(
-        "SelfTest" => "Splash\\Connectors\\ReCommerce\\Widgets\\SelfTest",
+        "SelfTest" => Widgets\SelfTest::class,
     );
 
     /**
@@ -97,9 +99,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         }
         //====================================================================//
         // Perform Ping Test
-        $ping = new Action\Ping($this->getConnexion(), "/product-code-type");
-
-        return $ping->isSuccessful();
+        return Action\Ping::execute($this->getConnexion(), "/product-code-type");
     }
 
     /**
@@ -114,9 +114,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         }
         //====================================================================//
         // Perform Connect Test
-        $connect = new Action\Connect($this->getConnexion(), "/product-code-type");
-
-        return $connect->isSuccessful();
+        return Action\Connect::execute($this->getConnexion(), "/product-code-type");
     }
 
     /**
