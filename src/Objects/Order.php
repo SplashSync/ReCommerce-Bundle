@@ -47,12 +47,12 @@ class Order extends AbstractStandaloneObject
     //====================================================================//
     // OpenApi Traits
     use ApiModels\CRUDTrait;
-    use ApiModels\ObjectsListTrait;
     use ApiModels\SimpleFieldsTrait;
     use ApiModels\ListFieldsGetTrait;
 
     //====================================================================//
     // ReCommerce Order Traits
+    use Order\ObjectsListTrait;
     use Order\StatusTrait;
     use Order\BoxesTrait;
     use Order\TransportUnitsTrait;
