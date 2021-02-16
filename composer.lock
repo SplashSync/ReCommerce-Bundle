@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47c782d293ec3a4938c168f4f766b00f",
+    "content-hash": "305dfc534d31aaf3e4e0f4c23a778b87",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -543,10 +543,16 @@
         {
             "name": "splash/openapi",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SplashSync/OpenApi.git",
+                "reference": "b22273984e71b9953826ddc3eddb2e4fc5158044"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Php-OpenApi",
-                "reference": "ea5875c838db186411d217e790a8fbde9fa34056"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SplashSync/OpenApi/zipball/b22273984e71b9953826ddc3eddb2e4fc5158044",
+                "reference": "b22273984e71b9953826ddc3eddb2e4fc5158044",
+                "shasum": ""
             },
             "require": {
                 "ext-json": "*",
@@ -564,24 +570,14 @@
                 "symfony/phpunit-bridge": "*",
                 "symfony/symfony": "^3.4|^4.4"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
                     "Splash\\OpenApi\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "classmap": [
-                    "tests/Kernel.php"
-                ],
-                "files": [
-                    "vendor/splash/phpcore/inc/Splash.Inc.php",
-                    "vendor/splash/php-bundle/src/Tests/KernelTestCase.php"
-                ],
-                "psr-4": {
-                    "Splash\\OpenApi\\Test\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -596,9 +592,11 @@
                 }
             ],
             "description": "A Collection of tools for OpenAPI Connectors",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/SplashSync/OpenApi/issues",
+                "source": "https://github.com/SplashSync/OpenApi/tree/master"
+            },
+            "time": "2021-02-16T13:53:28+00:00"
         },
         {
             "name": "splash/php-bundle",

@@ -56,12 +56,5 @@
         "doctrine/orm":                                 "^2.5",
 
         "fzaninotto/faker":                             "^1.8"
-    },
-
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../Php-OpenApi"
-        }
-    ]
+    }
 }

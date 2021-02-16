@@ -142,7 +142,7 @@ trait TransportUnitsTrait
         $currentUnits = $this->loadTransportUnits();
         //====================================================================//
         // Walk on NEW Boxes List
-        foreach ($newUnits as $index => $unit) {
+        foreach ($newUnits as $unit) {
             //====================================================================//
             // Search for Unit by Name
             $currentUnit = $this->findTransportUnit($currentUnits, $unit->name);
