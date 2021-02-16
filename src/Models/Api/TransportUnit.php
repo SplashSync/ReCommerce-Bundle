@@ -144,7 +144,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("depth")
      * @JMS\Type("int")
-     * @JMS\Groups ({"Read"})
+     * @JMS\Groups({"Read"})
      */
     public $depth = 0;
 
@@ -157,7 +157,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("weight")
      * @JMS\Type("float")
-     * @JMS\Groups ({"Read", "Write"})
+     * @JMS\Groups({"Read", "Write"})
      */
     public $weight = 0.0;
 
@@ -167,7 +167,7 @@ class TransportUnit
      * @Assert\Type("DateTime")
      *
      * @JMS\SerializedName("created")
-     * @JMS\Groups ({"Read"})
+     * @JMS\Groups({"Read"})
      */
     public $created;
 

@@ -81,6 +81,33 @@ trait TransportUnitsTrait
         ;
 
         //====================================================================//
+        // TRANSPORT UNIT - Height
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("height")
+            ->name("Height (cm)")
+            ->inList("transportUnits")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
+        // TRANSPORT UNIT - Width
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("width")
+            ->name("Width (cm)")
+            ->inList("transportUnits")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
+        // TRANSPORT UNIT - Depth
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("depth")
+            ->name("Depth (cm)")
+            ->inList("transportUnits")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
         // TRANSPORT UNIT - Date Created
         $this->fieldsFactory()->create(SPL_T_DATETIME)
             ->identifier("created")
