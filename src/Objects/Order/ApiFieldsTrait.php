@@ -1,5 +1,17 @@
 <?php
 
+/*
+ *  This file is part of SplashSync Project.
+ *
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
 
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
@@ -21,8 +33,9 @@ trait ApiFieldsTrait
     /**
      * Read API Simple Field
      *
-     * @param string $key Input List Key
+     * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
+     *
      * @throws Exception
      */
     protected function getApiSimpleFields(string $key, string $fieldName): void
@@ -41,8 +54,9 @@ trait ApiFieldsTrait
     /**
      * Read requested Field
      *
-     * @param string $key Input List Key
+     * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
+     *
      * @throws Exception
      */
     protected function getApiListFields(string $key, string $fieldName): void
@@ -74,10 +88,11 @@ trait ApiFieldsTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed $fieldData Field Data
+     * @param mixed  $fieldData Field Data
+     *
+     * @throws Exception
      *
      * @return void
-     * @throws Exception
      */
     protected function setApiSimpleFields(string $fieldName, $fieldData): void
     {

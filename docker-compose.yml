@@ -55,8 +55,9 @@ services:
         container_name: sandbox.recommerce.local
         volumes:
             # Specify API Entities to Use
-            - './sandbox/Entity:/srv/api/src/Entity:ro'
-            - './sandbox/recommerce.yml:/srv/api/config/packages/recommerce.yml:ro'
+            - './docker/sandbox/Controller:/srv/api/src/Controller:ro'
+            - './docker/sandbox/Entity:/srv/api/src/Entity:ro'
+            - './docker/sandbox/recommerce.yml:/srv/api/config/packages/recommerce.yml:ro'
         hostname:           sandbox.recommerce.local
         networks:
             recommerce:     { ipv4_address: 172.107.0.200, aliases: [ sandbox.recommerce.local ] }

@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,16 +23,13 @@ use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
 use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
 use Splash\Connectors\ReCommerce\Form\EditFormType;
 use Splash\Connectors\ReCommerce\Models\Api;
-use Splash\Core\SplashCore as Splash;
-use Splash\OpenApi\Action;
-use Splash\OpenApi\Client;
-use Splash\OpenApi\Connexion\JsonConnexion;
-use Splash\OpenApi\Connexion\JsonHalConnexion;
-use Splash\OpenApi\Helpers\ApiObjectVisitor;
-use Splash\OpenApi\Hydrator\Hydrator;
-use Splash\OpenApi\Models\Connexion\ConnexionInterface;
 use Splash\Connectors\ReCommerce\Objects;
 use Splash\Connectors\ReCommerce\Widgets;
+use Splash\Core\SplashCore as Splash;
+use Splash\OpenApi\Action;
+use Splash\OpenApi\Connexion\JsonHalConnexion;
+use Splash\OpenApi\Hydrator\Hydrator;
+use Splash\OpenApi\Models\Connexion\ConnexionInterface;
 
 /**
  * ReCommerce REST API Connector for Splash
@@ -189,6 +186,8 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function getFile(string $filePath, string $fileMd5)
     {
@@ -197,10 +196,23 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         if (!$this->selfTest()) {
             return false;
         }
+        //====================================================================//
+        // Read File Contents via Raw Get Request
+        $rawResponse = $this->getConnexion()->getRaw($filePath, null, true);
+        if (!$rawResponse || (md5($rawResponse) != $fileMd5)) {
+            return false;
+        }
+        //====================================================================//
+        // Build File Array
+        $file = array();
+        $file["name"] = $file["filename"] = pathinfo($filePath, PATHINFO_BASENAME);
+        $file["path"] = $filePath;
+        $file["url"] = $filePath;
+        $file["raw"] = base64_encode((string) $rawResponse);
+        $file["md5"] = md5($rawResponse);
+        $file["size"] = strlen($rawResponse);
 
-        Splash::log()->err("There are No Files Reading for ReCommerce Up To Now!");
-
-        return false;
+        return $file;
     }
 
     //====================================================================//
@@ -290,14 +302,33 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     }
 
     //====================================================================//
+    // ReCommerce Connector Specific
+    //====================================================================//
+
+    /**
+     * Check if Connector use Sandbox Mode
+     *
+     * @return bool
+     */
+    public function isSandbox()
+    {
+        if ($this->getParameter("isSandbox", false)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    //====================================================================//
     // Open API Connector Interfaces
     //====================================================================//
 
     /**
      * Get Connector Api Connexion
      *
-     * @return ConnexionInterface
      * @throws Exception
+     *
+     * @return ConnexionInterface
      */
     public function getConnexion() : ConnexionInterface
     {
@@ -332,7 +363,6 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         if (!isset($this->hydrator)) {
             $this->hydrator = new Hydrator($this->metaDir);
         }
-
 
         return $this->hydrator;
     }

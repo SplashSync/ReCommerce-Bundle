@@ -21,6 +21,14 @@
         </h4>
     </li>   
     {% endif %}
+
+    {% if connector.sandbox %}
+        <li>
+            <h4 class="font-md text-warning">
+                <i class="fa fa-flask"></i>&nbsp;{{ 'admin.sandbox.enabled'| trans }}
+            </h4>
+        </li>
+    {% endif %}
     
 </ul>
 

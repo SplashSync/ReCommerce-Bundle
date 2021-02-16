@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -91,9 +91,17 @@ class SelfTest extends AbstractStandaloneWidget
         $this->buildIntroBlock();
 
         //====================================================================//
-        // Build SlefTest Results Block
+        // Build SelfTest Results Block
         //====================================================================//
         $this->connector->selfTest();
+
+        //====================================================================//
+        // Check Sandbox Mode
+        //====================================================================//
+        if ($this->connector->isSandbox()) {
+            Splash::log()->war("ReCommerce Sandbox Mode is Active");
+        }
+
         $this->buildNotificationsBlock();
 
         //====================================================================//

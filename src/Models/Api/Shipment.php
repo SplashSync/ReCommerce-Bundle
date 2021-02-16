@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,19 +16,15 @@
 namespace Splash\Connectors\ReCommerce\Models\Api;
 
 use DateTime;
-use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\MaxDepth;
-use JMS\Serializer\Annotation\SerializedName;
-use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\XmlElement;
-use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\ReadOnly;
-use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation as JMS;
+use Splash\Connectors\ReCommerce\DataTransformer\LinesTransformer;
 use Splash\OpenApi\Validator as SPL;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class representing the Shipment model.
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Shipment
 {
@@ -36,11 +32,12 @@ class Shipment
      * Unique identifier representing a Shipment.
      *
      * @var string
-     * @SerializedName("id")
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read", "Write", "List"})
+     *
+     * @JMS\SerializedName("id")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read", "Write", "List"})
      */
     protected $id;
 
@@ -48,12 +45,14 @@ class Shipment
      * The order ID this shipment belongs to.
      *
      * @var string
-     * @SerializedName("orderId")
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read", "Write", "List", "Required"})
-     * @SPL\Microdata({"hhtp://www.schema.org", "Order"})
+     *
+     * @JMS\SerializedName("orderId")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "orderNumber"})
      */
     protected $orderId;
 
@@ -61,11 +60,13 @@ class Shipment
      * The warehouse this shipment belongs to.
      *
      * @var string
-     * @SerializedName("warehouseId")
+     *
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Groups ({"Read", "Write", "List", "Required"})
-     * @Type("string")
+     *
+     * @JMS\SerializedName("warehouseId")
+     * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     * @JMS\Type("string")
      */
     protected $warehouseId;
 
@@ -73,9 +74,13 @@ class Shipment
      * The global order id corresponding to this Shipment. Required for multiSku Shipments.
      *
      * @var null|string
-     * @SerializedName("customerOrderId")
+     *
      * @Assert\Type("string")
-     * @Type("string")
+     *
+     * @JMS\SerializedName("customerOrderId")
+     * @JMS\Type("string")
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "alternateName"})
      */
     protected $customerOrderId;
 
@@ -83,7 +88,7 @@ class Shipment
      * Sales channel label. Behavior of the shipment's workflow vary depending on it.
      *
      * @var string
-     * @SerializedName("salesChannelLabel")
+     *
      * @Assert\NotNull()
      * @Assert\Choice({
      *     "monoSku": "Mono SKU",
@@ -92,9 +97,9 @@ class Shipment
      *     })
      * @Assert\Type("string")
      *
-     * @Groups ({"Read", "Write", "List", "Required"})
-     *
-     * @Type("string")
+     * @JMS\SerializedName("salesChannelLabel")
+     * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     * @JMS\Type("string")
      */
     protected $salesChannelLabel;
 
@@ -102,7 +107,7 @@ class Shipment
      * Carrier label identifying which carrier has to be used.
      *
      * @var string
-     * @SerializedName("carrierLabel")
+     *
      * @Assert\NotNull()
      * @Assert\Choice({
      *     "chrono18": "Chronopost 18",
@@ -119,10 +124,13 @@ class Shipment
      *     "palletCarrier": "Transporteur Palette",
      *     "other": "Autre",
      * })
-     * @Groups ({"Read", "Write", "List", "Required"})
      * @Assert\Type("string")
-     * @Type("string")
      *
+     * @JMS\SerializedName("carrierLabel")
+     * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     * @JMS\Type("string")
+     *
+     * @SPL\Microdata({"http://schema.org/ParcelDelivery", "identifier"})
      */
     protected $carrierLabel;
 
@@ -130,31 +138,37 @@ class Shipment
      * Transport unit type label. Behavior of the shipment's workflow and validations may vary depending on it.
      *
      * @var string
-     * @SerializedName("transportUnitTypeLabel")
+     *
      * @Assert\NotNull()
      * @Assert\Choice({
      *     "parcel": "Colis",
      *     "pallet": "Pallette"
      * })
-     * @Groups ({"Read", "Write", "List", "Required"})
      * @Assert\Type("string")
-     * @Type("string")
+     *
+     * @JMS\SerializedName("transportUnitTypeLabel")
+     * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     * @JMS\Type("string")
+     *
+     * @SPL\Microdata({"http://schema.org/ParcelDelivery", "alternateName"})
      */
     protected $transportUnitTypeLabel;
 
     /**
      * @var Address
-     * @SerializedName("shippingAddress")
+     *
      * @Assert\NotNull()
      * @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Address")
-     * @Type("Splash\Connectors\ReCommerce\Models\Api\Address")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("shippingAddress")
+     * @JMS\Type("Splash\Connectors\ReCommerce\Models\Api\Address")
+     * @JMS\Groups ({"Read"})
      */
     protected $shippingAddress;
 
     /**
      * @var string
-     * @SerializedName("status")
+     *
      * @Assert\NotNull()
      * @Assert\Type("string")
      * @Assert\Choice({
@@ -171,29 +185,39 @@ class Shipment
      *     "cancelled":     "Cancelled.",
      * })
      *
-     * @Type("string")
-     * @Groups ({"Read"})
+     * @JMS\SerializedName("status")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read", "List"})
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "orderStatus"})
      */
     protected $status = "draft";
 
     /**
      * @var DateTime
-     * @SerializedName("created")
+     *
      * @Assert\NotNull()
      * @Assert\Type("\DateTime")
-     * @Type("DateTime")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("created")
+     * @JMS\Type("DateTime")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "orderDate"})
      */
     protected $created;
 
     /**
      * @var DateTime
      *
-     * @SerializedName("modified")
      * @Assert\NotNull()
      * @Assert\Type("\DateTime")
-     * @Type("DateTime")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("modified")
+     * @JMS\Type("DateTime")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/DataFeedItem", "dateModified"})
      */
     protected $modified;
 
@@ -201,36 +225,42 @@ class Shipment
      * Shipment's lines. Associations of ProductCode for a quantity.
      *
      * @var Line[]
-     * @SerializedName("lines")
+     *
      * @Assert\NotNull()
      * @Assert\All({
      *   @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Line")
      * })
-     * @Type("array<Splash\Connectors\ReCommerce\Models\Api\Line>")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("lines")
+     * @JMS\Type("array<Splash\Connectors\ReCommerce\Models\Api\Line>")
+     * @JMS\Groups ({"Read"})
      */
     protected $lines;
-//
-//    /**
-//     * Assets attached to this shipment.
-//     *
-//     * @var null|Swagger\Server\Model\AssetResponseInShipment[]
-//     * @SerializedName("assets")
-//     * @Assert\All({
-//     *   @Assert\Type("Swagger\Server\Model\AssetResponseInShipment")
-//     * })
-//     * @Type("array<Swagger\Server\Model\AssetResponseInShipment>")
-//     */
-//    protected $assets;
-//
+
+    /**
+     * Assets attached to this shipment.
+     *
+     * @var null|Asset[]
+     *
+     * @Assert\All({
+     *   @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Asset")
+     * })
+     *
+     * @JMS\SerializedName("assets")
+     * @JMS\Type("array<Splash\Connectors\ReCommerce\Models\Api\Asset>")
+     */
+    protected $assets;
+
     /**
      * Number of Box attached to this shipment. Not available when requesting multiple Shipments
      *
      * @var null|int
-     * @SerializedName("countBoxes")
+     *
      * @Assert\Type("int")
-     * @Type("int")
-     * @ReadOnly()
+     *
+     * @JMS\SerializedName("countBoxes")
+     * @JMS\Type("int")
+     * @JMS\Groups ({"Read"})
      */
     protected $countBoxes;
 
@@ -238,34 +268,101 @@ class Shipment
      * Number of TransportUnit attached to this shipment. Not available when requesting multiple Shipments
      *
      * @var null|int
-     * @SerializedName("countTransportUnits")
+     *
      * @Assert\Type("int")
-     * @Type("int")
-     * @ReadOnly()
+     *
+     * @JMS\SerializedName("countTransportUnits")
+     * @JMS\Type("int")
+     * @JMS\Groups ({"Read"})
      */
     protected $countTransportUnits;
-//
-//    /**
-//     * The two last status in Shipment's status history, chronological ordered. Not available when requesting multiple Shipments
-//     *
-//     * @var null|Swagger\Server\Model\StatusHistoryResponse[]
-//     * @SerializedName("lastStatusHistories")
-//     * @Assert\All({
-//     *   @Assert\Type("Swagger\Server\Model\StatusHistoryResponse")
-//     * })
-//     * @Type("array<Swagger\Server\Model\StatusHistoryResponse>")
-//     */
-//    protected $lastStatusHistories;
-//
-//    /**
-//     * @var null|Swagger\Server\Model\SelfLink
-//     * @SerializedName("_links")
-//     * @Assert\Type("Swagger\Server\Model\SelfLink")
-//     * @Type("Swagger\Server\Model\SelfLink")
-//     */
-//    protected $links;
 
+    //====================================================================//
+    // Computed Fields
+    //====================================================================//
 
+    /**
+     * Sales channel code.
+     * Send to Carrier in Order to Adjust Shipment Workflow.
+     *
+     * @var null|string
+     *
+     * @JMS\SerializedName("salesChannelCode")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "disambiguatingDescription"})
+     */
+    protected $salesChannelCode;
+
+    /**
+     * Expended Shipment's lines. Including Accessories Lines.
+     *
+     * @var Line[]
+     *
+     * @JMS\Exclude()
+     */
+    private $expendedLines;
+
+    /**
+     * Shipment Parcel's Simulation.
+     * - 2 Lines per parcel
+     * - 2 Parcels per Transport Unit
+     *
+     * @var Line[]
+     *
+     * @JMS\Exclude()
+     */
+    private $parcelsSimulation;
+
+    //====================================================================//
+    // SPECIAL GETTERS
+    //====================================================================//
+
+    /**
+     * @return null|string
+     */
+    public function getSalesChannelCode(): ?string
+    {
+        $channelsCodes = array(
+            "monoSku" => "B2C",
+            "multiSku" => "B2B",
+            "readyMadeBox" => "CARTON",
+        );
+        if (!isset($channelsCodes[$this->salesChannelLabel])) {
+            return null;
+        }
+
+        return $channelsCodes[$this->salesChannelLabel];
+    }
+
+    /**
+     * Gets expended lines.
+     *
+     * @return Line[]
+     */
+    public function getLines(): array
+    {
+        if (!isset($this->expendedLines)) {
+            $this->expendedLines = LinesTransformer::expend($this->lines);
+        }
+
+        return $this->expendedLines;
+    }
+
+    /**
+     * Gets a Simulated list of Parcels based on lines.
+     *
+     * @return array
+     */
+    public function getParcelSimulation(): array
+    {
+        if (!isset($this->parcelsSimulation)) {
+            $this->parcelsSimulation = LinesTransformer::simParcels($this->lines);
+        }
+
+        return $this->parcelsSimulation;
+    }
 
     //====================================================================//
     // GENERIC GETTERS & SETTERS
@@ -279,20 +376,6 @@ class Shipment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Sets id.
-     *
-     * @param string $id Unique identifier representing a Shipment.
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -354,9 +437,9 @@ class Shipment
     }
 
     /**
-     * Sets customerOrderId.
+     * Sets customerOrderId. Required for multiSku Shipments.
      *
-     * @param null|string $customerOrderId The global order id corresponding to this Shipment. Required for multiSku Shipments.
+     * @param null|string $customerOrderId The global order id corresponding to this Shipment.
      *
      * @return $this
      */
@@ -379,8 +462,9 @@ class Shipment
 
     /**
      * Sets salesChannelLabel.
+     * Behavior of the shipment's workflow vary depending on it.
      *
-     * @param string $salesChannelLabel Sales channel label. Behavior of the shipment's workflow vary depending on it.
+     * @param string $salesChannelLabel Sales channel label.
      *
      * @return $this
      */
@@ -427,8 +511,9 @@ class Shipment
 
     /**
      * Sets transportUnitTypeLabel.
+     * Behavior of the shipment's workflow and validations may vary depending on it.
      *
-     * @param string $transportUnitTypeLabel Transport unit type label. Behavior of the shipment's workflow and validations may vary depending on it.
+     * @param string $transportUnitTypeLabel Transport unit type label.
      *
      * @return $this
      */
@@ -444,25 +529,9 @@ class Shipment
      *
      * @return Address
      */
-    public function getShippingAddress()
+    public function getShippingAddress(): Address
     {
         return $this->shippingAddress;
-    }
-
-    /**
-     * Sets shippingAddress.
-     *
-     * @param Address $shippingAddress
-     *
-     * @return $this
-     */
-    public function setShippingAddress(Address $shippingAddress)
-    {
-
-
-        $this->shippingAddress = $shippingAddress;
-
-        return $this;
     }
 
     /**
@@ -470,23 +539,9 @@ class Shipment
      *
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
-    }
-
-    /**
-     * Sets status.
-     *
-     * @param string $status
-     *
-     * @return $this
-     */
-    public function setStatus(string $status)
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     /**
@@ -494,7 +549,7 @@ class Shipment
      *
      * @return DateTime
      */
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
@@ -504,152 +559,38 @@ class Shipment
      *
      * @return DateTime
      */
-    public function getModified()
+    public function getModified(): DateTime
     {
         return $this->modified;
     }
 
     /**
-     * Gets lines.
+     * Gets assets.
      *
-     * @return Line[]
+     * @return null|Asset[]
      */
-    public function getLines()
+    public function getAssets(): ?array
     {
-        return $this->lines;
+        return $this->assets;
     }
 
-    /**
-     * Sets lines.
-     *
-     * @param Line[] $lines Shipment's lines. Associations of ProductCode for a quantity.
-     *
-     * @return $this
-     */
-    public function setLines(array $lines)
-    {
-        $this->lines = $lines;
-
-        return $this;
-    }
-//
-//    /**
-//     * Gets assets.
-//     *
-//     * @return null|Swagger\Server\Model\AssetResponseInShipment[]
-//     */
-//    public function getAssets()
-//    {
-//        return $this->assets;
-//    }
-//
-//    /**
-//     * Sets assets.
-//     *
-//     * @param null|Swagger\Server\Model\AssetResponseInShipment[] $assets Assets attached to this shipment.
-//     *
-//     * @return $this
-//     */
-//    public function setAssets(AssetResponseInShipment $assets = null)
-//    {
-//        $this->assets = $assets;
-//
-//        return $this;
-//    }
-//
     /**
      * Gets countBoxes.
      *
-     * @return null|int
+     * @return int
      */
-    public function getCountBoxes()
+    public function getCountBoxes(): int
     {
-        return $this->countBoxes;
+        return (int) $this->countBoxes;
     }
-//
-//    /**
-//     * Sets countBoxes.
-//     *
-//     * @param null|int $countBoxes Number of `Box` attached to this shipment. Not available when requesting multiple Shipments
-//     *
-//     * @return $this
-//     */
-//    public function setCountBoxes($countBoxes = null)
-//    {
-//        $this->countBoxes = $countBoxes;
-//
-//        return $this;
-//    }
-//
+
     /**
      * Gets countTransportUnits.
      *
-     * @return null|int
+     * @return int
      */
-    public function getCountTransportUnits()
+    public function getCountTransportUnits(): int
     {
-        return $this->countTransportUnits;
+        return (int) $this->countTransportUnits;
     }
-//
-//    /**
-//     * Sets countTransportUnits.
-//     *
-//     * @param null|int $countTransportUnits Number of `TransportUnit` attached to this shipment. Not available when requesting multiple Shipments
-//     *
-//     * @return $this
-//     */
-//    public function setCountTransportUnits($countTransportUnits = null)
-//    {
-//        $this->countTransportUnits = $countTransportUnits;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Gets lastStatusHistories.
-//     *
-//     * @return null|Swagger\Server\Model\StatusHistoryResponse[]
-//     */
-//    public function getLastStatusHistories()
-//    {
-//        return $this->lastStatusHistories;
-//    }
-//
-//    /**
-//     * Sets lastStatusHistories.
-//     *
-//     * @param null|Swagger\Server\Model\StatusHistoryResponse[] $lastStatusHistories The two last status in Shipment's status history, chronological ordered. Not available when requesting multiple Shipments
-//     *
-//     * @return $this
-//     */
-//    public function setLastStatusHistories(StatusHistoryResponse $lastStatusHistories = null)
-//    {
-//        $this->lastStatusHistories = $lastStatusHistories;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Gets links.
-//     *
-//     * @return null|Swagger\Server\Model\SelfLink
-//     */
-//    public function getLinks()
-//    {
-//        return $this->links;
-//    }
-//
-//    /**
-//     * Sets links.
-//     *
-//     * @param null|Swagger\Server\Model\SelfLink $links
-//     *
-//     * @return $this
-//     */
-//    public function setLinks(SelfLink $links = null)
-//    {
-//        $this->links = $links;
-//
-//        return $this;
-//    }
 }

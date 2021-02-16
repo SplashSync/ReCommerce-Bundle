@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,27 +19,18 @@ namespace Splash\Connectors\ReCommerce\Objects;
 use Exception;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
+use Splash\Connectors\ReCommerce\DataTransformer\AssetTransformer;
+use Splash\Connectors\ReCommerce\Models\Api;
 use Splash\Connectors\ReCommerce\Models\Api\Shipment;
 use Splash\Connectors\ReCommerce\Services\ReCommerceConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\ListsTrait;
 use Splash\Models\Objects\ObjectsTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
-use Splash\Connectors\ReCommerce\Models\Api;
-//use Splash\OpenApi\Helpers\Descriptor;
-//use Splash\OpenApi\Helpers\Reader;
-//use Splash\OpenApi\Helpers\ApiObjectVisitor;
-use Splash\OpenApi\Hydrator\Hydrator;
-use Splash\OpenApi\Visitor\JsonHalVisitor;
-//use Splash\OpenApi\Models\AbstractApiObject;
-use Splash\OpenApi\Models\Connexion\ConnexionInterface as Connexion;
+use Splash\OpenApi\Action\JsonHal;
 use Splash\OpenApi\Models\Objects as ApiModels;
-//use Splash\OpenApi\Models\OpenApiAwareInterface;
-//use Splash\OpenApi\Models\OpenApiAwareTrait;
-
-use Splash\OpenApi\Fields as ApiFields;
 use Splash\OpenApi\Visitor\AbstractVisitor as Visitor;
-use Splash\OpenApi\Visitor\JsonVisitor;
+use Splash\OpenApi\Visitor\JsonHalVisitor;
 
 /**
  * Optilog Implementation of Customers Orders
@@ -58,11 +49,14 @@ class Order extends AbstractStandaloneObject
     use ApiModels\CRUDTrait;
     use ApiModels\ObjectsListTrait;
     use ApiModels\SimpleFieldsTrait;
-    use ApiModels\ListFieldsTrait;
+    use ApiModels\ListFieldsGetTrait;
 
     //====================================================================//
     // ReCommerce Order Traits
-
+    use Order\StatusTrait;
+    use Order\BoxesTrait;
+    use Order\TransportUnitsTrait;
+    use Order\ParcelsTrait;
 
     //====================================================================//
     // Object Definition Parameters
@@ -108,23 +102,36 @@ class Order extends AbstractStandaloneObject
      * Class Constructor
      *
      * @param ReCommerceConnector $parentConnector
+     *
      * @throws Exception
      */
     public function __construct(ReCommerceConnector $parentConnector)
     {
         $this->connector = $parentConnector;
         //====================================================================//
-        // Connect Open Api Interfaces
-        $this->model = Api\Shipment::class;
-        $this->connexion = $parentConnector->getConnexion();
-        $this->hydrator = $parentConnector->getHydrator();
-        //====================================================================//
         //  Load Translation File
         Splash::translator()->load('local');
         //====================================================================//
         // Prepare Api Visitor
         $this->getVisitor();
-        ApiFields\Descriptor::load($this->connector->getHydrator(), $this->model);
+        //====================================================================//
+        // Setup Assets Transformer
+        AssetTransformer::configure($this->getVisitor());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function description(): array
+    {
+        if (!$this->connector->isSandbox()) {
+            static::$ALLOW_PUSH_CREATED = false;
+            static::$ALLOW_PUSH_DELETED = false;
+            static::$ENABLE_PUSH_CREATED = false;
+            static::$ENABLE_PUSH_DELETED = false;
+        }
+
+        return parent::description();
     }
 
     /**
@@ -135,12 +142,21 @@ class Order extends AbstractStandaloneObject
     public function getVisitor(): Visitor
     {
         if (!isset($this->visitor)) {
-            $this->visitor =  new JsonHalVisitor(
+            $this->visitor = new JsonHalVisitor(
                 $this->connector->getConnexion(),
                 $this->connector->getHydrator(),
                 Api\Shipment::class
             );
-            $this->visitor->setModel(Api\Shipment::class,"/shipment","/shipment/{id}");
+            $this->visitor->setModel(
+                Api\Shipment::class,
+                "/shipment",
+                "/shipment/{id}",
+                array("id", "boxes", "transportUnits", "parcels")
+            );
+            $this->visitor->setListAction(
+                JsonHal\ListAction::class,
+                array("filterKey" => "status")
+            );
         }
 
         return $this->visitor;

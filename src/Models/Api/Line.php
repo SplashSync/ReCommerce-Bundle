@@ -1,21 +1,26 @@
 <?php
 
+/*
+ *  This file is part of SplashSync Project.
+ *
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
 
 namespace Splash\Connectors\ReCommerce\Models\Api;
 
-use JMS\Serializer\Annotation\AccessType;
-use JMS\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\VirtualProperty;
-use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation as JMS;
 use Splash\OpenApi\Validator as SPL;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class representing the LineResponse model.
- *
- * @package Swagger\Server\Model
- * @author  Swagger Codegen team
+ * Class representing the Shipment Line API Model.
  */
 class Line
 {
@@ -23,11 +28,15 @@ class Line
      * A unique identifier among Shipment's lines
      *
      * @var string
-     * @SerializedName("id")
+     *
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("id")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http//schema.org/partOfInvoice", "identifier"})
      */
     protected $id;
 
@@ -35,11 +44,15 @@ class Line
      * The attached-to ProductCode's reference
      *
      * @var string
-     * @SerializedName("productCodeReference")
+     *
      * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("productCodeReference")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Product", "sku"})
      */
     protected $productCodeReference;
 
@@ -47,11 +60,14 @@ class Line
      * Quantity of the given ProductCode for this Shipment
      *
      * @var int
-     * @SerializedName("quantity")
+     *
      * @Assert\NotNull()
      * @Assert\Type("int")
-     * @Type("int")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("quantity")
+     * @JMS\Type("int")
+     * @JMS\Groups ({"Read"})
+     *
      * @SPL\Microdata({"http://schema.org/QuantitativeValue", "value"})
      */
     protected $quantity;
@@ -59,23 +75,29 @@ class Line
     /**
      * Optional EAN customisation for this line. If not set, you must use the attached ProductCode EAN
      *
-     * @var string|null
-     * @SerializedName("ean")
+     * @var null|string
+     *
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read"})
-     * @SPL\Microdata({"http://schema.org/Product", "ean13"})
+     *
+     * @JMS\SerializedName("ean")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Product", "gint13"})
      */
     protected $ean;
 
     /**
      * Optional label customisation for this line
      *
-     * @var string|null
-     * @SerializedName("label")
+     * @var null|string
+     *
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("label")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
      * @SPL\Microdata({"http://schema.org/partOfInvoice", "description"})
      */
     protected $label;
@@ -83,11 +105,15 @@ class Line
     /**
      * Optional article code customisation for this line
      *
-     * @var string|null
-     * @SerializedName("articleCode")
+     * @var null|string
+     *
      * @Assert\Type("string")
-     * @Type("string")
-     * @Groups ({"Read"})
+     *
+     * @JMS\SerializedName("articleCode")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Product", "additionalProperty"})
      */
     protected $articleCode;
 
@@ -95,19 +121,31 @@ class Line
      * Accessories to prepare in the same quantity for this line (should be put in the same box/transport unit)
      *
      * @var array
-     * @SerializedName("accessories")
+     *
      * @Assert\NotNull()
-     * @Type("array<array>")
-     * @AccessType("public_method")
+     *
+     * @JMS\SerializedName("accessories")
+     * @JMS\Type("array<array>")
      */
     protected $accessories;
+
+    /**
+     * Line is Accessory Copy of an Original Line
+     *
+     * @var null|bool
+     *
+     * @JMS\Type("bool")
+     * @JMS\Groups ({"Read"})
+     */
+    protected $accessoryLine;
 
     /**
      * Accessories to prepare in the same quantity for this line (should be put in the same box/transport unit)
      *
      * @var string
-     * @Type("string")
-     * @Groups ({"Read"})
+     *
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
      * @SPL\Type("inline")
      */
     protected $accessoriesSkus;
@@ -121,7 +159,7 @@ class Line
      *
      * @return string
      */
-    public function getAccessoriesSkus()
+    public function getAccessoriesSkus(): string
     {
         if (isset($this->accessoriesSkus)) {
             return $this->accessoriesSkus;
@@ -134,7 +172,29 @@ class Line
             }
         }
 
-        return $this->accessoriesSkus = json_encode($skus);
+        return $this->accessoriesSkus = (string) json_encode($skus);
+    }
+
+    /**
+     * Create Order Line for Accessory.
+     *
+     * @return Line
+     */
+    public function getAccessoryCopy(array $accessory)
+    {
+        $accessoryLine = clone $this;
+
+        $accessoryLine->productCodeReference = $accessory["productCodeReference"];
+        $accessoryLine->articleCode = null;
+        $accessoryLine->label = "Acc. for ".$accessoryLine->label;
+        $accessoryLine->ean = (isset($accessory["ean"]) && !empty($accessory["ean"]))
+            ? $accessory["ean"]
+            : $accessory["productCodeReference"]
+        ;
+        $accessoryLine->accessories = array();
+        $accessoryLine->accessoryLine = true;
+
+        return $accessoryLine;
     }
 
     //====================================================================//
@@ -152,20 +212,6 @@ class Line
     }
 
     /**
-     * Sets id.
-     *
-     * @param string $id  A unique identifier among Shipment's lines
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Gets productCodeReference.
      *
      * @return string
@@ -176,47 +222,19 @@ class Line
     }
 
     /**
-     * Sets productCodeReference.
-     *
-     * @param string $productCodeReference  The attached-to ProductCode's reference
-     *
-     * @return $this
-     */
-    public function setProductCodeReference($productCodeReference)
-    {
-        $this->productCodeReference = $productCodeReference;
-
-        return $this;
-    }
-
-    /**
      * Gets quantity.
      *
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
-        return (float) $this->quantity;
-    }
-
-    /**
-     * Sets quantity.
-     *
-     * @param int $quantity  Quantity of the given ProductCode for this Shipment
-     *
-     * @return $this
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
+        return (int) $this->quantity;
     }
 
     /**
      * Gets ean.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getEan()
     {
@@ -224,65 +242,23 @@ class Line
     }
 
     /**
-     * Sets ean.
-     *
-     * @param string|null $ean  Optional EAN customisation for this line. If not set, you must use the attached ProductCode EAN
-     *
-     * @return $this
-     */
-    public function setEan($ean = null)
-    {
-        $this->ean = $ean;
-
-        return $this;
-    }
-
-    /**
      * Gets label.
      *
-     * @return string|null
+     * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
-        return $this->label;
-    }
-
-    /**
-     * Sets label.
-     *
-     * @param string|null $label  Optional label customisation for this line
-     *
-     * @return $this
-     */
-    public function setLabel($label = null)
-    {
-        $this->label = $label;
-
-        return $this;
+        return (string) $this->label;
     }
 
     /**
      * Gets articleCode.
      *
-     * @return string|null
+     * @return string
      */
-    public function getArticleCode()
+    public function getArticleCode(): string
     {
-        return $this->articleCode;
-    }
-
-    /**
-     * Sets articleCode.
-     *
-     * @param string|null $articleCode  Optional article code customisation for this line
-     *
-     * @return $this
-     */
-    public function setArticleCode($articleCode = null)
-    {
-        $this->articleCode = $articleCode;
-
-        return $this;
+        return (string) $this->articleCode;
     }
 
     /**
@@ -296,20 +272,12 @@ class Line
     }
 
     /**
-     * Sets accessories.
+     * Gets Is Accessory Flag.
      *
-     * @param array $accessories  Accessories to prepare in the same quantity for this line (should be put in the same box/transport unit)
-     *
-     * @return $this
+     * @return bool
      */
-    public function setAccessories(array $accessories)
+    public function isAccessoryLine(): bool
     {
-        $this->accessories = $accessories;
-
-        return $this;
+        return (bool) $this->accessoryLine;
     }
-
-
 }
-
-

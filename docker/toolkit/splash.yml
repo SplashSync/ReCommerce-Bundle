@@ -32,6 +32,7 @@ splash:
             config:
                 WsHost:         http://sandbox.recommerce.local:8000
                 ApiKey:         ThisIsSecretApiKey
+                isSandbox:      true
 
         ########################################################################
         # Recommerce Staging

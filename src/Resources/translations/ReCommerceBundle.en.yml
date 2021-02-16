@@ -21,6 +21,8 @@ profile:
 admin:
     selftest:   ReCommerce Connector Configuration
     connect:    Connect to ReCommerce API
+    sandbox:
+        enabled:    Sandbox Mode is Enabled
 #    webhooks:
 #        label:  Update of WebHooks
 #        desc:   Detect & Update Splash Sync WebHooks Configuration
