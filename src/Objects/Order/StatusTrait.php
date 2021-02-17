@@ -61,7 +61,7 @@ trait StatusTrait
         $this->fieldsFactory()->create(SPL_T_BOOL)
             ->Identifier("isToShip")
             ->Name("Is To Ship")
-            ->MicroData("http://schema.org/OrderStatus", "OrderProcessing")
+            ->MicroData("http://schema.org/OrderStatus", "OrderToShip")
             ->isReadOnly();
 
         //====================================================================//
