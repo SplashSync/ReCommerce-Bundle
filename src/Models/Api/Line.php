@@ -36,7 +36,7 @@ class Line
      * @JMS\Type("string")
      * @JMS\Groups ({"Read"})
      *
-     * @SPL\Microdata({"http//schema.org/partOfInvoice", "identifier"})
+     * @SPL\Microdata({"http://schema.org/partOfInvoice", "identifier"})
      */
     protected $id;
 
