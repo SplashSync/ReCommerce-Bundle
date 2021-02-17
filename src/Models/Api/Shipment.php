@@ -325,9 +325,9 @@ class Shipment
     public function getSalesChannelCode(): ?string
     {
         $channelsCodes = array(
-            "monoSku" => "B2C",
-            "multiSku" => "B2B",
-            "readyMadeBox" => "CARTON",
+            "monoSku" => "REC00021",
+            "multiSku" => "REC00121",
+            "readyMadeBox" => "REC00221",
         );
         if (!isset($channelsCodes[$this->salesChannelLabel])) {
             return null;
