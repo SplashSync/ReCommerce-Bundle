@@ -203,7 +203,7 @@ class Shipment
      * @JMS\Type("DateTime")
      * @JMS\Groups ({"Read"})
      *
-     * @SPL\Microdata({"http://schema.org/Order", "orderDate"})
+     * @SPL\Microdata({"http://schema.org/DataFeedItem", "dateCreated"})
      */
     protected $created;
 
