@@ -105,7 +105,7 @@ class Asset
      * @JMS\Type("array")
      * @JMS\Groups ({"Read"})
      *
-     * @SPL\Type("file")
+     * @SPL\Type("stream")
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "description"})
      */
     protected $file;
