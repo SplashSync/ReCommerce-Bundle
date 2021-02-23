@@ -344,7 +344,7 @@ class Shipment
     public function getLines(): array
     {
         if (!isset($this->expendedLines)) {
-            $this->expendedLines = LinesTransformer::expend($this->lines);
+            $this->expendedLines = LinesTransformer::expend((array) $this->lines);
         }
 
         return $this->expendedLines;
@@ -358,7 +358,7 @@ class Shipment
     public function getParcelSimulation(): array
     {
         if (!isset($this->parcelsSimulation)) {
-            $this->parcelsSimulation = LinesTransformer::simParcels($this->lines);
+            $this->parcelsSimulation = LinesTransformer::simParcels((array) $this->lines);
         }
 
         return $this->parcelsSimulation;
