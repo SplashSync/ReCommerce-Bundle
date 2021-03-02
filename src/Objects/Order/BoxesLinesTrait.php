@@ -42,7 +42,7 @@ trait BoxesLinesTrait
         //====================================================================//
         // Check if List field & Init List Array
         $fieldId = self::lists()->initOutput($this->out, "lines", $fieldName);
-        if (!$fieldId || $this->object->isBoxesToLinesOrder()) {
+        if (!$fieldId || !$this->object->isBoxesToLinesOrder()) {
             return;
         }
         //====================================================================//
