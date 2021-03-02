@@ -51,8 +51,6 @@ class Shipment
      * @JMS\SerializedName("orderId")
      * @JMS\Type("string")
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
-     *
-     * @SPL\Microdata({"http://schema.org/Order", "orderNumber"})
      */
     protected $orderId;
 
@@ -282,6 +280,19 @@ class Shipment
     //====================================================================//
 
     /**
+     * Order reference => Read Only ReCommerce ID.
+     *
+     * @var string
+     *
+     * @JMS\SerializedName("reference")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Order", "orderNumber"})
+     */
+    protected $reference;
+
+    /**
      * Sales channel code.
      * Send to Carrier in Order to Adjust Shipment Workflow.
      *
@@ -318,6 +329,14 @@ class Shipment
     //====================================================================//
     // SPECIAL GETTERS
     //====================================================================//
+
+    /**
+     * @return string
+     */
+    public function getReference(): string
+    {
+        return (string) $this->id;
+    }
 
     /**
      * Check if this Order push Boxes to Order Lines
