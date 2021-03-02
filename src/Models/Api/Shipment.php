@@ -320,6 +320,16 @@ class Shipment
     //====================================================================//
 
     /**
+     * Check if this Order push Boxes to Order Lines
+     *
+     * @return bool
+     */
+    public function isBoxesToLinesOrder(): bool
+    {
+        return ('readyMadeBox' == $this->salesChannelLabel);
+    }
+
+    /**
      * @return null|string
      */
     public function getSalesChannelCode(): ?string

@@ -55,6 +55,7 @@ class Order extends AbstractStandaloneObject
     use Order\ObjectsListTrait;
     use Order\StatusTrait;
     use Order\BoxesTrait;
+    use Order\BoxesLinesTrait;
     use Order\TransportUnitsTrait;
     use Order\ParcelsTrait;
 
