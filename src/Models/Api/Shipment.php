@@ -246,7 +246,6 @@ class Shipment
      *
      * @JMS\SerializedName("assets")
      * @JMS\Type("array<Splash\Connectors\ReCommerce\Models\Api\Asset>")
-     * @JMS\Groups ({"Read"})
      */
     protected $assets;
 
