@@ -30,7 +30,7 @@ splash:
             # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN RECOMMERCE CONTACT
             ########################################################################
             config:
-                WsHost:         http://sandbox.recommerce.local:8000
+                WsHost:         http://sandbox.recommerce.local
                 ApiKey:         ThisIsSecretApiKey
                 isSandbox:      true
 
