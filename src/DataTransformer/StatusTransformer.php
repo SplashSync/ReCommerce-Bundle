@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\ReCommerce\DataTransformer;
 
+use Splash\Client\Splash;
 use Splash\Models\Objects\Order\Status;
 
 class StatusTransformer
@@ -49,7 +50,13 @@ class StatusTransformer
      */
     public static function getAll(): array
     {
-        return Status::getAllChoices(true);
+        $allStatuses = Status::getAllChoices(true);
+        if (Splash::isDebugMode()) {
+            unset($allStatuses[Status::RETURNED]);
+            unset($allStatuses[Status::PAYMENT_DUE]);
+        }
+
+        return $allStatuses;
     }
 
     /**

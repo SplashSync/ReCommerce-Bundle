@@ -47,6 +47,7 @@ trait ParcelsTrait
             ->name("Parcel identifier")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "identifier")
+            ->isNotTested()
         ;
 
         //====================================================================//
@@ -56,6 +57,7 @@ trait ParcelsTrait
             ->name("Tracking Number")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "trackingNumber")
+            ->isNotTested()
         ;
 
         //====================================================================//
@@ -65,6 +67,7 @@ trait ParcelsTrait
             ->name("Tracking Url")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "trackingUrl")
+            ->isNotTested()
         ;
 
         //====================================================================//
@@ -74,6 +77,7 @@ trait ParcelsTrait
             ->name("Weight (kg)")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "weight")
+            ->isNotTested()
         ;
 
         //====================================================================//
@@ -83,6 +87,7 @@ trait ParcelsTrait
             ->name("Contents")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "itemShipped")
+            ->isNotTested()
         ;
 
         //====================================================================//
@@ -93,6 +98,7 @@ trait ParcelsTrait
             ->description("Serial Shipping Container Code")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "disambiguatingDescription")
+            ->isNotTested()
         ;
     }
 
