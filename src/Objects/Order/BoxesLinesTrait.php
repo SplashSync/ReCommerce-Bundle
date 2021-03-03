@@ -16,11 +16,6 @@
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
 use Exception;
-use Splash\Client\Splash;
-use Splash\Connectors\ReCommerce\Models\Api;
-use Splash\OpenApi\Action\JsonHal;
-use Splash\OpenApi\Fields as ApiFields;
-use Splash\OpenApi\Visitor\JsonHalVisitor;
 
 /**
  * Manage Translation from Boxes to Lines for ReadyMadeBox Orders
@@ -48,7 +43,7 @@ trait BoxesLinesTrait
         //====================================================================//
         // Fill Line List with Data
         foreach ($this->loadBoxes() as $index => $box) {
-            switch($fieldId) {
+            switch ($fieldId) {
                 case 'id':
                     $value = "box".$index;
 
