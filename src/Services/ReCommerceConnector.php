@@ -198,7 +198,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         }
         //====================================================================//
         // Read File Contents via Raw Get Request
-        $rawResponse = $this->getConnexion()->getRaw($filePath, null, true);
+        $rawResponse = $this->getConnexion()->getRaw($filePath);
         if (!$rawResponse || (md5($rawResponse) != $fileMd5)) {
             return false;
         }

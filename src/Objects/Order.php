@@ -31,6 +31,7 @@ use Splash\OpenApi\Action\JsonHal;
 use Splash\OpenApi\Models\Objects as ApiModels;
 use Splash\OpenApi\Visitor\AbstractVisitor as Visitor;
 use Splash\OpenApi\Visitor\JsonHalVisitor;
+use stdClass;
 
 /**
  * Optilog Implementation of Customers Orders
@@ -115,9 +116,6 @@ class Order extends AbstractStandaloneObject
         //====================================================================//
         // Prepare Api Visitor
         $this->getVisitor();
-        //====================================================================//
-        // Setup Assets Transformer
-        AssetTransformer::configure($this->getVisitor());
     }
 
     /**
@@ -133,6 +131,34 @@ class Order extends AbstractStandaloneObject
         }
 
         return parent::description();
+    }
+
+    /**
+     * Load Request Object
+     *
+     * @param string $objectId Object id
+     *
+     * @throws Exception
+     *
+     * @return false|stdClass
+     */
+    public function load($objectId)
+    {
+        //====================================================================//
+        // Stack Trace
+        Splash::log()->trace();
+        //====================================================================//
+        // Load Remote Object
+        $loadResponse = $this->visitor->load($objectId);
+        if (!$loadResponse->isSuccess()) {
+            return false;
+        }
+        //====================================================================//
+        // Setup Assets Transformer
+        AssetTransformer::configure($this->getVisitor(), $objectId);
+        //====================================================================//
+        // Return Hydrated Object
+        return $loadResponse->getResults();
     }
 
     /**

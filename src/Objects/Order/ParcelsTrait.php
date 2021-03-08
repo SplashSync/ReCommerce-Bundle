@@ -152,11 +152,15 @@ trait ParcelsTrait
             return;
         }
         //====================================================================//
-        // Convert Parcels to Boxes
-        $this->in["boxes"] = $boxes = ParcelTransformer::toBoxes($fieldData);
-        //====================================================================//
-        // Update Shipment Boxes
-        $this->updateBoxes($boxes);
+        // If Order Require Boxes Updates
+        if (!$this->object->isBoxesToLinesOrder()) {
+            //====================================================================//
+            // Convert Parcels to Boxes
+            $this->in["boxes"] = $boxes = ParcelTransformer::toBoxes($fieldData);
+            //====================================================================//
+            // Update Shipment Boxes
+            $this->updateBoxes($boxes);
+        }
         //====================================================================//
         // Convert Parcels to Transport Units
         $this->in["transportUnits"] = $units = ParcelTransformer::toUnits($fieldData);

@@ -36,6 +36,11 @@ class AssetTransformer
     private static $visitor;
 
     /**
+     * @var string
+     */
+    private static $shipmentId;
+
+    /**
      * @var ApcuCache
      */
     private static $apcu;
@@ -52,9 +57,10 @@ class AssetTransformer
      *
      * @return void
      */
-    public static function configure(AbstractVisitor $visitor): void
+    public static function configure(AbstractVisitor $visitor, string $shipmentId): void
     {
         self::$visitor = $visitor;
+        self::$shipmentId = $shipmentId;
     }
 
     /**
@@ -73,8 +79,8 @@ class AssetTransformer
             return $fromCache;
         }
         //====================================================================//
-        // Load Splash Image from Url
-        $fromUrl = self::getMetadataFromUrl($asset->url, $asset->name);
+        // Load Splash File from Api
+        $fromUrl = self::getMetadataFromApi($asset);
         if ($fromUrl) {
             //====================================================================//
             // Save Splash File is In Cache
@@ -88,25 +94,27 @@ class AssetTransformer
     }
 
     /**
-     * Load Asset Informations Array from Url
+     * Load Asset Informations Array from Api
      *
-     * @param string      $absoluteUrl
-     * @param null|string $filename
+     * @param Asset $asset
      *
      * @return null|array
      */
-    private static function getMetadataFromUrl(string $absoluteUrl, ?string $filename): ?array
+    private static function getMetadataFromApi(Asset  $asset): ?array
     {
         //====================================================================//
-        // Build Image File Name
-        $filename = !empty($filename) ? $filename : basename((string) parse_url($absoluteUrl, PHP_URL_PATH));
+        // Build Splash File Name
+        $filename = !empty($asset->name) ? $asset->name : basename((string) parse_url($asset->url, PHP_URL_PATH));
         //====================================================================//
         // Load Image from API
         $splashFile = null;
         for ($count = 0; $count < 3; $count++) {
             //====================================================================//
+            // Build Request Api Url
+            $apiPath = "/shipment/".self::$shipmentId."/asset/".$asset->id."/download";
+            //====================================================================//
             // Read File Contents via Raw Get Request
-            $rawResponse = self::$visitor->getConnexion()->getRaw($absoluteUrl, null, true);
+            $rawResponse = self::$visitor->getConnexion()->getRaw($apiPath);
             if (!$rawResponse) {
                 break;
             }
@@ -114,9 +122,8 @@ class AssetTransformer
             // Build File Array
             $splashFile = array();
             $splashFile["name"] = $splashFile["filename"] = $filename;
-            $splashFile["path"] = $absoluteUrl;
-            $splashFile["url"] = $absoluteUrl;
-            $splashFile["raw"] = base64_encode((string) $rawResponse);
+            $splashFile["path"] = $apiPath;
+            $splashFile["url"] = $apiPath;
             $splashFile["md5"] = md5($rawResponse);
             $splashFile["size"] = strlen($rawResponse);
         }
