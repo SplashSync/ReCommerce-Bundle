@@ -126,6 +126,7 @@ class AssetTransformer
             $splashFile["url"] = $apiPath;
             $splashFile["md5"] = md5($rawResponse);
             $splashFile["size"] = strlen($rawResponse);
+            $splashFile["ttl"] = 10;
         }
 
         return $splashFile;
