@@ -16,6 +16,7 @@
 namespace Splash\Connectors\ReCommerce\Objects;
 
 use Exception;
+use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
 use Splash\Connectors\ReCommerce\DataTransformer\AssetTransformer;
@@ -35,7 +36,7 @@ use stdClass;
 /**
  * Optilog Implementation of Customers Orders
  */
-class Order extends AbstractStandaloneObject
+class Order extends AbstractStandaloneObject implements TrackingInterface
 {
     //====================================================================//
     // Splash Php Core Traits
