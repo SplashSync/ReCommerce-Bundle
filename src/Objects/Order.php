@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\ReCommerce\Objects;
 
-//use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Exception;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
@@ -59,6 +58,7 @@ class Order extends AbstractStandaloneObject
     use Order\BoxesLinesTrait;
     use Order\TransportUnitsTrait;
     use Order\ParcelsTrait;
+    use Order\TrackingTrait;
 
     //====================================================================//
     // Object Definition Parameters
