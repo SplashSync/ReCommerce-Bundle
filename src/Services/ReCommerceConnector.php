@@ -22,7 +22,6 @@ use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
 use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
 use Splash\Connectors\ReCommerce\Form\EditFormType;
-use Splash\Connectors\ReCommerce\Models\Api;
 use Splash\Connectors\ReCommerce\Objects;
 use Splash\Connectors\ReCommerce\Widgets;
 use Splash\Core\SplashCore as Splash;
