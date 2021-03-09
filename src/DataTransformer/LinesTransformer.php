@@ -20,6 +20,13 @@ use Splash\Connectors\ReCommerce\Models\Api\Line;
 class LinesTransformer
 {
     /**
+     * Temporary Storage for Accessories Ean Codes
+     *
+     * @var array<string, string>
+     */
+    private static $accCodeToEan = array();
+
+    /**
      * Transforms Shipments Lines to Expended Line List.
      *
      * @param Line[] $lines
@@ -46,7 +53,10 @@ class LinesTransformer
             foreach ($accessories as $accessory) {
                 //====================================================================//
                 // Push Original Line
-                $expendedLines[] = $line->getAccessoryCopy($accessory);
+                $expendedLines[] = $line->getAccessoryCopy(
+                    (string) $accessory["productCodeReference"],
+                    self::getEan($accessory["productCodeReference"]),
+                );
             }
         }
 
@@ -88,5 +98,54 @@ class LinesTransformer
         ksort($parcels);
 
         return $parcels;
+    }
+
+    /**
+     * Import Accessories Ean from Embedded informations.
+     *
+     * @param array[] $embedded Raw Embedded infos
+     *
+     * @return int Number of imported Ean
+     */
+    public static function populateEan(array $embedded): int
+    {
+        //====================================================================//
+        // Reset Ean Storage
+        self::$accCodeToEan = array();
+        //====================================================================//
+        // Safety Check
+        if (!isset($embedded["productCodes"]) || !is_array($embedded["productCodes"])) {
+            return 0;
+        }
+        //====================================================================//
+        // Walk on Product Codes to Extract Ean
+        foreach ($embedded["productCodes"] as $productItem) {
+            //====================================================================//
+            // Safety Check
+            if (!isset($productItem["reference"]) || !isset($productItem["ean"])) {
+                continue;
+            }
+            //====================================================================//
+            // Add Ean to Table
+            self::$accCodeToEan[(string) $productItem["reference"]] = (string) $productItem["ean"];
+        }
+
+        return count(self::$accCodeToEan);
+    }
+
+    /**
+     * Import Accessories Ean from Embedded informations.
+     *
+     * @param string $productCode
+     *
+     * @return null|string
+     */
+    private static function getEan(string $productCode): ?string
+    {
+        if (!isset(self::$accCodeToEan[$productCode])) {
+            return null;
+        }
+
+        return self::$accCodeToEan[$productCode];
     }
 }

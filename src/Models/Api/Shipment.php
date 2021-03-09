@@ -327,6 +327,19 @@ class Shipment
      */
     private $parcelsSimulation;
 
+    /**
+     * Embedded Additional Info
+     *
+     * @var array
+     *
+     * @Assert\Type("array")
+     *
+     * @JMS\SerializedName("_embedded")
+     * @JMS\Type("array")
+     * @JMS\Groups ({"Read"})
+     */
+    private $embedded = array();
+
     //====================================================================//
     // SPECIAL GETTERS
     //====================================================================//
@@ -392,6 +405,22 @@ class Shipment
         }
 
         return $this->parcelsSimulation;
+    }
+
+    /**
+     * Execute Post Load Data Treatments
+     *
+     * @JMS\PostDeserialize()
+     *
+     * @return self
+     */
+    public function onPostDeserialize(): self
+    {
+        //====================================================================//
+        // Populate Line Transformer with Accessories Ean
+        LinesTransformer::populateEan($this->embedded);
+
+        return $this;
     }
 
     //====================================================================//

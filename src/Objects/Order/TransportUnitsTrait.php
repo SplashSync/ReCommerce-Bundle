@@ -246,8 +246,10 @@ trait TransportUnitsTrait
             return $this->units = array();
         }
         //====================================================================//
-        // Load Units List from API
-        $listResponse = $this->getUnitsVisitor((string) $this->getObjectIdentifier())->list();
+        // Load Units Paginated List from API
+        $listResponse = $this
+            ->getUnitsVisitor((string) $this->getObjectIdentifier())
+            ->listWithPagination(null, 250, 2000);
         $this->units = $listResponse->isSuccess() ? $listResponse->getResults() : array();
 
         return $this->units;

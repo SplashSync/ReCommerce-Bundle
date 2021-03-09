@@ -192,8 +192,10 @@ trait BoxesTrait
             return $this->boxes = array();
         }
         //====================================================================//
-        // Load Boxes List from API
-        $listResponse = $this->getBoxesVisitor((string) $this->getObjectIdentifier())->list();
+        // Load Boxes Paginated List from API
+        $listResponse = $this
+            ->getBoxesVisitor((string) $this->getObjectIdentifier())
+            ->listWithPagination(null, 250, 2000);
         $this->boxes = $listResponse->isSuccess() ? $listResponse->getResults() : array();
 
         return $this->boxes;

@@ -20,6 +20,7 @@ use App\Entity\Shipment;
 use App\Entity\TransportUnit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -30,24 +31,35 @@ class TransportUnitController extends AbstractController
     /**
      * Get List of Transport Units for a Shipment
      *
-     * @param int $shipment
+     * @param Request $request
+     * @param int     $shipment
      *
      * @return JsonResponse
      */
-    public function listAction(int $shipment): JsonResponse
+    public function listAction(Request $request, int $shipment): JsonResponse
     {
-        $results = $this->getDoctrine()->getManager()->getRepository(TransportUnit::class)->findBy(array(
+        $limit = $request->get("limit");
+        $page = $request->get("page");
+
+        $results = $this->getDoctrine()->getManager()->getRepository(TransportUnit::class)->findBy(
+            array("shipment" => $shipment),
+            null,
+            $limit,
+            $page ? ($page - 1) * $limit : null,
+        );
+
+        $total = count($this->getDoctrine()->getManager()->getRepository(TransportUnit::class)->findBy(array(
             "shipment" => $shipment
-        ));
+        )));
 
         return new JsonResponse(array(
             "_links" => array(),
             "_embedded" => array(
                 "box" => $this->get('serializer')->normalize($results)
             ),
-            "page_count" => 1,
-            "total_items" => count($results),
-            "page" => 1,
+            "page_count" => $page ? 1 + ((int) ($total / $limit)): 1,
+            "total_items" => $total,
+            "page" => $page ?: 1,
         ));
     }
 

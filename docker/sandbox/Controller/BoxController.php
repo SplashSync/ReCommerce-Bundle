@@ -19,6 +19,7 @@ use App\Entity\Box;
 use App\Entity\Shipment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -26,17 +27,30 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BoxController extends AbstractController
 {
+    const PAGE_SIZE = 5;
+
     /**
      * Get List of Boxes for a Shipment
      *
-     * @param int $shipment
+     * @param Request $request
+     * @param int     $shipment
      *
      * @return JsonResponse
      */
-    public function listAction(int $shipment): JsonResponse
+    public function listAction(Request $request, int $shipment): JsonResponse
     {
-        $results = $this->getDoctrine()->getManager()->getRepository(Box::class)->findBy(array(
-            "shipment" => $shipment
+        $limit = $request->get("limit");
+        $page = $request->get("page");
+
+        $results = $this->getDoctrine()->getManager()->getRepository(Box::class)->findBy(
+            array("shipment" => $shipment),
+            null,
+            $limit,
+            $page ? ($page - 1) * $limit : null,
+        );
+
+        $total = count($this->getDoctrine()->getManager()->getRepository(Box::class)->findBy(
+            array("shipment" => $shipment),
         ));
 
         return new JsonResponse(array(
@@ -44,9 +58,9 @@ class BoxController extends AbstractController
             "_embedded" => array(
                 "box" => $this->get('serializer')->normalize($results)
             ),
-            "page_count" => 1,
-            "total_items" => count($results),
-            "page" => 1,
+            "page_count" => $page ? 1 + ((int) ($total / $limit)): 1,
+            "total_items" => $total,
+            "page" => $page ?: 1,
         ));
     }
 

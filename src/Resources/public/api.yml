@@ -1,0 +1,97 @@
+swagger: "2.0"
+info:
+  description: "Splash Notification API for reCommerce."
+  version: "1.0.0"
+  title: "ReCommerce > Splash Webhook API"
+  termsOfService: "https://www.splashsync.com/en/legal/terms-of-service"
+  contact:
+    email: "contact@splashsync.com"
+host: "eu-99.splashsync.com"
+basePath: "/ws/recommerce/0123456789"
+tags:
+  - name: "Webhooks"
+    description: "Notify Splash of changes done on ReCommerce Side"
+schemes:
+  - "https"
+paths:
+  /:
+    post:
+      tags:
+        - "Webhooks"
+      summary: "Submit changes notifications"
+      description: ""
+      operationId: "commit"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "data"
+          description: "List of changes to submit"
+          required: true
+          schema:
+            $ref: "#/definitions/commit"
+      responses:
+        "200":
+          description: "Commit succeeded"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+        "500":
+          description: "Internal Server Error"
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: api-key
+definitions:
+  commit-item:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        example: "Product"
+      ids:
+        type: "array"
+        items:
+          type: string
+        example:
+          - "SKU-0001"
+          - "SKU-0002"
+          - "SKU-0003"
+      changeDate:
+        type: "string"
+        format: "date-time"
+      user:
+        type: "string"
+        example: "John Doe"
+      reason:
+        type: "string"
+        example: "Order XXX validated"
+    xml:
+      name: "Tag"
+  commit:
+    type: "object"
+    required:
+      - "name"
+      - "photoUrls"
+    properties:
+      commit-item:
+        type: "array"
+        xml:
+          name: "tag"
+          wrapped: true
+        items:
+          $ref: "#/definitions/commit-item"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"

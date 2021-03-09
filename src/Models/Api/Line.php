@@ -180,17 +180,14 @@ class Line
      *
      * @return Line
      */
-    public function getAccessoryCopy(array $accessory)
+    public function getAccessoryCopy(string $productCode, ?string $productEan)
     {
         $accessoryLine = clone $this;
 
-        $accessoryLine->productCodeReference = $accessory["productCodeReference"];
+        $accessoryLine->productCodeReference = $productCode;
         $accessoryLine->articleCode = null;
         $accessoryLine->label = "Acc. for ".$accessoryLine->label;
-        $accessoryLine->ean = (isset($accessory["ean"]) && !empty($accessory["ean"]))
-            ? $accessory["ean"]
-            : $accessory["productCodeReference"]
-        ;
+        $accessoryLine->ean = $productEan ?: $productCode;
         $accessoryLine->accessories = array();
         $accessoryLine->accessoryLine = true;
 

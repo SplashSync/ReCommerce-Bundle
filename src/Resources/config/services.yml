@@ -12,8 +12,8 @@ services:
             
     ################################################################################
     # Enables Dependency Injection in Controller Actions
-#    Splash\Connectors\ReCommerce\Controller\:
-#        resource:   '../../Controller'
-#        public:     true
-#        tags:
-#            - { name: 'controller.service_arguments' }
+    Splash\Connectors\ReCommerce\Controller\:
+        resource:   '../../Controller'
+        public:     true
+        tags:
+            - { name: 'controller.service_arguments' }

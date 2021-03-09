@@ -28,7 +28,7 @@
 #
 ################################################################################
 
-version: '2'
+version: '2.2'
 
 services:
     
@@ -41,7 +41,7 @@ services:
             # Specify Local Configuration File
             - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
             # Uncomment to use Local Sources instead of Release
-            - './src/:/app/vendor/splash/recommerce/src/:ro'
+            - './:/app/vendor/splash/recommerce/:ro'
         hostname:           toolkit.recommerce.local
         networks:
             recommerce:     { ipv4_address: 172.107.0.100, aliases: [ toolkit.recommerce.local ] }

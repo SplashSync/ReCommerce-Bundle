@@ -122,8 +122,12 @@ class Line
 
     /**
      * Address Faker
+     *
+     * @param Shipment $shipment
+     *
+     * @return Line
      */
-    public static function fake(Shipment $shipment): self
+    public static function fake(Shipment &$shipment): self
     {
         $faker = Factory::create();
 
@@ -138,12 +142,11 @@ class Line
 
         $accessoires = array();
         for ($i = 0; $i < 1; $i++) {
+            $productCodeReference = $faker->macAddress;
             $accessoires[] = array(
-                "productCodeReference" => $faker->ean13,
-                "ean" => $faker->randomElement(array(
-                    "0000000001145", "0000000001173", "0000000001174", "3663705900067",
-                )),
+                "productCodeReference" => $productCodeReference,
             );
+            $shipment->addAccEan($productCodeReference, $faker->ean13);
         }
         $line->accessories = $accessoires;
 

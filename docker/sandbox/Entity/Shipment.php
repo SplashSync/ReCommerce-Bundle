@@ -34,7 +34,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={
  *          "get":      { "path": "/shipment/{id}" },
  *          "patch":    { "path": "/shipment/{id}" },
- *          "delete":   { "path": "/shipment/{id}" }
+ *          "delete":   { "path": "/shipment/{id}" },
+ *          "download":      {
+ *              "method": "GET",
+ *              "path": "/shipment/{id}/asset/{asset}/download",
+ *              "controller": {"App\Controller\AssetController", "downloadAction"},
+ *          },
  *     },
  *     attributes={
  *          "filters"={"shipment.orderId"},
@@ -252,6 +257,20 @@ class Shipment
     public $transportUnits;
 
     /**
+     * Extra Informations
+     *
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=true)
+     *
+     * @Assert\Type("array")
+     * @Groups({"read"})
+     */
+    public $_embedded = array(
+        "productCodes" => array(),
+    );
+
+    /**
      * Number of Box attached to this shipment. Not available when requesting multiple Shipments
      *
      * @var null|int
@@ -289,6 +308,28 @@ class Shipment
     public function getCountTransportUnits(): ?int
     {
         return count($this->transportUnits->toArray());
+    }
+
+    //====================================================================//
+    // Specific Setters
+    //====================================================================//
+
+    /**
+     * Add an Accessory Ean Code to Embedded
+     *
+     * @param string $productCode
+     * @param string $ean
+     *
+     * @return self
+     */
+    public function addAccEan(string $productCode, string $ean): self
+    {
+        $this->_embedded["productCodes"][] = array(
+            "reference" => $productCode,
+            "ean" => $ean,
+        );
+
+        return $this;
     }
 
     //====================================================================//
