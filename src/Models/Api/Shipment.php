@@ -79,6 +79,7 @@ class Shipment
      * @JMS\Type("string")
      *
      * @SPL\Microdata({"http://schema.org/Order", "alternateName"})
+     * @SPL\Logged()
      */
     protected $customerOrderId;
 
@@ -98,6 +99,7 @@ class Shipment
      * @JMS\SerializedName("salesChannelLabel")
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
      * @JMS\Type("string")
+     * @SPL\Logged()
      */
     protected $salesChannelLabel;
 
