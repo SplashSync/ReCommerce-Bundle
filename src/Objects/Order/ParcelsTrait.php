@@ -44,7 +44,7 @@ trait ParcelsTrait
         // PARCEL - Identifier
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("id")
-            ->name("Parcel identifier")
+            ->name("Identifier")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "identifier")
             ->isNotTested()
@@ -54,7 +54,7 @@ trait ParcelsTrait
         // PARCEL - Tracking Number
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("trackingNumber")
-            ->name("Tracking Number")
+            ->name("Tracking")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "trackingNumber")
             ->isNotTested()
@@ -64,7 +64,7 @@ trait ParcelsTrait
         // PARCEL - Tracking Url
         $this->fieldsFactory()->create(SPL_T_URL)
             ->identifier("trackingUrl")
-            ->name("Tracking Url")
+            ->name("Url")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "trackingUrl")
             ->isNotTested()
@@ -163,7 +163,10 @@ trait ParcelsTrait
         }
         //====================================================================//
         // Convert Parcels to Transport Units
-        $this->in["transportUnits"] = $units = ParcelTransformer::toUnits($fieldData);
+        $this->in["transportUnits"] = $units = ParcelTransformer::toUnits(
+            $fieldData,
+            $this->object->getTransportUnitTypeLabel()
+        );
         //====================================================================//
         // Update Shipment Transport Units
         $this->updateTransportUnits($units);

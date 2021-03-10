@@ -58,6 +58,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Box
 {
     /**
+     * Unique identifier for the Asset − machine-readable
+     *
+     * @var int
+     *
+     * @ORM\Column(type="string")
+     *
+     * @Assert\Type("string")
+     *
+     * @Groups({"read"})
+     */
+    public $id;
+
+    /**
      * Box name, unique for the API
      *
      * @var string

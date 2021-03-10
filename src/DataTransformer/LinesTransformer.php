@@ -84,7 +84,7 @@ class LinesTransformer
             // Add Line to Parcel
             if (!isset($parcels[$parcelId])) {
                 $parcels[$parcelId] = array(
-                    "id" => "Parcel-".$parcelId,
+                    "id" => "Parcel.".$parcelId,
                     "trackingNumber" => md5($line->getArticleCode()),
                     "trackingUrl" => "https://track.my.parcel.com/?id=".md5($line->getArticleCode()),
                     "weight" => strlen($line->getLabel()) / 10,

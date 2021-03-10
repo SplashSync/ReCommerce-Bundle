@@ -80,6 +80,7 @@ class BoxController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        $data->id = uniqid("b", true);
         $data->shipment = $parent;
 
         $this->getDoctrine()->getManager()->persist($data);

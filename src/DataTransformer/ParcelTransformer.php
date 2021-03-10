@@ -56,10 +56,11 @@ class ParcelTransformer
      * Transforms Parcels Lists to Transport Units List.
      *
      * @param null|array $parcels
+     * @param string     $type
      *
      * @return Api\TransportUnit[]
      */
-    public static function toUnits(?array $parcels): array
+    public static function toUnits(?array $parcels, string $type): array
     {
         /** @var Api\TransportUnit[] $units */
         $units = array();
@@ -82,7 +83,7 @@ class ParcelTransformer
             //====================================================================//
             // Create Transport Unit if Needed
             if (!isset($units[$name])) {
-                $units[$name] = new Api\TransportUnit($name);
+                $units[$name] = new Api\TransportUnit($name, $type);
             }
             //====================================================================//
             // Add Parcel to Transport Unit

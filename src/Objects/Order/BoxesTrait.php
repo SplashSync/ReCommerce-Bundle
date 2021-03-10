@@ -45,6 +45,15 @@ trait BoxesTrait
     protected function buildBoxesFields(): void
     {
         //====================================================================//
+        // BOX - Id
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("id")
+            ->name("Box ID")
+            ->inList("boxes")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
         // BOX - Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("name")

@@ -25,6 +25,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Box
 {
     /**
+     * Box id, unique for the API
+     *
+     * @var string
+     *
+     * @JMS\SerializedName("id")
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     */
+    public $id;
+
+    /**
      * Box name, unique for the API
      *
      * @var string

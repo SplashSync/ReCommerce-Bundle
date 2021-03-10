@@ -179,10 +179,14 @@ class TransportUnit
      * TransportUnit constructor.
      *
      * @param string $name
+     * @param string $type
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $type)
     {
         $this->name = $name;
+        if (in_array($type, array("parcel", "pallet"), true)) {
+            $this->type = $type;
+        }
     }
 
     /**
@@ -202,9 +206,6 @@ class TransportUnit
         }
         if (!empty($parcel['weight'])) {
             $this->weight += (float) $parcel['weight'];
-        }
-        if (count($this->boxes) > 1) {
-            $this->type = "pallet";
         }
 
         return $this;

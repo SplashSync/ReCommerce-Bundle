@@ -63,6 +63,15 @@ trait TransportUnitsTrait
         ;
 
         //====================================================================//
+        // TRANSPORT UNIT - Type
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("type")
+            ->name("Type")
+            ->inList("transportUnits")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
         // TRANSPORT UNIT - Tracking Number
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("trackingNumber")
@@ -172,7 +181,7 @@ trait TransportUnitsTrait
         foreach ($newUnits as $unit) {
             //====================================================================//
             // Search for Unit by Name
-            $currentUnit = $this->findTransportUnit($currentUnits, $unit->name);
+            $currentUnit = $this->findTransportUnit($currentUnits, $unit->name, $unit->type);
             if (!$currentUnit) {
                 //====================================================================//
                 // Create a new Box from API
@@ -263,10 +272,10 @@ trait TransportUnitsTrait
      *
      * @return null|API\TransportUnit
      */
-    private function findTransportUnit(array &$units, string $unitName): ?API\TransportUnit
+    private function findTransportUnit(array &$units, string $unitName, string $unitType): ?API\TransportUnit
     {
         foreach ($units as $index => $unit) {
-            if ($unit->name == $unitName) {
+            if (($unit->name == $unitName) && ($unit->type == $unitType)) {
                 unset($units[$index]);
 
                 return $unit;
