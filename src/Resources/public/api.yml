@@ -52,15 +52,15 @@ definitions:
     properties:
       type:
         type: "string"
-        example: "Product"
+        example: "Order"
       ids:
         type: "array"
         items:
           type: string
         example:
-          - "SKU-0001"
-          - "SKU-0002"
-          - "SKU-0003"
+          - "ID0001"
+          - "ID0002"
+          - "ID0003"
       changeDate:
         type: "string"
         format: "date-time"
@@ -75,8 +75,7 @@ definitions:
   commit:
     type: "object"
     required:
-      - "name"
-      - "photoUrls"
+      - "commit-item"
     properties:
       commit-item:
         type: "array"
