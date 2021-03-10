@@ -7,7 +7,7 @@ info:
   contact:
     email: "contact@splashsync.com"
 host: "eu-99.splashsync.com"
-basePath: "/ws/recommerce/0123456789"
+basePath: "/ws/recommerce/14bc4830d5a95eca"
 tags:
   - name: "Webhooks"
     description: "Notify Splash of changes done on ReCommerce Side"
