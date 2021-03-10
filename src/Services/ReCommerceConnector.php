@@ -287,7 +287,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     public function getPublicActions() : array
     {
         return array(
-            "index" => "ReCommerceBundle:WebHooks:index",
+            "webhook" => "ReCommerceBundle:WebHooks:index",
         );
     }
 

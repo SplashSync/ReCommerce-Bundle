@@ -26,7 +26,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class S01WebHookTest extends TestCase
 {
+    /**
+     * Connector Server ID
+     */
     const CONNECTOR = 'ThisIsSandBoxWsId';
+
+    /**
+     * Connector Webhook Action
+     */
+    const ACTION = 'webhook';
 
     /**
      * Test Connector Loading
@@ -54,24 +62,28 @@ class S01WebHookTest extends TestCase
         $this->assertInstanceOf(ReCommerceConnector::class, $connector);
 
         //====================================================================//
+        // PING -> OK
+        $this->assertPublicActionWorks($connector, null, array(), "POST");
+        $this->assertNotEmpty($this->getResponseContents());
+        //====================================================================//
         // POST -> FORBIDDEN
-        $this->assertPublicActionFail($connector, null, array(), "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "POST");
         $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $this->getResponseCode());
         //====================================================================//
         // GET -> BAD_REQUEST
-        $this->assertPublicActionFail($connector, null, array(), "GET");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "GET");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
         //====================================================================//
         // PUT -> BAD_REQUEST
-        $this->assertPublicActionFail($connector, null, array(), "PUT");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "PUT");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
         //====================================================================//
         // PATCH -> BAD_REQUEST
-        $this->assertPublicActionFail($connector, null, array(), "PATCH");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "PATCH");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
         //====================================================================//
         // DELETE -> BAD_REQUEST
-        $this->assertPublicActionFail($connector, null, array(), "DELETE");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "DELETE");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
 
         //====================================================================//
@@ -79,7 +91,7 @@ class S01WebHookTest extends TestCase
         //====================================================================//
 
         $this->getTestClient()->setServerParameter("HTTP_api-key", "This-Key-Is-Wrong");
-        $this->assertPublicActionFail($connector, null, array(), "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "POST");
         $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $this->getResponseCode());
     }
 
@@ -102,7 +114,7 @@ class S01WebHookTest extends TestCase
         // Empty Contents
         //====================================================================//
 
-        $this->assertPublicActionFail($connector, null, array(), "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, array(), "POST");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
 
         //====================================================================//
@@ -110,7 +122,7 @@ class S01WebHookTest extends TestCase
         //====================================================================//
 
         $partial = array("commit-items" => array());
-        $this->assertPublicActionFail($connector, null, $partial, "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, $partial, "POST");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
 
         //====================================================================//
@@ -120,7 +132,7 @@ class S01WebHookTest extends TestCase
         $noType = array("commit-items" => array(array(
             "ids" => array(uniqid(), uniqid(), uniqid())
         )));
-        $this->assertPublicActionFail($connector, null, $noType, "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, $noType, "POST");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
 
         //====================================================================//
@@ -130,7 +142,7 @@ class S01WebHookTest extends TestCase
         $noIds = array("commit-items" => array(array(
             "type" => "Order"
         )));
-        $this->assertPublicActionFail($connector, null, $noIds, "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, $noIds, "POST");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
 
         //====================================================================//
@@ -141,7 +153,7 @@ class S01WebHookTest extends TestCase
             "type" => "Order",
             "ids" => uniqid(),
         )));
-        $this->assertPublicActionFail($connector, null, $wrongIds, "POST");
+        $this->assertPublicActionFail($connector, self::ACTION, $wrongIds, "POST");
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $this->getResponseCode());
     }
 
@@ -174,7 +186,7 @@ class S01WebHookTest extends TestCase
 
         //====================================================================//
         // Touch Url
-        $this->assertPublicActionWorks($connector, null, $data, "POST");
+        $this->assertPublicActionWorks($connector, self::ACTION, $data, "POST");
         $this->assertEquals(JsonResponse::HTTP_OK, $this->getResponseCode());
 
         //====================================================================//
