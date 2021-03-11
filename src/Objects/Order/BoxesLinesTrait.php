@@ -49,7 +49,6 @@ trait BoxesLinesTrait
 
                     break;
                 case 'productCodeReference':
-                case 'ean':
                     $value = $box->name;
 
                     break;
