@@ -66,20 +66,21 @@ class TransportUnit
      *
      * @JMS\SerializedName("type")
      * @JMS\Type("string")
-     * @JMS\Groups ({"Read", "Write"})
+     * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $type = "parcel";
 
     /**
      * Only for type 'parcel'. Carrier's tracking number - unique among other Shipment's transport units
      *
-     * @var null|string
+     * @var string
      *
+     * @Assert\NotNull()
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("trackingNumber")
      * @JMS\Type("string")
-     * @JMS\Groups ({"Read", "Write"})
+     * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $trackingNumber;
 
@@ -94,7 +95,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("name")
      * @JMS\Type("string")
-     * @JMS\Groups ({"Read", "Write"})
+     * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $name;
 
@@ -104,7 +105,7 @@ class TransportUnit
      * @Assert\Type("array")
      *
      * @JMS\SerializedName("boxes")
-     * @JMS\Groups ({"Write"})
+     * @JMS\Groups ({"Write", "Required"})
      * @JMS\Type("array")
      */
     public $boxes = array();
@@ -157,7 +158,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("weight")
      * @JMS\Type("float")
-     * @JMS\Groups({"Read", "Write"})
+     * @JMS\Groups({"Read", "Write", "Required"})
      */
     public $weight = 0.0;
 

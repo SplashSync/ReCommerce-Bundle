@@ -181,7 +181,7 @@ trait TransportUnitsTrait
         foreach ($newUnits as $unit) {
             //====================================================================//
             // Search for Unit by Name
-            $currentUnit = $this->findTransportUnit($currentUnits, $unit->name, $unit->type);
+            $currentUnit = $this->findTransportUnit($currentUnits, $unit->trackingNumber, $unit->type);
             if (!$currentUnit) {
                 //====================================================================//
                 // Create a new Box from API
@@ -268,14 +268,15 @@ trait TransportUnitsTrait
      * Find Transport Units in Loaded List
      *
      * @param API\TransportUnit[] $units
-     * @param string              $unitName
+     * @param string              $trackingNumber
+     * @param string              $unitType
      *
      * @return null|API\TransportUnit
      */
-    private function findTransportUnit(array &$units, string $unitName, string $unitType): ?API\TransportUnit
+    private function findTransportUnit(array &$units, string $trackingNumber, string $unitType): ?API\TransportUnit
     {
         foreach ($units as $index => $unit) {
-            if (($unit->name == $unitName) && ($unit->type == $unitType)) {
+            if (($unit->trackingNumber == $trackingNumber) && ($unit->type == $unitType)) {
                 unset($units[$index]);
 
                 return $unit;

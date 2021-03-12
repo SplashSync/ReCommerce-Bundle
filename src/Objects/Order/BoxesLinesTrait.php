@@ -45,9 +45,6 @@ trait BoxesLinesTrait
         foreach ($this->loadBoxes() as $index => $box) {
             switch ($fieldId) {
                 case 'id':
-                    $value = $box->id;
-
-                    break;
                 case 'ean':
                     $value = $box->name;
 
