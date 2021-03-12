@@ -110,6 +110,7 @@ class Address
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "telephone"})
+     * @SPL\Type("phone")
      */
     public $phoneNumber;
 
