@@ -37,8 +37,8 @@ class StatusTransformer
         "processed" => Status::PROCESSED,       // Processed, Shipment has been well prepared.
         "ready-to-ship" => Status::PICKUP,      // Ready, Shipment is ready to be shipped, but is still not to ship.
         "to-ship" => Status::TO_SHIP,           // To Ship, Shipment has to be shipped.
-        "shipping" => Status::IN_TRANSIT,       // Shipping, Shipment has been taken into account and being prepared.
         "shipped" => Status::IN_TRANSIT,        // Shipped, Shipment has been shipped.
+        "shipping" => Status::IN_TRANSIT,       // Shipping, Shipment has been taken into account and being prepared.
         "closed" => Status::DELIVERED,          // Closed, Shipment is complete, and stock has been updated.
         "cancelled" => Status::CANCELED,        // Cancelled.
     );
