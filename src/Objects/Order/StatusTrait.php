@@ -89,7 +89,9 @@ trait StatusTrait
 
                 break;
             case 'isValidated':
-                $this->out[$fieldName] = StatusTransformer::isValidated($this->object->getStatus());
+                $this->out[$fieldName] = $this->object->isBoxesToLinesOrder()
+                    ? StatusTransformer::isToShip($this->object->getStatus())
+                    : StatusTransformer::isValidated($this->object->getStatus());
 
                 break;
             case 'isToShip':
