@@ -52,7 +52,11 @@ class StatusTransformer
     {
         $allStatuses = Status::getAllChoices(true);
         if (Splash::isDebugMode()) {
-            unset($allStatuses[Status::RETURNED], $allStatuses[Status::PAYMENT_DUE]);
+            unset(
+                $allStatuses[Status::RETURNED],
+                $allStatuses[Status::PAYMENT_DUE],
+                $allStatuses[Status::OUT_OF_STOCK]
+            );
         }
 
         return $allStatuses;
