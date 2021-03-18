@@ -211,7 +211,7 @@ class Address
         $address->lastname = $faker->lastName;
         $address->company = $faker->company;
         $address->email = $faker->companyEmail;
-        $address->phoneNumber = $faker->phoneNumber;
+        $address->phoneNumber = $faker->e164PhoneNumber;
         $address->address1 = $faker->streetAddress;
         $address->address2 = $faker->streetSuffix;
         $address->postalCode = $faker->postcode;
