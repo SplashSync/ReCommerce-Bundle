@@ -140,7 +140,7 @@ class LinesTransformer
      *
      * @return null|string
      */
-    private static function getEan(string $productCode): ?string
+    public static function getEan(string $productCode): ?string
     {
         if (!isset(self::$accCodeToEan[$productCode])) {
             return null;

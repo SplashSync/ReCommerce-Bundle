@@ -16,6 +16,7 @@
 namespace Splash\Connectors\ReCommerce\Models\Api;
 
 use JMS\Serializer\Annotation as JMS;
+use Splash\Connectors\ReCommerce\DataTransformer\LinesTransformer;
 use Splash\OpenApi\Validator as SPL;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -194,6 +195,27 @@ class Line
         return $accessoryLine;
     }
 
+    /**
+     * Gets ean.
+     *
+     * @return null|string
+     */
+    public function getEan()
+    {
+        //====================================================================//
+        // Ensure Ean Setup
+        if (empty($this->ean)) {
+            //====================================================================//
+            // Detect Ean From _embedded
+            $ean = LinesTransformer::getEan($this->getProductCodeReference());
+            //====================================================================//
+            // If Empty, use Reference as Ean
+            $this->ean = $ean ?: $this->getProductCodeReference();
+        }
+
+        return $this->ean;
+    }
+
     //====================================================================//
     // GENERIC GETTERS & SETTERS
     //====================================================================//
@@ -226,16 +248,6 @@ class Line
     public function getQuantity(): int
     {
         return (int) $this->quantity;
-    }
-
-    /**
-     * Gets ean.
-     *
-     * @return null|string
-     */
-    public function getEan()
-    {
-        return $this->ean;
     }
 
     /**
