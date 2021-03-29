@@ -50,10 +50,10 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
     use ApiModels\CRUDTrait;
     use ApiModels\SimpleFieldsTrait;
     use ApiModels\ListFieldsGetTrait;
+    use ApiModels\ObjectsListTrait;
 
     //====================================================================//
     // ReCommerce Order Traits
-    use Order\ObjectsListTrait;
     use Order\StatusTrait;
     use Order\BoxesTrait;
     use Order\BoxesLinesTrait;
@@ -183,7 +183,7 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
             );
             $this->visitor->setListAction(
                 JsonHal\ListAction::class,
-                array("filterKey" => "status")
+                array("filterKey" => "order")
             );
         }
 

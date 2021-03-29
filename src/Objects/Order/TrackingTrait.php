@@ -15,13 +15,17 @@
 
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
+use Splash\OpenApi\Action\JsonHal;
+
 trait TrackingTrait
 {
     /**
      * @var string[]
      */
     private static $trackedStatuses = array(
-        "pending", "toShip"
+        "pending",
+        "toShip",
+        "processed&transportUnitTypeLabel=pallet&salesChannelLabel=readyMadeBox",
     );
 
     /**
@@ -37,7 +41,14 @@ trait TrackingTrait
      */
     public function getUpdatedIds(): array
     {
-        $visitor = $this->getVisitor();
+        $visitor = clone $this->getVisitor();
+        //====================================================================//
+        // Walk on tracked Order Statuses
+        $visitor->setListAction(
+            JsonHal\ListAction::class,
+            array("filterKey" => "status")
+        );
+
         $orderIds = array();
         //====================================================================//
         // Walk on tracked Order Statuses
