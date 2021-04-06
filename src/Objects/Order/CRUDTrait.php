@@ -49,6 +49,8 @@ trait CRUDTrait
 
     /**
      * {@inheritDoc}
+     *
+     * @return false|string Object Id of False if Failed to Update
      */
     public function update(bool $needed)
     {
