@@ -24,6 +24,11 @@ use Splash\Connectors\ReCommerce\DataTransformer\StatusTransformer;
 trait StatusTrait
 {
     /**
+     * @var null|string
+     */
+    private $newStatus;
+
+    /**
      * Build Status Fields
      *
      * @return void
@@ -121,6 +126,7 @@ trait StatusTrait
         // WRITE Field
         switch ($fieldName) {
             case 'splashStatut':
+                $this->newStatus = null;
                 $reStatus = StatusTransformer::toReCommerce($fieldData);
                 //====================================================================//
                 // COMPARE STATUS
@@ -133,22 +139,39 @@ trait StatusTrait
                     break;
                 }
                 //====================================================================//
-                // UPDATE SHIPMENT STATUS
-                $uri = $this->visitor->getItemUri((string) $this->getObjectIdentifier());
-                $uri .= "/status/".$reStatus;
-                $body = array(
-                    "reasonMessage" => "Updated by Splash"
-                );
-                if (!$this->getVisitor()->getConnexion()->patch($uri, $body)) {
-                    Splash::log()->err("An error occurred while updating Shipment Status");
-
-                    return;
-                }
+                // MARK SHIPMENT STATUS FOR UPDATE
+                $this->newStatus = $reStatus;
 
                 break;
             default:
                 return;
         }
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Update Order Status after Main Update
+     *
+     * @return bool
+     */
+    protected function postUpdateStatus(): bool
+    {
+        //====================================================================//
+        // CHECK IF UPDATE NEEDED
+        if (!isset($this->newStatus)) {
+            return true;
+        }
+        //====================================================================//
+        // UPDATE SHIPMENT STATUS
+        $uri = $this->visitor->getItemUri((string) $this->getObjectIdentifier());
+        $uri .= "/status/".$this->newStatus;
+        $body = array(
+            "reasonMessage" => "Updated by Splash"
+        );
+        if (!$this->getVisitor()->getConnexion()->patch($uri, $body)) {
+            return Splash::log()->err("An error occurred while updating Shipment Status");
+        }
+
+        return true;
     }
 }

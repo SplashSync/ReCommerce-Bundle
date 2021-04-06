@@ -139,6 +139,7 @@ class Line
         $line->ean = $faker->ean13;
         $line->label = $faker->sentence(4);
         $line->articleCode = $faker->streetAddress;
+        $shipment->addAccEan($line->productCodeReference, $faker->ean13);
 
         $accessoires = array();
         for ($i = 0; $i < 1; $i++) {

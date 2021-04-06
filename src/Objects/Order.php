@@ -19,7 +19,6 @@ use Exception;
 use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
-use Splash\Connectors\ReCommerce\DataTransformer\AssetTransformer;
 use Splash\Connectors\ReCommerce\Models\Api;
 use Splash\Connectors\ReCommerce\Models\Api\Shipment;
 use Splash\Connectors\ReCommerce\Services\ReCommerceConnector;
@@ -31,7 +30,6 @@ use Splash\OpenApi\Action\JsonHal;
 use Splash\OpenApi\Models\Objects as ApiModels;
 use Splash\OpenApi\Visitor\AbstractVisitor as Visitor;
 use Splash\OpenApi\Visitor\JsonHalVisitor;
-use stdClass;
 
 /**
  * Optilog Implementation of Customers Orders
@@ -47,13 +45,13 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
 
     //====================================================================//
     // OpenApi Traits
-    use ApiModels\CRUDTrait;
     use ApiModels\SimpleFieldsTrait;
     use ApiModels\ListFieldsGetTrait;
     use ApiModels\ObjectsListTrait;
 
     //====================================================================//
     // ReCommerce Order Traits
+    use Order\CRUDTrait;
     use Order\StatusTrait;
     use Order\BoxesTrait;
     use Order\BoxesLinesTrait;
@@ -132,34 +130,6 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
         }
 
         return parent::description();
-    }
-
-    /**
-     * Load Request Object
-     *
-     * @param string $objectId Object id
-     *
-     * @throws Exception
-     *
-     * @return false|stdClass
-     */
-    public function load($objectId)
-    {
-        //====================================================================//
-        // Stack Trace
-        Splash::log()->trace();
-        //====================================================================//
-        // Load Remote Object
-        $loadResponse = $this->visitor->load($objectId);
-        if (!$loadResponse->isSuccess()) {
-            return false;
-        }
-        //====================================================================//
-        // Setup Assets Transformer
-        AssetTransformer::configure($this->getVisitor(), $objectId);
-        //====================================================================//
-        // Return Hydrated Object
-        return $loadResponse->getResults();
     }
 
     /**

@@ -53,7 +53,7 @@ class Line
      * @JMS\Type("string")
      * @JMS\Groups ({"Read"})
      *
-     * @SPL\Microdata({"http://schema.org/Product", "sku"})
+     * @SPL\Microdata({"http://schema.org/Product", "ref"})
      */
     protected $productCodeReference;
 
@@ -74,7 +74,7 @@ class Line
     protected $quantity;
 
     /**
-     * Optional EAN customisation for this line. If not set, you must use the attached ProductCode EAN
+     * Optional Customer EAN customisation for this line. If not set, you must use the attached ProductCode EAN
      *
      * @var null|string
      *
@@ -117,6 +117,18 @@ class Line
      * @SPL\Microdata({"http://schema.org/Product", "additionalProperty"})
      */
     protected $articleCode;
+
+    /**
+     * Logistical EAN for this line. Taken from attached ProductCodes EAN
+     *
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     *
+     * @SPL\Microdata({"http://schema.org/Product", "sku"})
+     */
+    protected $articleEan;
 
     /**
      * Accessories to prepare in the same quantity for this line (should be put in the same box/transport unit)
@@ -196,24 +208,42 @@ class Line
     }
 
     /**
-     * Gets ean.
+     * Gets Customer Ean Code.
      *
      * @return null|string
      */
     public function getEan()
     {
         //====================================================================//
-        // Ensure Ean Setup
+        // Ensure Customer Ean Setup
         if (empty($this->ean)) {
+            //====================================================================//
+            // If Empty, use Product Reference as Ean
+            $this->ean = $this->getProductCodeReference();
+        }
+
+        return $this->ean;
+    }
+
+    /**
+     * Gets Logistical EAN.
+     *
+     * @return null|string
+     */
+    public function getArticleEan()
+    {
+        //====================================================================//
+        // Ensure Ean Setup
+        if (empty($this->articleEan)) {
             //====================================================================//
             // Detect Ean From _embedded
             $ean = LinesTransformer::getEan($this->getProductCodeReference());
             //====================================================================//
             // If Empty, use Reference as Ean
-            $this->ean = $ean ?: $this->getProductCodeReference();
+            $this->articleEan = $ean ?: $this->getProductCodeReference();
         }
 
-        return $this->ean;
+        return $this->articleEan;
     }
 
     //====================================================================//
