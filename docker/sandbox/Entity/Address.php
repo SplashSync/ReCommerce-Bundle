@@ -202,7 +202,7 @@ class Address
      */
     public static function fake(Shipment $shipment): self
     {
-        $faker = Factory::create();
+        $faker = Factory::create("fr_FR");
 
         $address = new self();
 
