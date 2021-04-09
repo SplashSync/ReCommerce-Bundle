@@ -15,17 +15,19 @@
 
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
-use Splash\OpenApi\Action\JsonHal;
-
 trait TrackingTrait
 {
     /**
-     * @var string[]
+     * @var string[][]
      */
     private static $trackedStatuses = array(
-        "pending",
-        "toShip",
-        "processed&transportUnitTypeLabel=pallet&salesChannelLabel=readyMadeBox",
+        array("status" => "pending"),
+        array("status" => "toShip"),
+        array(
+            "status" => "processed",
+            "transportUnitTypeLabel" => "pallet",
+            "salesChannelLabel" => "readyMadeBox",
+        )
     );
 
     /**
@@ -42,20 +44,19 @@ trait TrackingTrait
     public function getUpdatedIds(): array
     {
         $visitor = clone $this->getVisitor();
-        //====================================================================//
-        // Walk on tracked Order Statuses
-        $visitor->setListAction(
-            JsonHal\ListAction::class,
-            array("filterKey" => "status")
-        );
-
         $orderIds = array();
         //====================================================================//
         // Walk on tracked Order Statuses
         foreach (self::$trackedStatuses as $trackedStatus) {
             //====================================================================//
+            // Build List Request Parameters
+            $queryArgs = array(
+                "max" => 10,
+                "extraArgs" => $trackedStatus
+            );
+            //====================================================================//
             // Load List of Orders from API
-            $listResponse = $visitor->list($trackedStatus, array("max" => 10));
+            $listResponse = $visitor->list(null, $queryArgs);
             if (!$listResponse->isSuccess()) {
                 continue;
             }
