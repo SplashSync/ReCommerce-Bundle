@@ -51,7 +51,7 @@ trait TrackingTrait
             //====================================================================//
             // Build List Request Parameters
             $queryArgs = array(
-                "max" => 10,
+                "max" => 50,
                 "extraArgs" => $trackedStatus
             );
             //====================================================================//
