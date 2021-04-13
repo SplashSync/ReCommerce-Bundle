@@ -62,8 +62,6 @@ trait CRUDTrait
         }
         //====================================================================//
         // Execute Post Update Status Changes
-        $this->postUpdateStatus();
-
-        return $response;
+        return $this->postUpdateStatus() ? $response : false;
     }
 }
