@@ -191,6 +191,9 @@ class Line
     /**
      * Create Order Line for Accessory.
      *
+     * @param string      $productCode Accessory Product Code References
+     * @param null|string $productEan  Accessory Article Ean found on _embedded
+     *
      * @return Line
      */
     public function getAccessoryCopy(string $productCode, ?string $productEan)
@@ -198,9 +201,7 @@ class Line
         $accessoryLine = clone $this;
 
         $accessoryLine->productCodeReference = $productCode;
-        $accessoryLine->articleCode = null;
-        $accessoryLine->label = "Acc. for ".$accessoryLine->label;
-        $accessoryLine->ean = $productEan ?: $productCode;
+        $accessoryLine->articleEan = $productEan ?: $productCode;
         $accessoryLine->accessories = array();
         $accessoryLine->accessoryLine = true;
 
