@@ -46,6 +46,7 @@ trait BoxesLinesTrait
             switch ($fieldId) {
                 case 'id':
                 case 'ean':
+                case 'articleEan':
                     $value = $box->name;
 
                     break;
