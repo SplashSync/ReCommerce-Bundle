@@ -235,11 +235,33 @@ class TransportUnit
     public $boxes;
 
     /**
+     * Number of Boxes Included in Transport Unit
+     *
+     * @var int
+     *
+     * @Assert\NotNull()
+     * @Assert\Type("int")
+     *
+     * @Groups({"read"})
+     */
+    protected $countBoxes;
+
+    /**
      * Transport Unit Constructor
      */
     public function __construct()
     {
         $this->box = new ArrayCollection();
+    }
+
+    /**
+     * Gets Number of Boxes Included in Transport Unit.
+     *
+     * @return int
+     */
+    public function getCountBoxes(): int
+    {
+        return $this->box->count();
     }
 
     //====================================================================//

@@ -111,6 +111,19 @@ class TransportUnit
     public $boxes = array();
 
     /**
+     * Number of Boxes Included in Transport Unit
+     *
+     * @var int
+     *
+     * @Assert\Type("int")
+     *
+     * @JMS\SerializedName("countBoxes")
+     * @JMS\Groups ({"Read"})
+     * @JMS\Type("int")
+     */
+    public $countBoxes;
+
+    /**
      * Only for type 'pallet'. Pallet height in cm
      *
      * @var null|int
@@ -208,7 +221,22 @@ class TransportUnit
         if (!empty($parcel['weight'])) {
             $this->weight += (float) $parcel['weight'];
         }
+        $this->countBoxes = count($this->boxes);
 
         return $this;
+    }
+
+    /**
+     * Get Transport Unit Comparaison Md5 Checksum
+     *
+     * @return string
+     */
+    public function getCheckSum(): string
+    {
+        return md5(serialize(array(
+            $this->type,
+            $this->trackingNumber,
+            $this->countBoxes,
+        )));
     }
 }

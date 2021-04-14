@@ -81,6 +81,15 @@ trait TransportUnitsTrait
         ;
 
         //====================================================================//
+        // TRANSPORT UNIT - Number of Attached Boxes
+        $this->fieldsFactory()->create(SPL_T_INT)
+            ->identifier("countBoxes")
+            ->name("Nb Boxes")
+            ->inList("transportUnits")
+            ->isReadOnly()
+        ;
+
+        //====================================================================//
         // TRANSPORT UNIT - Weight
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
             ->identifier("weight")
@@ -170,6 +179,7 @@ trait TransportUnitsTrait
     protected function updateTransportUnits(array $newUnits): void
     {
         $errors = 0;
+        $toCreateUnits = array();
         //====================================================================//
         // Create Transport Units Visitor
         $visitor = $this->getUnitsVisitor((string) $this->getObjectIdentifier());
@@ -181,21 +191,28 @@ trait TransportUnitsTrait
         foreach ($newUnits as $unit) {
             //====================================================================//
             // Search for Unit by Name
-            $currentUnit = $this->findTransportUnit($currentUnits, $unit->trackingNumber, $unit->type);
+            $currentUnit = $this->findTransportUnit($currentUnits, $unit);
             if (!$currentUnit) {
                 //====================================================================//
-                // Create a new Box from API
-                if (!$visitor->create($unit, false)->isSuccess()) {
-                    Splash::log()->errTrace("Unable to create transport unit ".$unit->name);
-                    $errors++;
-                };
+                // Mark Transport Unit for Creation
+                $toCreateUnits[] = $unit;
             }
         }
         //====================================================================//
-        // Delete Remaining Transport Units
+        // Delete Remaining/Updated Transport Units
         foreach ($currentUnits as $unit) {
             if (!empty($unit->id) && !$visitor->delete($unit->id)->isSuccess()) {
                 Splash::log()->errTrace("Unable to delete transport unit ".$unit->id);
+                $errors++;
+            };
+        }
+        //====================================================================//
+        // Create New Transport Units
+        foreach ($toCreateUnits as $unit) {
+            //====================================================================//
+            // Create a new Box from API
+            if (!$visitor->create($unit, false)->isSuccess()) {
+                Splash::log()->errTrace("Unable to create transport unit ".$unit->name);
                 $errors++;
             };
         }
@@ -267,17 +284,16 @@ trait TransportUnitsTrait
     /**
      * Find Transport Units in Loaded List
      *
-     * @param API\TransportUnit[] $units
-     * @param string              $trackingNumber
-     * @param string              $unitType
+     * @param API\TransportUnit[] $currentUnits
+     * @param API\TransportUnit   $expectedUnit
      *
      * @return null|API\TransportUnit
      */
-    private function findTransportUnit(array &$units, string $trackingNumber, string $unitType): ?API\TransportUnit
+    private function findTransportUnit(array &$currentUnits, API\TransportUnit $expectedUnit): ?API\TransportUnit
     {
-        foreach ($units as $index => $unit) {
-            if (($unit->trackingNumber == $trackingNumber) && ($unit->type == $unitType)) {
-                unset($units[$index]);
+        foreach ($currentUnits as $index => $unit) {
+            if ($unit->getCheckSum() == $expectedUnit->getCheckSum()) {
+                unset($currentUnits[$index]);
 
                 return $unit;
             }

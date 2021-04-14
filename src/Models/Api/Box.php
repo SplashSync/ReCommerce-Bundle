@@ -17,7 +17,6 @@ namespace Splash\Connectors\ReCommerce\Models\Api;
 
 use DateTime;
 use JMS\Serializer\Annotation as JMS;
-use Splash\Client\Splash;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -108,8 +107,6 @@ class Box
                 );
             }
         }
-
-        Splash::log()->www("Box", $box);
 
         return $box->isValid() ? $box : null;
     }

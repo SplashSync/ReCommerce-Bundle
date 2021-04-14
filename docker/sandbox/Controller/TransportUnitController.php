@@ -55,7 +55,7 @@ class TransportUnitController extends AbstractController
         return new JsonResponse(array(
             "_links" => array(),
             "_embedded" => array(
-                "box" => $this->get('serializer')->normalize($results)
+                "transportUnit" => $this->get('serializer')->normalize($results)
             ),
             "page_count" => $page ? 1 + ((int) ($total / $limit)): 1,
             "total_items" => $total,
