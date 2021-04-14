@@ -91,6 +91,16 @@ trait ParcelsTrait
         ;
 
         //====================================================================//
+        // PARCEL - Serials
+        $this->fieldsFactory()->create(SPL_T_INLINE)
+            ->identifier("serials")
+            ->name("Serials")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "itemSerials")
+            ->isNotTested()
+        ;
+
+        //====================================================================//
         // PARCEL - Serial Shipping Container Code
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("sscc")
@@ -190,6 +200,7 @@ trait ParcelsTrait
             case "weight":
                 return isset($parcel[$fieldId]) ? (float) $parcel[$fieldId] : null;
             case "contents":
+            case "serials":
                 return (isset($parcel[$fieldId]) && is_array($parcel[$fieldId]))
                     ? (string) json_encode($parcel[$fieldId])
                     : null;

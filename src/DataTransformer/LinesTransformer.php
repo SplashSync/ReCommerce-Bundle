@@ -79,20 +79,27 @@ class LinesTransformer
             //====================================================================//
             // Build Parcel ID
             $parcelId = $line->getId() % 3;
-
+            $parcelMd5 = md5($line->getArticleCode());
             //====================================================================//
             // Add Line to Parcel
             if (!isset($parcels[$parcelId])) {
                 $parcels[$parcelId] = array(
-                    "id" => "Parcel.".$parcelId,
-                    "trackingNumber" => md5($line->getArticleCode()),
-                    "trackingUrl" => "https://track.my.parcel.com/?id=".md5($line->getArticleCode()),
+                    "id" => "Parcel.".strtoupper($parcelMd5),
+                    "trackingNumber" => $parcelMd5,
+                    "trackingUrl" => "https://track.my.parcel.com/?id=".$parcelMd5,
                     "weight" => strlen($line->getLabel()) / 10,
                     "contents" => array(),
                     "sscc" => "SSCC-".($parcelId % 2 + 1),
                 );
             }
+            //====================================================================//
+            // Add LineId to Parcel
             $parcels[$parcelId]["contents"][] = $line->getId();
+            //====================================================================//
+            // Fake Products Serials (1/3)
+            $parcels[$parcelId]["serials"][] = ($line->getId() % 2)
+                ? implode(" | ", str_split($parcelMd5, 8))
+                : "";
         }
 
         ksort($parcels);

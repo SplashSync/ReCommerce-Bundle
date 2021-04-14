@@ -17,6 +17,7 @@ namespace Splash\Connectors\ReCommerce\Models\Api;
 
 use DateTime;
 use JMS\Serializer\Annotation as JMS;
+use Splash\Client\Splash;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -76,17 +77,39 @@ class Box
     public static function createFromParcel(array $parcel): ?Box
     {
         $box = new self();
-
+        //====================================================================//
+        // Box Name <=> Logistic Parcel Identifier
         if (isset($parcel['id']) && is_string($parcel['id'])) {
             $box->name = $parcel['id'];
         }
-        if (isset($parcel['contents']) && is_string($parcel['contents'])) {
-            $contents = json_decode($parcel['contents'], true);
-            $box->lineItems = array();
-            foreach ($contents as $lineId) {
-                $box->lineItems[] = array("lineId" => $lineId);
+        //====================================================================//
+        // Extract Received Data
+        $contents = json_decode($parcel['contents'] ?? "", true);
+        $encodedSerials = json_decode($parcel['serials'] ?? "", true);
+        //====================================================================//
+        // Push Items - Walk on Contents (Should be original LineId@lines)
+        $box->lineItems = array();
+        foreach ($contents ?? array() as $index => $lineId) {
+            //====================================================================//
+            // Filter Empty Serials
+            if (empty($encodedSerials[$index] ?? "")) {
+                continue;
+            }
+            //====================================================================//
+            // Extract Serials
+            $lineSerials = explode(" | ", $encodedSerials[$index] ?? "");
+            foreach ($lineSerials ?? array() as $lineSerial) {
+                if (empty($lineSerial)) {
+                    continue;
+                }
+                $box->lineItems[] = array(
+                    "lineId" => $lineId,
+                    "serial" => $lineSerial,
+                );
             }
         }
+
+        Splash::log()->www("Box", $box);
 
         return $box->isValid() ? $box : null;
     }
