@@ -97,13 +97,25 @@ class StatusTransformer
     /**
      * Check if Order Status Code is Validated
      *
-     * @param string $status Order Status Code
+     * @param string $reStatus ReCommerce Order Status Code
      *
      * @return bool
      */
-    public static function isValidated(string $status)
+    public static function isValidated(string $reStatus): bool
     {
-        return ("pending" == $status);
+        return ("pending" == $reStatus);
+    }
+
+    /**
+     * Check if Order Status Code is Canceled
+     *
+     * @param string $reStatus ReCommerce Order Status Code
+     *
+     * @return bool
+     */
+    public static function isToShip(string $reStatus): bool
+    {
+        return in_array($reStatus, array("to-ship", "toShip"), true);
     }
 
     /**
@@ -113,19 +125,7 @@ class StatusTransformer
      *
      * @return bool
      */
-    public static function isToShip(string $status)
-    {
-        return ("to-ship" == $status);
-    }
-
-    /**
-     * Check if Order Status Code is Canceled
-     *
-     * @param string $status Order Status Code
-     *
-     * @return bool
-     */
-    public static function isCanceled(string $status)
+    public static function isCanceled(string $status): bool
     {
         return Status::isCanceled(self::toSplash($status));
     }
