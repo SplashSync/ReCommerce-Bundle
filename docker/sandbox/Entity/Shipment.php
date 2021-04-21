@@ -271,6 +271,21 @@ class Shipment
     );
 
     /**
+     * Preparation Rules Informations
+     *
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=true)
+     *
+     * @Assert\Type("array")
+     * @Groups({"read"})
+     */
+    public $preparationRule = array(
+        "maximumQuantityPerBox" => 10,
+        "mixedEanInBox" => null,
+    );
+
+    /**
      * Number of Box attached to this shipment. Not available when requesting multiple Shipments
      *
      * @var null|int

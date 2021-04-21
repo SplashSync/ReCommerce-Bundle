@@ -343,6 +343,44 @@ class Shipment
     private $embedded = array();
 
     //====================================================================//
+    // PREPARATION RULES
+    //====================================================================//
+
+    /**
+     * Preparation Rules Informations
+     *
+     * @var array
+     *
+     * @Assert\Type("array")
+     *
+     * @JMS\SerializedName("preparationRule")
+     * @JMS\Type("array")
+     * @JMS\Groups ({"Read"})
+     */
+    protected $preparationRule = array();
+
+    /**
+     * Max Number of of Items per Box
+     *
+     * @var null|int
+     *
+     * @Assert\Type("int")
+     * @SPL\Microdata({"http://schema.org/Order", "maximumQuantityPerBox"})
+     */
+    protected $maximumQuantityPerBox;
+
+    /**
+     * Allow Ean Mix in Boxes
+     *
+     * @var null|bool
+     *
+     * @Assert\Type("bool")
+     * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
+     */
+    protected $mixedEanInBox;
+
+
+    //====================================================================//
     // SPECIAL GETTERS
     //====================================================================//
 
@@ -407,6 +445,30 @@ class Shipment
         }
 
         return $this->parcelsSimulation;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getMaximumQuantityPerBox(): ?int
+    {
+        if(!isset($this->preparationRule['maximumQuantityPerBox'])) {
+            return null;
+        }
+
+        return (int) $this->preparationRule['maximumQuantityPerBox'];
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function getMixedEanInBox(): ?bool
+    {
+        if(!isset($this->preparationRule['mixedEanInBox'])) {
+            return null;
+        }
+
+        return (bool) $this->preparationRule['mixedEanInBox'];
     }
 
     /**
