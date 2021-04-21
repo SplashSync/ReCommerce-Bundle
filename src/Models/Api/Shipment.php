@@ -318,8 +318,6 @@ class Shipment
      *
      * @var array
      *
-     * @Assert\Type("array")
-     *
      * @JMS\SerializedName("preparationRule")
      * @JMS\Type("array")
      * @JMS\Groups ({"Read"})
@@ -331,7 +329,7 @@ class Shipment
      *
      * @var null|int
      *
-     * @Assert\Type("int")
+     * @JMS\Type("int")
      * @JMS\Groups ({"Read"})
      * @SPL\Microdata({"http://schema.org/Order", "maximumQuantityPerBox"})
      */
@@ -342,7 +340,7 @@ class Shipment
      *
      * @var null|bool
      *
-     * @Assert\Type("bool")
+     * @JMS\Type("bool")
      * @JMS\Groups ({"Read"})
      * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
      */
@@ -466,7 +464,7 @@ class Shipment
     public function getMixedEanInBox(): ?bool
     {
         if (!isset($this->preparationRule['mixedEanInBox'])) {
-            return null;
+            return true;
         }
 
         return (bool) $this->preparationRule['mixedEanInBox'];
