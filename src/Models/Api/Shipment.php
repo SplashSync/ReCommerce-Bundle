@@ -309,6 +309,45 @@ class Shipment
      */
     protected $salesChannelCode;
 
+    //====================================================================//
+    // PREPARATION RULES
+    //====================================================================//
+
+    /**
+     * Preparation Rules Informations
+     *
+     * @var array
+     *
+     * @Assert\Type("array")
+     *
+     * @JMS\SerializedName("preparationRule")
+     * @JMS\Type("array")
+     * @JMS\Groups ({"Read"})
+     */
+    protected $preparationRule = array();
+
+    /**
+     * Max Number of of Items per Box
+     *
+     * @var null|int
+     *
+     * @Assert\Type("int")
+     * @JMS\Groups ({"Read"})
+     * @SPL\Microdata({"http://schema.org/Order", "maximumQuantityPerBox"})
+     */
+    protected $maximumQuantityPerBox;
+
+    /**
+     * Allow Ean Mix in Boxes
+     *
+     * @var null|bool
+     *
+     * @Assert\Type("bool")
+     * @JMS\Groups ({"Read"})
+     * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
+     */
+    protected $mixedEanInBox;
+
     /**
      * Expended Shipment's lines. Including Accessories Lines.
      *
@@ -341,44 +380,6 @@ class Shipment
      * @JMS\Groups ({"Read"})
      */
     private $embedded = array();
-
-    //====================================================================//
-    // PREPARATION RULES
-    //====================================================================//
-
-    /**
-     * Preparation Rules Informations
-     *
-     * @var array
-     *
-     * @Assert\Type("array")
-     *
-     * @JMS\SerializedName("preparationRule")
-     * @JMS\Type("array")
-     * @JMS\Groups ({"Read"})
-     */
-    protected $preparationRule = array();
-
-    /**
-     * Max Number of of Items per Box
-     *
-     * @var null|int
-     *
-     * @Assert\Type("int")
-     * @SPL\Microdata({"http://schema.org/Order", "maximumQuantityPerBox"})
-     */
-    protected $maximumQuantityPerBox;
-
-    /**
-     * Allow Ean Mix in Boxes
-     *
-     * @var null|bool
-     *
-     * @Assert\Type("bool")
-     * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
-     */
-    protected $mixedEanInBox;
-
 
     //====================================================================//
     // SPECIAL GETTERS
@@ -452,7 +453,7 @@ class Shipment
      */
     public function getMaximumQuantityPerBox(): ?int
     {
-        if(!isset($this->preparationRule['maximumQuantityPerBox'])) {
+        if (!isset($this->preparationRule['maximumQuantityPerBox'])) {
             return null;
         }
 
@@ -464,7 +465,7 @@ class Shipment
      */
     public function getMixedEanInBox(): ?bool
     {
-        if(!isset($this->preparationRule['mixedEanInBox'])) {
+        if (!isset($this->preparationRule['mixedEanInBox'])) {
             return null;
         }
 

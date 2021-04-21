@@ -49,7 +49,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "identifier")
             ->isNotTested()
         ;
-
         //====================================================================//
         // PARCEL - Tracking Number
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -59,7 +58,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "trackingNumber")
             ->isNotTested()
         ;
-
         //====================================================================//
         // PARCEL - Tracking Url
         $this->fieldsFactory()->create(SPL_T_URL)
@@ -69,17 +67,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "trackingUrl")
             ->isNotTested()
         ;
-
-        //====================================================================//
-        // PARCEL - Weight
-        $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->identifier("weight")
-            ->name("Weight (kg)")
-            ->inList(self::$parcelsList)
-            ->microdata("https://schema.org/ParcelDelivery", "weight")
-            ->isNotTested()
-        ;
-
         //====================================================================//
         // PARCEL - Contents
         $this->fieldsFactory()->create(SPL_T_INLINE)
@@ -89,7 +76,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "itemShipped")
             ->isNotTested()
         ;
-
         //====================================================================//
         // PARCEL - Serials
         $this->fieldsFactory()->create(SPL_T_INLINE)
@@ -99,7 +85,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "itemSerials")
             ->isNotTested()
         ;
-
         //====================================================================//
         // PARCEL - Serial Shipping Container Code
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -108,6 +93,49 @@ trait ParcelsTrait
             ->description("Serial Shipping Container Code")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "disambiguatingDescription")
+            ->isNotTested()
+        ;
+    }
+
+    /**
+     * Build Fields using FieldFactory
+     */
+    protected function buildParcelsDimFields(): void
+    {
+        //====================================================================//
+        // PARCEL - Weight
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("weight")
+            ->name("Weight (kg)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "weight")
+            ->isNotTested()
+        ;
+        //====================================================================//
+        // PARCEL - Height
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("height")
+            ->name("Height (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "height")
+            ->isNotTested()
+        ;
+        //====================================================================//
+        // PARCEL - Width
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("width")
+            ->name("Width (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "width")
+            ->isNotTested()
+        ;
+        //====================================================================//
+        // PARCEL - Depth
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("depth")
+            ->name("Depth (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "length")
             ->isNotTested()
         ;
     }

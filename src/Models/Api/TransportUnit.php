@@ -132,7 +132,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("height")
      * @JMS\Type("int")
-     * @JMS\Groups ({"Read"})
+     * @JMS\Groups ({"Read", "Write"})
      */
     public $height = 0;
 
@@ -145,7 +145,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("width")
      * @JMS\Type("int")
-     * @JMS\Groups ({"Read"})
+     * @JMS\Groups ({"Read", "Write"})
      */
     public $width = 0;
 
@@ -158,7 +158,7 @@ class TransportUnit
      *
      * @JMS\SerializedName("depth")
      * @JMS\Type("int")
-     * @JMS\Groups({"Read"})
+     * @JMS\Groups({"Read", "Write"})
      */
     public $depth = 0;
 
@@ -220,6 +220,15 @@ class TransportUnit
         }
         if (!empty($parcel['weight'])) {
             $this->weight += (float) $parcel['weight'];
+        }
+        if (isset($parcel['height'])) {
+            $this->height = (int) (100 * $parcel['height']) ?? 0;
+        }
+        if (isset($parcel['width'])) {
+            $this->width = (int) (100 * $parcel['width']) ?? 0;
+        }
+        if (isset($parcel['depth'])) {
+            $this->depth = (int) (100 * $parcel['depth']) ?? 0;
         }
         $this->countBoxes = count($this->boxes);
 

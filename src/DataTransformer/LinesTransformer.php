@@ -88,6 +88,9 @@ class LinesTransformer
                     "trackingNumber" => $parcelMd5,
                     "trackingUrl" => "https://track.my.parcel.com/?id=".$parcelMd5,
                     "weight" => strlen($line->getLabel()) / 10,
+                    "height" => rand(10, 100) / 100,
+                    "width" => rand(10, 100) / 100,
+                    "depth" => rand(10, 100) / 100,
                     "contents" => array(),
                     "sscc" => "SSCC-".($parcelId % 2 + 1),
                 );
