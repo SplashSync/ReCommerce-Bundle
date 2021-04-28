@@ -414,6 +414,11 @@ class Shipment
         if (!isset($channelsCodes[$this->salesChannelLabel])) {
             return null;
         }
+        //====================================================================//
+        // Special Case
+        if (("readyMadeBox" == $this->salesChannelLabel) && ("pallet" == $this->transportUnitTypeLabel)) {
+            return "REC00222";
+        }
 
         return $channelsCodes[$this->salesChannelLabel];
     }
