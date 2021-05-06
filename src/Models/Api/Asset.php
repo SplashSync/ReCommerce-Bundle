@@ -95,7 +95,7 @@ class Asset
      *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "name"})
      */
-    public $tag;
+    protected $tag;
 
     /**
      * Asset Splash Definition Array
@@ -113,6 +113,19 @@ class Asset
     //====================================================================//
     // SPECIAL GETTERS
     //====================================================================//
+
+    /**
+     * @return string
+     */
+    public function getTag(): string
+    {
+        switch ($this->tag) {
+            case "orderSummary":
+                return "BL";
+            default:
+                return $this->tag;
+        }
+    }
 
     /**
      * @return null|array
