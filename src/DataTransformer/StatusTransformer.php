@@ -115,7 +115,7 @@ class StatusTransformer
      */
     public static function isToShip(string $reStatus): bool
     {
-        return in_array($reStatus, array("to-ship", "toShip"), true);
+        return in_array($reStatus, array("to-ship", "toShip", "processed"), true);
     }
 
     /**
