@@ -35,7 +35,7 @@ trait TrackingTrait
      */
     public function getTrackingDelay(): int
     {
-        return 30;
+        return 360;
     }
 
     /**
