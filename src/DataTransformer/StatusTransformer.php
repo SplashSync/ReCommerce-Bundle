@@ -32,7 +32,7 @@ class StatusTransformer
         // Real ReCommerce Statuses
         "failed" => Status::PROBLEM,            // In Error
         "draft" => Status::DRAFT,               // Draft
-        "pending" => Status::PROCESSING,        // Pending
+        "pending" => Status::PAYMENT_DUE,       // Pending
         "processing" => Status::PROCESSING,     // Processing, Shipment has been taken into account.
         "processed" => Status::PROCESSED,       // Processed, Shipment has been well prepared.
         "ready-to-ship" => Status::PICKUP,      // Ready, Shipment is ready to be shipped, but is still not to ship.
