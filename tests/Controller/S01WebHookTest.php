@@ -191,7 +191,7 @@ class S01WebHookTest extends TestCase
 
         //====================================================================//
         // Verify Response
-        $this->assertIsLastCommited($action, $objectType, $objectId);
+        $this->assertIsLastCommitted($action, $objectType, $objectId);
     }
 
     /**
