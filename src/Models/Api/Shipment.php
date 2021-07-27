@@ -353,7 +353,7 @@ class Shipment
      *
      * @JMS\Type("string")
      * @JMS\Groups ({"Read"})
-     * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
+     * @SPL\Microdata({"http://schema.org/Order", "prepareComments"})
      */
     protected $prepareComments;
 
