@@ -347,6 +347,17 @@ class Shipment
     protected $mixedEanInBox;
 
     /**
+     * Preparation Comments
+     *
+     * @var null|string
+     *
+     * @JMS\Type("string")
+     * @JMS\Groups ({"Read"})
+     * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
+     */
+    protected $prepareComments;
+
+    /**
      * Expended Shipment's lines. Including Accessories Lines.
      *
      * @var Line[]
@@ -473,6 +484,18 @@ class Shipment
         }
 
         return (bool) $this->preparationRule['mixedEanInBox'];
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPrepareComments(): ?string
+    {
+        if (!isset($this->preparationRule['comments'])) {
+            return null;
+        }
+
+        return (string) $this->preparationRule['comments'];
     }
 
     /**
