@@ -217,7 +217,7 @@ class Shipment
      * })
      * @Groups({"read"})
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Line", mappedBy="shipment", cascade="all")
+     * @ORM\OneToMany(targetEntity="App\Entity\Line", mappedBy="shipment", cascade={"all"})
      */
     public $lines;
 
@@ -232,7 +232,7 @@ class Shipment
      *
      * @Groups({"read"})
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Asset", mappedBy="shipment", cascade="all")
+     * @ORM\OneToMany(targetEntity="App\Entity\Asset", mappedBy="shipment", cascade={"all"})
      */
     public $assets;
 
@@ -245,7 +245,7 @@ class Shipment
      *   @Assert\Type("App\Entity\Box")
      * })
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Box", mappedBy="shipment", cascade="all")
+     * @ORM\OneToMany(targetEntity="App\Entity\Box", mappedBy="shipment", cascade={"all"})
      */
     public $boxes;
 
@@ -258,7 +258,7 @@ class Shipment
      *   @Assert\Type("App\Entity\TransportUnit")
      * })
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\TransportUnit", mappedBy="shipment", cascade="all")
+     * @ORM\OneToMany(targetEntity="App\Entity\TransportUnit", mappedBy="shipment", cascade={"all"})
      */
     public $transportUnits;
 

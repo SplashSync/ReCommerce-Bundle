@@ -218,7 +218,7 @@ class TransportUnit
      *   @Assert\Type("App\Entity\Box")
      * })
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Box", mappedBy="transportUnit", cascade="all")
+     * @ORM\OneToMany(targetEntity="App\Entity\Box", mappedBy="transportUnit", cascade={"all"})
      */
     public $box;
 
