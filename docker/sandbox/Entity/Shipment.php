@@ -127,7 +127,13 @@ class Shipment
      * @ORM\Column
      *
      * @Assert\NotNull()
-     * @Assert\Choice({ "palletCarrier", "other", "chrono18", "chrono13", "chronoRelais13", "chronoSamedi", "chronoClassicInternational", "chronoExpress", "dpdRedict", "upsExpressPlus", "upsStandard", "upsAccessPoint", "upsSameDay" })
+     * @Assert\Choice({
+     *     "palletCarrier", "other",
+     *     "chrono18", "chrono13", "chronoRelais13", "chronoSamedi", "chronoClassicInternational", "chronoExpress",
+     *     "dpdRedict",
+     *     "upsExpressPlus", "upsStandard", "upsAccessPoint", "upsSameDay",
+     *     "tntInternational", "tntEconomy"
+     * })
      * @Assert\Type("string")
      * @Groups({"read", "write"})
      */

@@ -121,7 +121,8 @@ class Shipment
      *     "upsStandard": "UPS Standard",
      *     "upsAccessPoint": "UPS Access Point",
      *     "upsSameDay": "UPS Same Day",
-     *     "palletCarrier": "Transporteur Palette",
+     *     "tntInternational": "TNT Internationnal",
+     *     "tntEconomy": "TNT Economy",
      *     "other": "Autre",
      * })
      * @Assert\Type("string")
