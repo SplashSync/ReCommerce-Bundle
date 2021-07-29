@@ -159,7 +159,7 @@ class Shipment
      * @Assert\Type("App\Entity\Address")
      * @Groups({"read", "write"})
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade="all")
+     * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade={"all"})
      * @ORM\JoinColumn(referencedColumnName="id", unique=true, nullable=true)
      */
     public $shippingAddress;
