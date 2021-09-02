@@ -91,7 +91,7 @@ class StatusTransformer
             return null;
         }
 
-        return $index;
+        return (string) $index;
     }
 
     /**
