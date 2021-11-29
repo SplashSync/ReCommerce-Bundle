@@ -112,9 +112,9 @@ functional:
     after_script:
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/after.sh  | bash
     artifacts:
-    paths:
-        - logs
-        - manifest
+        paths:
+            - logs
+            - manifest
 
 #################################################################
 ## Build Documentation
