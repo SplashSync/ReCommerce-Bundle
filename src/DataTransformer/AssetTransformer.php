@@ -15,11 +15,12 @@
 
 namespace Splash\Connectors\ReCommerce\DataTransformer;
 
-use Psr\SimpleCache\InvalidArgumentException;
+use Psr\Cache\InvalidArgumentException;
 use Splash\Connectors\ReCommerce\Models\Api\Asset;
 use Splash\Models\Objects\FilesTrait;
 use Splash\OpenApi\Visitor\AbstractVisitor;
-use Symfony\Component\Cache\Simple\ApcuCache;
+use Symfony\Component\Cache\Adapter\ApcuAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class AssetTransformer
 {
@@ -33,28 +34,33 @@ class AssetTransformer
     /**
      * @var AbstractVisitor
      */
-    private static $visitor;
+    private static AbstractVisitor $visitor;
 
     /**
      * @var string
      */
-    private static $shipmentId;
+    private static string $shipmentId;
 
     /**
-     * @var ApcuCache
+     * @var ApcuAdapter
      */
-    private static $apcu;
+    private static ApcuAdapter $apcu;
+
+    /**
+     * @var Asset Asset Object for Cache Search
+     */
+    private static Asset $cacheAsset;
 
     /**
      * @var int Files Info Cache Lifetime
      */
-    private static $cacheTtl = 604800;
+    private static int $cacheTtl = 604800;
 
     /**
      * Configure API Visitor
      *
      * @param AbstractVisitor $visitor
-     *
+     * @param string $shipmentId
      * @return void
      */
     public static function configure(AbstractVisitor $visitor, string $shipmentId): void
@@ -64,7 +70,7 @@ class AssetTransformer
     }
 
     /**
-     * Load Asset Informations Array from Cache or API
+     * Load Asset Information Array from Cache or API
      *
      * @param Asset $asset
      *
@@ -73,28 +79,41 @@ class AssetTransformer
     public static function getInfos(Asset $asset): ?array
     {
         //====================================================================//
-        // Check if Splash File is In Cache
-        $fromCache = self::getMetadataFromCache($asset);
+        // Ensure Cache Exists
+        static::$apcu = static::$apcu ?? new ApcuAdapter();
+        static::$cacheAsset = $asset;
+        //====================================================================//
+        // Load Splash Image from Cache or API
+        try {
+            $fromCache = static::$apcu->get(self::getCacheKey($asset), function (ItemInterface $item) {
+                //====================================================================//
+                // Setup Cache Item
+                $item->expiresAfter(self::$cacheTtl);
+                //====================================================================//
+                // Load Splash Image from Api
+                return self::getMetadataFromApi(static::$cacheAsset);
+            });
+        } catch (InvalidArgumentException $ex) {
+            return null;
+        }
+        //====================================================================//
+        // Check if Splash Image is In Cache
         if ($fromCache) {
             return $fromCache;
         }
         //====================================================================//
-        // Load Splash File from Api
-        $fromUrl = self::getMetadataFromApi($asset);
-        if ($fromUrl) {
-            //====================================================================//
-            // Save Splash File is In Cache
-            self::setMetadataInCache($asset, $fromUrl);
-
-            return $fromUrl;
+        // Loading Splash Image Fail
+        try {
+            static::$apcu->delete(self::getCacheKey($asset));
+        } catch (InvalidArgumentException $e) {
+            return null;
         }
-        //====================================================================//
-        // Loading  Splash Image Fail
+
         return null;
     }
 
     /**
-     * Load Asset Informations Array from Api
+     * Load Asset Information Array from Api
      *
      * @param Asset $asset
      *
@@ -130,60 +149,6 @@ class AssetTransformer
         }
 
         return $splashFile;
-    }
-
-    /**
-     * Load Asset Informations from Cache
-     *
-     * @param Asset $asset
-     *
-     * @return null|array
-     */
-    private static function getMetadataFromCache(Asset  $asset): ?array
-    {
-        //====================================================================//
-        // Build Cache Key
-        $cacheKey = self::getCacheKey($asset);
-        //====================================================================//
-        // Ensure Cache Exists
-        if (!isset(static::$apcu)) {
-            static::$apcu = new ApcuCache();
-        }
-        //====================================================================//
-        // Check if Asset is In Cache
-        try {
-            if (static::$apcu->has($cacheKey)) {
-                return static::$apcu->get($cacheKey);
-            }
-        } catch (InvalidArgumentException $e) {
-            return null;
-        }
-
-        return null;
-    }
-
-    /**
-     * Save Asset Informations in Cache
-     *
-     * @param Asset $asset
-     * @param array $splashFile
-     *
-     * @return void
-     */
-    private static function setMetadataInCache(Asset $asset, array $splashFile): void
-    {
-        //====================================================================//
-        // Ensure Cache Exists
-        if (!isset(static::$apcu)) {
-            static::$apcu = new ApcuCache();
-        }
-        //====================================================================//
-        // Store In Cache
-        try {
-            static::$apcu->set(self::getCacheKey($asset), $splashFile, static::$cacheTtl);
-        } catch (InvalidArgumentException $e) {
-            return;
-        }
     }
 
     /**

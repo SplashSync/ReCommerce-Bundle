@@ -28,7 +28,7 @@ variables:
 # Defined Pipeline Stages
 stages:
   - quality
-  - functionnal
+  - functional
   - deploy
 
 ################################################################
@@ -64,58 +64,57 @@ stages:
     after_script:
       - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/after.sh | sh
 
+################################################################################
+# PHP 8.0
+tests:php-8.0:
+    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+    <<: *quality
+
+################################################################################
+# PHP 7.4
 quality:php-7.4:
-  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
-  <<: *quality
-
-quality:php-7.3:
-  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
-  <<: *quality
-
-#tests:php-8.0:
-#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-#  allow_failure: true
-#  <<: *core_tests
+    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+    <<: *quality
 
 ################################################################
 # Functional Tests
 ################################################################
 
-functionnal:
-  image:      docker:stable
-  stage:      functionnal
-  retry:      2
-  tags:
-    - Dedicated
-  services:
-    - docker:dind
-  ################################################################################
-  # Install & Configure Environment
-  before_script:
-    # Install Git, Bash, Curl & Docker Compose
-    - apk add --no-cache curl bash git docker-compose
-    # Install & Build Docker Compose
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/build.sh  | bash
+functional:
+    image:      docker:stable
+    stage:      functional
+    retry:      2
+    tags:
+        - Dedicated
+    services:
+        - docker:dind
+    ################################################################################
+    # Install & Configure Environment
+    before_script:
+        # Install Git, Bash, Curl & Docker Compose
+        - apk add --no-cache curl bash git docker-compose
+        # Install & Build Docker Compose
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/build.sh  | bash
 
-  ################################################################################
-  # Run Test Script
-  script:
-    # Wait for container to Start
-    - sleep 10
-    - docker-compose exec -T toolkit curl http://openapi/
-    # Execute PhpUnit Tests
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/phpunit.sh  | bash
-    # Build Splash Manifest
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/manifest.sh  | bash
+    ################################################################################
+    # Run Test Script
+    script:
+        # Wait for container to Start
+        - sleep 10
+        - docker-compose exec -T toolkit curl http://openapi/
+        # Execute PhpUnit Tests
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/phpunit.sh  | bash
+        # Build Splash Manifest
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/manifest.sh  | bash
 
-  ################################################################################
-  # Run After Script
-  after_script:
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/after.sh  | bash
-  artifacts:
+    ################################################################################
+    # Run After Script
+    after_script:
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/after.sh  | bash
+    artifacts:
     paths:
-      - logs
-      - manifest
+        - logs
+        - manifest
 
 #################################################################
 ## Build Documentation
@@ -124,16 +123,16 @@ pages:
     image:    registry.gitlab.com/badpixxel-projects/php-sdk:jekyll
     stage:    deploy
     tags:
-      - Dedicated
+        - Dedicated
     services:
-      - docker:dind
+        - docker:dind
     ################################################################################
     # Run Test Script
     script:
-      # Run Composer to Build deps
-      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
-      # Build Documentation
-      - php vendor/bin/grumphp run --tasks=build-docs
+        # Run Composer to Build deps
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
+        # Build Documentation
+        - php vendor/bin/grumphp run --tasks=build-docs
     artifacts:
         paths:
             - public
