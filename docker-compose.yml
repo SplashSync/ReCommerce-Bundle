@@ -65,7 +65,7 @@ services:
     ################################################################################
     # PHP 8.0
     php-8.0:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+        image:          splashsync/php-sdk:php-8.0
         container_name: recommerce-8.0
         volumes:
             - ./:/var/www/html
@@ -74,7 +74,7 @@ services:
     ################################################################################
     # PHP 7.4
     php-7.4:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+        image:          splashsync/php-sdk:php-7.4
         container_name: recommerce-7.4
         volumes:
             - ./:/var/www/html
