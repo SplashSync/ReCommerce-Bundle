@@ -60,7 +60,8 @@ class AssetTransformer
      * Configure API Visitor
      *
      * @param AbstractVisitor $visitor
-     * @param string $shipmentId
+     * @param string          $shipmentId
+     *
      * @return void
      */
     public static function configure(AbstractVisitor $visitor, string $shipmentId): void
