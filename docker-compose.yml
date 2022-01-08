@@ -42,6 +42,7 @@ services:
             - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
             # Uncomment to use Local Sources instead of Release
             - './:/app/vendor/splash/recommerce/:ro'
+            - './tests/Controller:/app/tests/Controller/:ro'
         hostname:           toolkit.recommerce.local
         networks:
             recommerce:     { ipv4_address: 172.107.0.100, aliases: [ toolkit.recommerce.local ] }

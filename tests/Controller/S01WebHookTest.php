@@ -185,12 +185,15 @@ class S01WebHookTest extends TestCase
         $this->configure($connector);
 
         //====================================================================//
-        // Touch Url
+        // POST MODE
         $this->assertPublicActionWorks($connector, self::ACTION, $data, "POST");
         $this->assertEquals(JsonResponse::HTTP_OK, $this->getResponseCode());
+        $this->assertIsLastCommitted($action, $objectType, $objectId);
 
         //====================================================================//
-        // Verify Response
+        // JSON POST MODE
+        $this->assertPublicActionWorks($connector, self::ACTION, $data, "JSON");
+        $this->assertEquals(JsonResponse::HTTP_OK, $this->getResponseCode());
         $this->assertIsLastCommitted($action, $objectType, $objectId);
     }
 
