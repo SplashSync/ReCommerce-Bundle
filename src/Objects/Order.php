@@ -33,6 +33,8 @@ use Splash\OpenApi\Visitor\JsonHalVisitor;
 
 /**
  * Optilog Implementation of Customers Orders
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Order extends AbstractStandaloneObject implements TrackingInterface
 {

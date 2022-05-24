@@ -38,13 +38,13 @@
     "require": {
         "php":                                          "^7.4|^8.0",
         "ext-json":                                     "*",
-        "splash/php-bundle":                            "dev-master",
-        "splash/openapi":                               "dev-master"
+        "splash/php-bundle":                            "~1.0",
+        "splash/openapi":                               "1.0.x-dev"
     },
     
     "require-dev": {
+        "badpixxel/php-sdk":                            "~1.0",
         "splash/console":                               "dev-master",
-        "badpixxel/php-sdk":                            "dev-main",
 
         "symfony/symfony":                              "^3.4|^4.4",
         "symfony/monolog-bundle":                       "*",
