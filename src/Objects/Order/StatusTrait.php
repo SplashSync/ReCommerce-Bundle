@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -118,8 +118,8 @@ trait StatusTrait
     /**
      * Write Given Fields
      *
-     * @param string $fieldName Field Identifier / Name
-     * @param string|null $fieldData Field Data
+     * @param string      $fieldName Field Identifier / Name
+     * @param null|string $fieldData Field Data
      */
     protected function setStatusFields(string $fieldName, ?string $fieldData): void
     {
@@ -153,9 +153,9 @@ trait StatusTrait
     /**
      * Update Order Status after Main Update
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     protected function postUpdateStatus(): bool
     {
