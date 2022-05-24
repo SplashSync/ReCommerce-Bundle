@@ -20,7 +20,7 @@ trait TrackingTrait
     /**
      * @var string[][]
      */
-    private static $trackedStatuses = array(
+    private static array $trackedStatuses = array(
         array("status" => "pending"),
         array("status" => "toShip"),
         array(
@@ -62,9 +62,10 @@ trait TrackingTrait
             }
             //====================================================================//
             // Load List of Orders from API
+            $results = $listResponse->getResults();
             $orderIds = array_merge(
                 $orderIds,
-                self::extractOrderIds($listResponse->getResults())
+                self::extractOrderIds(is_array($results) ? $results : array())
             );
         }
 

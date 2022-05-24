@@ -61,19 +61,19 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     /**
      * @var ConnexionInterface
      */
-    private $connexion;
+    private ConnexionInterface $connexion;
 
     /**
      * Object Hydrator
      *
      * @var Hydrator
      */
-    private $hydrator;
+    private Hydrator $hydrator;
 
     /**
      * @var string
      */
-    private $metaDir;
+    private string $metaDir;
 
     /**
      * Setup Cache Dir for Metadata
@@ -85,6 +85,8 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function ping() : bool
     {
@@ -100,6 +102,8 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Exception
      */
     public function connect() : bool
     {
@@ -162,7 +166,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Verify Webservice Url is Set
         //====================================================================//
-        if (!isset($config["WsHost"]) || empty($config["WsHost"]) || !is_string($config["WsHost"])) {
+        if (empty($config["WsHost"]) || !is_string($config["WsHost"])) {
             Splash::log()->err("Webservice Host is Invalid");
 
             return false;
@@ -170,7 +174,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
-        if (!isset($config["ApiKey"]) || empty($config["ApiKey"]) || !is_string($config["ApiKey"])) {
+        if (empty($config["ApiKey"]) || !is_string($config["ApiKey"])) {
             Splash::log()->err("Api Key is Invalid");
 
             return false;
@@ -188,18 +192,18 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
      *
      * @throws Exception
      */
-    public function getFile(string $filePath, string $fileMd5)
+    public function getFile(string $filePath, string $fileMd5): ?array
     {
         //====================================================================//
         // Safety Check => Verify Self-test Pass
         if (!$this->selfTest()) {
-            return false;
+            return null;
         }
         //====================================================================//
         // Read File Contents via Raw Get Request
         $rawResponse = $this->getConnexion()->getRaw($filePath);
         if (!$rawResponse || (md5($rawResponse) != $fileMd5)) {
-            return false;
+            return null;
         }
         //====================================================================//
         // Build File Array
@@ -219,7 +223,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     //====================================================================//
 
     /**
-     * Get Connector Profile Informations
+     * Get Connector Profile Information
      *
      * @return array
      */
@@ -276,7 +280,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     /**
      * {@inheritdoc}
      */
-    public function getMasterAction()
+    public function getMasterAction(): ?string
     {
         return null;
     }

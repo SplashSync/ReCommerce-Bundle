@@ -81,18 +81,19 @@ class AssetTransformer
     {
         //====================================================================//
         // Ensure Cache Exists
-        static::$apcu = static::$apcu ?? new ApcuAdapter();
-        static::$cacheAsset = $asset;
+        self::$apcu = self::$apcu ?? new ApcuAdapter();
+        self::$cacheAsset = $asset;
         //====================================================================//
         // Load Splash Image from Cache or API
         try {
-            $fromCache = static::$apcu->get(self::getCacheKey($asset), function (ItemInterface $item) {
+            /** @var null|array $fromCache */
+            $fromCache = self::$apcu->get(self::getCacheKey($asset), function (ItemInterface $item): ?array {
                 //====================================================================//
                 // Setup Cache Item
                 $item->expiresAfter(self::$cacheTtl);
                 //====================================================================//
                 // Load Splash Image from Api
-                return self::getMetadataFromApi(static::$cacheAsset);
+                return self::getMetadataFromApi(self::$cacheAsset);
             });
         } catch (InvalidArgumentException $ex) {
             return null;
@@ -105,7 +106,7 @@ class AssetTransformer
         //====================================================================//
         // Loading Splash Image Fail
         try {
-            static::$apcu->delete(self::getCacheKey($asset));
+            self::$apcu->delete(self::getCacheKey($asset));
         } catch (InvalidArgumentException $e) {
             return null;
         }

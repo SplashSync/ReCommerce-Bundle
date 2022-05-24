@@ -36,15 +36,15 @@
     },
 
     "require": {
-        "php":                                          "^7.4|^8.0",
+        "php":                                          "^8.0",
         "ext-json":                                     "*",
         "splash/php-bundle":                            "dev-master",
         "splash/openapi":                               "dev-master"
     },
     
     "require-dev": {
+        "badpixxel/php-sdk":                            "~2.0",
         "splash/console":                               "dev-master",
-        "badpixxel/php-sdk":                            "dev-main",
 
         "symfony/symfony":                              "^3.4|^4.4",
         "symfony/monolog-bundle":                       "*",
@@ -55,5 +55,20 @@
         "doctrine/orm":                                 "^2.6",
 
         "fzaninotto/faker":                             "^1.8"
+    },
+
+    "scripts": {
+        "auto-scripts": [
+            "rm vendor/splash/phpcore/Tests/Tools/TestCase.php",
+            "php tests/console cache:clear",
+            "cd var/cache/dev && ln -sf testsKernelDevDebugContainer.xml testContainer.xml"
+        ],
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     }
+
 }

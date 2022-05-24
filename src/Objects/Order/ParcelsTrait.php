@@ -26,19 +26,19 @@ trait ParcelsTrait
     /**
      * @var string
      */
-    private static $parcelsList = "parcels";
+    private static string $parcelsList = "parcels";
 
     /**
      * @var null|array[]
      */
-    private $parcels;
+    private ?array $parcels;
 
     /**
      * Build Objects Fields.
      *
      * @return void
      */
-    protected function buildParcelsFields()
+    protected function buildParcelsFields(): void
     {
         //====================================================================//
         // PARCEL - Identifier
@@ -148,7 +148,7 @@ trait ParcelsTrait
      *
      * @throws Exception
      */
-    protected function getParcelsFields($key, $fieldName): void
+    protected function getParcelsFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // Check if List field & Init List Array
@@ -180,9 +180,11 @@ trait ParcelsTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param array|null $fieldData Field Data
+     *
+     * @throws Exception
      */
-    protected function setParcelsFields($fieldName, $fieldData): void
+    protected function setParcelsFields(string $fieldName, ?array $fieldData): void
     {
         //====================================================================//
         // Check if Parcel List Field

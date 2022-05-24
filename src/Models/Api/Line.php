@@ -155,13 +155,13 @@ class Line
     /**
      * Accessories to prepare in the same quantity for this line (should be put in the same box/transport unit)
      *
-     * @var string
+     * @var null|string
      *
      * @JMS\Type("string")
      * @JMS\Groups ({"Read"})
      * @SPL\Type("inline")
      */
-    protected $accessoriesSkus;
+    protected ?string $accessoriesSkus;
 
     //====================================================================//
     // VIRTUAL GETTERS

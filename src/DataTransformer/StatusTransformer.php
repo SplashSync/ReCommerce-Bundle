@@ -78,7 +78,7 @@ class StatusTransformer
     }
 
     /**
-     * Convert Splash Status to ReCommerce Status Id
+     * Convert Splash Status to ReCommerce Status ID
      *
      * @param string $status
      *

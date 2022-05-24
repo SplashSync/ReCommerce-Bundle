@@ -83,7 +83,9 @@ class Box
         }
         //====================================================================//
         // Extract Received Data
+        /** @var null|array $contents */
         $contents = json_decode($parcel['contents'] ?? "", true);
+        /** @var null|array $encodedSerials */
         $encodedSerials = json_decode($parcel['serials'] ?? "", true);
         //====================================================================//
         // Push Items - Walk on Contents (Should be original LineId@lines)
@@ -97,7 +99,7 @@ class Box
             //====================================================================//
             // Extract Serials
             $lineSerials = explode(" | ", $encodedSerials[$index] ?? "");
-            foreach ($lineSerials ?? array() as $lineSerial) {
+            foreach ($lineSerials as $lineSerial) {
                 if (empty($lineSerial)) {
                     continue;
                 }

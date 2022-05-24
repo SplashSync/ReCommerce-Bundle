@@ -163,6 +163,7 @@ class WebHooksController extends AbstractController
      */
     private function extractData(Request $request): ?JsonResponse
     {
+        /** @var null|array $rawData */
         $rawData = $request->getContent()
             ? json_decode((string) $request->getContent(), true)
             : $request->request->all();

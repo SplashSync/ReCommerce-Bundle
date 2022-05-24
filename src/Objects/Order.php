@@ -66,38 +66,45 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
     /**
      * {@inheritdoc}
      */
-    protected static $NAME = "Customer Order";
+    protected static string $name = "Customer Order";
 
     /**
      * {@inheritdoc}
      */
-    protected static $DESCRIPTION = "ReCommerce Order Object";
+    protected static string $description = "ReCommerce Order Object";
 
     /**
      * {@inheritdoc}
      */
-    protected static $ICO = "fa fa-shopping-cart";
+    protected static string $ico = "fa fa-shopping-cart";
 
     //====================================================================//
     // General Class Variables
     //====================================================================//
 
     /**
-     * @var Shipment
+     * {@inheritdoc}
+     *
+     * @phpstan-var array<string, null|array<string, null|array|scalar|Api\Box|Api\TransportUnit>|scalar>
      */
-    protected $object;
+    protected array $in;
+
+    /**
+     * @phpstan-var  Shipment
+     */
+    protected object $object;
 
     /**
      * Open Api Shipment Visitor
      *
      * @var Visitor
      */
-    protected $visitor;
+    protected Visitor $visitor;
 
     /**
      * @var ReCommerceConnector
      */
-    protected $connector;
+    protected ReCommerceConnector $connector;
 
     /**
      * Class Constructor
@@ -123,10 +130,10 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
     public function description(): array
     {
         if (!$this->connector->isSandbox()) {
-            static::$ALLOW_PUSH_CREATED = false;
-            static::$ALLOW_PUSH_DELETED = false;
-            static::$ENABLE_PUSH_CREATED = false;
-            static::$ENABLE_PUSH_DELETED = false;
+            static::$allowPushCreated = false;
+            static::$allowPushDeleted = false;
+            static::$enablePushCreated = false;
+            static::$enablePushDeleted = false;
         }
 
         return parent::description();

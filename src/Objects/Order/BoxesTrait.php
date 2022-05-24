@@ -30,12 +30,12 @@ trait BoxesTrait
     /**
      * @var null|Api\Box[]
      */
-    private $boxes;
+    private ?array $boxes;
 
     /**
-     * @var JsonHalVisitor
+     * @var null|JsonHalVisitor
      */
-    private $boxVisitor;
+    private ?JsonHalVisitor $boxVisitor;
 
     /**
      * Build Fields
@@ -52,7 +52,6 @@ trait BoxesTrait
             ->inList("boxes")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // BOX - Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -61,7 +60,6 @@ trait BoxesTrait
             ->inList("boxes")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // BOX - Date Created
         $this->fieldsFactory()->create(SPL_T_DATETIME)
@@ -80,7 +78,7 @@ trait BoxesTrait
      *
      * @throws Exception
      */
-    protected function getBoxesFields($key, $fieldName): void
+    protected function getBoxesFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // Check if List field & Init List Array
@@ -204,10 +202,12 @@ trait BoxesTrait
         // Load Boxes Paginated List from API
         $listResponse = $this
             ->getBoxesVisitor((string) $this->getObjectIdentifier())
-            ->listWithPagination(null, 250, 2000);
-        $this->boxes = $listResponse->isSuccess() ? $listResponse->getResults() : array();
+            ->listWithPagination(null, 250, 2000)
+        ;
+        /** @var Api\Box[] $boxes */
+        $boxes = $listResponse->isSuccess() ? $listResponse->getResults() : array();
 
-        return $this->boxes;
+        return $this->boxes = $boxes;
     }
 
     /**

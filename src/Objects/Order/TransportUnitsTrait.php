@@ -30,12 +30,12 @@ trait TransportUnitsTrait
     /**
      * @var null|Api\TransportUnit[]
      */
-    private $units;
+    private ?array $units;
 
     /**
-     * @var JsonHalVisitor
+     * @var null|JsonHalVisitor
      */
-    private $unitsVisitor;
+    private ?JsonHalVisitor $unitsVisitor;
 
     /**
      * Build Fields
@@ -52,7 +52,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -61,7 +60,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Type
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -70,7 +68,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Tracking Number
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -79,7 +76,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Number of Attached Boxes
         $this->fieldsFactory()->create(SPL_T_INT)
@@ -88,7 +84,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Weight
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
@@ -97,7 +92,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Height
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
@@ -106,7 +100,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Width
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
@@ -115,7 +108,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Depth
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
@@ -124,7 +116,6 @@ trait TransportUnitsTrait
             ->inList("transportUnits")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // TRANSPORT UNIT - Date Created
         $this->fieldsFactory()->create(SPL_T_DATETIME)
@@ -143,7 +134,7 @@ trait TransportUnitsTrait
      *
      * @throws Exception
      */
-    protected function getTransportUnitsFields($key, $fieldName): void
+    protected function getTransportUnitsFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // Check if List field & Init List Array
@@ -204,7 +195,7 @@ trait TransportUnitsTrait
             if (!empty($unit->id) && !$visitor->delete($unit->id)->isSuccess()) {
                 Splash::log()->errTrace("Unable to delete transport unit ".$unit->id);
                 $errors++;
-            };
+            }
         }
         //====================================================================//
         // Create New Transport Units
@@ -214,7 +205,7 @@ trait TransportUnitsTrait
             if (!$visitor->create($unit, false)->isSuccess()) {
                 Splash::log()->errTrace("Unable to create transport unit ".$unit->name);
                 $errors++;
-            };
+            }
         }
 
         unset($this->in["transportUnits"]);
@@ -275,10 +266,12 @@ trait TransportUnitsTrait
         // Load Units Paginated List from API
         $listResponse = $this
             ->getUnitsVisitor((string) $this->getObjectIdentifier())
-            ->listWithPagination(null, 250, 2000);
-        $this->units = $listResponse->isSuccess() ? $listResponse->getResults() : array();
+            ->listWithPagination(null, 250, 2000)
+        ;
+        /** @var API\TransportUnit[] $units */
+        $units = $listResponse->isSuccess() ? $listResponse->getResults() : array();
 
-        return $this->units;
+        return $this->units = $units;
     }
 
     /**

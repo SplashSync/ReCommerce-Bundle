@@ -361,11 +361,11 @@ class Shipment
     /**
      * Expended Shipment's lines. Including Accessories Lines.
      *
-     * @var Line[]
+     * @var null|Line[]
      *
      * @JMS\Exclude()
      */
-    private $expendedLines;
+    private ?array $expendedLines;
 
     /**
      * Shipment Parcel's Simulation.
@@ -376,7 +376,7 @@ class Shipment
      *
      * @JMS\Exclude()
      */
-    private $parcelsSimulation;
+    private ?array $parcelsSimulation;
 
     /**
      * Embedded Additional Info

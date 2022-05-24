@@ -15,8 +15,10 @@
 
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
+use Exception;
 use Splash\Connectors\ReCommerce\DataTransformer\AssetTransformer;
 use Splash\OpenApi\Models\Objects\CRUDTrait as OpenApiCRUDTrait;
+use Splash\Connectors\ReCommerce\Models\Api\Shipment;
 
 /**
  * ReCommerce Orders CRUD Functions
@@ -30,14 +32,16 @@ trait CRUDTrait
 
     /**
      * {@inheritDoc}
+     *
+     * @throws Exception
      */
-    public function load($objectId)
+    public function load(string $objectId): ?Shipment
     {
         //====================================================================//
         // Execute Core Action
         $response = $this->coreLoad($objectId);
-        if (false == $response) {
-            return false;
+        if (!$response instanceof Shipment) {
+            return null;
         }
         //====================================================================//
         // Setup Assets Transformer
@@ -50,18 +54,18 @@ trait CRUDTrait
     /**
      * {@inheritDoc}
      *
-     * @return false|string Object Id of False if Failed to Update
+     * @throws Exception
      */
-    public function update(bool $needed)
+    public function update(bool $needed): ?string
     {
         //====================================================================//
         // Execute Core Action
         $response = $this->coreUpdate($needed);
-        if (false == $response) {
-            return false;
+        if (!$response) {
+            return null;
         }
         //====================================================================//
         // Execute Post Update Status Changes
-        return $this->postUpdateStatus() ? $response : false;
+        return $this->postUpdateStatus() ? $response : null;
     }
 }

@@ -222,13 +222,13 @@ class TransportUnit
             $this->weight += (float) $parcel['weight'];
         }
         if (isset($parcel['height'])) {
-            $this->height = (int) (100 * $parcel['height']) ?? 0;
+            $this->height = (int) (100 * $parcel['height']) ?: 0;
         }
         if (isset($parcel['width'])) {
-            $this->width = (int) (100 * $parcel['width']) ?? 0;
+            $this->width = (int) (100 * $parcel['width']) ?: 0;
         }
         if (isset($parcel['depth'])) {
-            $this->depth = (int) (100 * $parcel['depth']) ?? 0;
+            $this->depth = (int) (100 * $parcel['depth']) ?: 0;
         }
         $this->countBoxes = count($this->boxes);
 

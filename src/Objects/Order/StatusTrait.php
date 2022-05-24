@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\ReCommerce\Objects\Order;
 
+use Exception;
 use Splash\Client\Splash;
 use Splash\Connectors\ReCommerce\DataTransformer\StatusTransformer;
 
@@ -26,7 +27,7 @@ trait StatusTrait
     /**
      * @var null|string
      */
-    private $newStatus;
+    private ?string $newStatus;
 
     /**
      * Build Status Fields
@@ -84,7 +85,7 @@ trait StatusTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getStatusFields($key, $fieldName): void
+    protected function getStatusFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -118,16 +119,16 @@ trait StatusTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param string|null $fieldData Field Data
      */
-    protected function setStatusFields($fieldName, $fieldData): void
+    protected function setStatusFields(string $fieldName, ?string $fieldData): void
     {
         //====================================================================//
         // WRITE Field
         switch ($fieldName) {
             case 'splashStatut':
                 $this->newStatus = null;
-                $reStatus = StatusTransformer::toReCommerce($fieldData);
+                $reStatus = StatusTransformer::toReCommerce((string) $fieldData);
                 //====================================================================//
                 // COMPARE STATUS
                 if (empty($reStatus) || ($reStatus == $this->object->getStatus())) {
@@ -153,6 +154,8 @@ trait StatusTrait
      * Update Order Status after Main Update
      *
      * @return bool
+     *
+     * @throws Exception
      */
     protected function postUpdateStatus(): bool
     {

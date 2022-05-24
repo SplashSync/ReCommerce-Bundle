@@ -224,7 +224,9 @@ class S01WebHookTest extends TestCase
      */
     private function configure(AbstractConnector $connector): void
     {
-        $this->getTestClient()->setServerParameter("HTTP_api-key", $connector->getParameter("ApiKey"));
+        $apiKey = $connector->getParameter("ApiKey");
+        $this->assertIsString($apiKey);
+        $this->getTestClient()->setServerParameter("HTTP_api-key", $apiKey);
     }
 
     /**
