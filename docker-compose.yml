@@ -35,7 +35,7 @@ services:
     ################################################################################
     # Splash Toolkit Container   
     toolkit:
-        image: 'splashsync/toolkit'
+        image: 'splashsync/toolkit:1.0'
         container_name: recommerce-toolkit
         volumes:
             # Specify Local Configuration File
