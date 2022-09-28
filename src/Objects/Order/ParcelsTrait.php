@@ -163,15 +163,13 @@ trait ParcelsTrait
         }
         //====================================================================//
         // Fill Boxes List with Data
-        if (is_array($this->parcels)) {
-            foreach ($this->parcels as $index => $parcel) {
-                //====================================================================//
-                // Read Raw value
-                $value = self::getParcelValue($parcel, $fieldId);
-                //====================================================================//
-                // Insert Data in List
-                self::lists()->Insert($this->out, self::$parcelsList, $fieldName, $index, $value);
-            }
+        foreach ($this->parcels ?? array() as $index => $parcel) {
+            //====================================================================//
+            // Read Raw value
+            $value = self::getParcelValue($parcel, $fieldId);
+            //====================================================================//
+            // Insert Data in List
+            self::lists()->Insert($this->out, self::$parcelsList, $fieldName, $index, $value);
         }
         unset($this->in[$key]);
     }
