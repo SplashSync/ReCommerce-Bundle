@@ -24,7 +24,7 @@ class LinesTransformer
      *
      * @var array<string, string>
      */
-    private static $accCodeToEan = array();
+    private static array $accCodeToEan = array();
 
     /**
      * Transforms Shipments Lines to Expended Line List.
@@ -111,9 +111,9 @@ class LinesTransformer
     }
 
     /**
-     * Import Accessories Ean from Embedded informations.
+     * Import Accessories Ean from Embedded information.
      *
-     * @param array[] $embedded Raw Embedded infos
+     * @param array<string, array|string> $embedded Raw Embedded infos
      *
      * @return int Number of imported Ean
      */

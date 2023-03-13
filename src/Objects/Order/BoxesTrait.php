@@ -30,7 +30,7 @@ trait BoxesTrait
     /**
      * @var null|Api\Box[]
      */
-    private ?array $boxes;
+    private ?array $boxes = null;
 
     /**
      * @var null|JsonHalVisitor
@@ -190,7 +190,7 @@ trait BoxesTrait
     {
         //====================================================================//
         // Already Loaded
-        if (isset($this->boxes) && is_array($this->boxes)) {
+        if (isset($this->boxes)) {
             return $this->boxes;
         }
         //====================================================================//

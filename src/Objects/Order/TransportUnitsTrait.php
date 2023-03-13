@@ -30,7 +30,7 @@ trait TransportUnitsTrait
     /**
      * @var null|Api\TransportUnit[]
      */
-    private ?array $units;
+    private ?array $units = null;
 
     /**
      * @var null|JsonHalVisitor
@@ -254,7 +254,7 @@ trait TransportUnitsTrait
     {
         //====================================================================//
         // Already Loaded
-        if (isset($this->units) && is_array($this->units)) {
+        if (isset($this->units)) {
             return $this->units;
         }
         //====================================================================//
