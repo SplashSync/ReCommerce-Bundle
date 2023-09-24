@@ -83,7 +83,7 @@ class Box
      *
      * @ApiProperty(identifier=true)
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     public $name;
 

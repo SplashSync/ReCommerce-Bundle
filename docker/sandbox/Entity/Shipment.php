@@ -151,7 +151,7 @@ class Shipment
      * @Assert\Type("string")
      * @Groups({"read"})
      */
-    public $transportUnitTypeLabel;
+    public string $transportUnitTypeLabel = "parcel";
 
     /**
      * @var Address

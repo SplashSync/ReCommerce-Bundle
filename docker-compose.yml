@@ -43,6 +43,7 @@ services:
             # Uncomment to use Local Sources instead of Release
             - './src:/app/connectors/ReCommerce/:ro'
             - './tests/Controller:/app/tests/Controller/:ro'
+            - './phpunit.xml.dist:/app/phpunit.xml.dist:ro'
         env_file:
             - .env
         hostname:           toolkit.recommerce.local
