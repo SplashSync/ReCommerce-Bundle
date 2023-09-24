@@ -21,6 +21,7 @@ use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
 use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
+use Splash\Connectors\ReCommerce\Actions\Master;
 use Splash\Connectors\ReCommerce\Form\EditFormType;
 use Splash\Connectors\ReCommerce\Objects;
 use Splash\Connectors\ReCommerce\Widgets;
@@ -293,7 +294,7 @@ class ReCommerceConnector extends AbstractConnector implements TrackingInterface
     public function getPublicActions() : array
     {
         return array(
-            "webhook" => "ReCommerceBundle:WebHooks:index",
+            "webhook" => Master::class,
         );
     }
 

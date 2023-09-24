@@ -13,28 +13,29 @@
  *  file that was distributed with this source code.
  */
 
-namespace Splash\Connectors\ReCommerce\Controller;
+namespace Splash\Connectors\ReCommerce\Actions;
 
 use Splash\Bundle\Models\AbstractConnector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Splash ReCommerce Connector WebHooks Controller
  */
-class WebHooksController extends AbstractController
+class Master extends AbstractController
 {
     /**
      * @var array
      */
-    private $data;
+    private array $data;
 
     /**
      * @var int
      */
-    private $counter;
+    private int $counter = 0;
 
     /**
      * Execute WebHook Public Action
@@ -46,7 +47,7 @@ class WebHooksController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function indexAction(Request $request, AbstractConnector $connector): JsonResponse
+    public function __invoke(Request $request, AbstractConnector $connector): JsonResponse
     {
         //==============================================================================
         // Safety Check
@@ -70,7 +71,7 @@ class WebHooksController extends AbstractController
         }
 
         return $this->getResponse(
-            JsonResponse::HTTP_OK,
+            Response::HTTP_OK,
             sprintf('%d Changes notified', $this->counter)
         );
         ;
@@ -93,10 +94,10 @@ class WebHooksController extends AbstractController
             //====================================================================//
             // Validate Item
             if (!isset($item["type"]) || !in_array($item["type"], array("Order"), true)) {
-                return $this->getResponse(JsonResponse::HTTP_BAD_REQUEST, 'Wrong object type');
+                return $this->getResponse(Response::HTTP_BAD_REQUEST, 'Wrong object type');
             }
             if (!isset($item["ids"]) || !is_iterable($item["ids"])) {
-                return $this->getResponse(JsonResponse::HTTP_BAD_REQUEST, 'Wrong objects ids');
+                return $this->getResponse(Response::HTTP_BAD_REQUEST, 'Wrong objects ids');
             }
             //====================================================================//
             // Walk on Item Ids
@@ -130,25 +131,25 @@ class WebHooksController extends AbstractController
         //====================================================================//
         // Verify Request is POST
         if (!$request->isMethod('POST')) {
-            return $this->getResponse(JsonResponse::HTTP_BAD_REQUEST, 'Only POST method is supported');
+            return $this->getResponse(Response::HTTP_BAD_REQUEST, 'Only POST method is supported');
         }
         //====================================================================//
         // Verify Api Key is Found
         $apiKey = $request->headers->get("api-key");
         if (empty($apiKey) || !is_string($apiKey)) {
-            return $this->getResponse(JsonResponse::HTTP_FORBIDDEN, 'Wrong or empty API Key');
+            return $this->getResponse(Response::HTTP_FORBIDDEN, 'Wrong or empty API Key');
         }
         //====================================================================//
         // Verify Api Key is Setup Locally
         $config = $connector->getConfiguration();
         if (!isset($config["ApiKey"]) || empty($config["ApiKey"]) || !is_string($config["ApiKey"])) {
-            return $this->getResponse(JsonResponse::HTTP_FORBIDDEN, 'Wrong or empty API Key');
+            return $this->getResponse(Response::HTTP_FORBIDDEN, 'Wrong or empty API Key');
         }
         //====================================================================//
         // Verify Api Keys are Similar
         $config = $connector->getConfiguration();
         if ($apiKey != $config["ApiKey"]) {
-            return $this->getResponse(JsonResponse::HTTP_FORBIDDEN, 'Wrong or empty API Key');
+            return $this->getResponse(Response::HTTP_FORBIDDEN, 'Wrong or empty API Key');
         }
 
         return null;
@@ -169,7 +170,7 @@ class WebHooksController extends AbstractController
             : $request->request->all();
 
         if (empty($rawData) || !isset($rawData["commit-item"]) || !is_array($rawData["commit-item"])) {
-            return $this->getResponse(JsonResponse::HTTP_BAD_REQUEST, 'Malformed or missing data...');
+            return $this->getResponse(Response::HTTP_BAD_REQUEST, 'Malformed or missing data...');
         }
 
         $this->data = $rawData["commit-item"];
@@ -183,7 +184,7 @@ class WebHooksController extends AbstractController
      *
      * @return JsonResponse
      */
-    private function getResponse($code, $message): JsonResponse
+    private function getResponse(int $code, $message): JsonResponse
     {
         return new JsonResponse(
             array(

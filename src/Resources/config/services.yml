@@ -1,19 +1,20 @@
 services:
+    _defaults:
+        autowire:       true
+        autoconfigure:  true
     
     ################################################################################
     # SPLASH Optilog Connector Service
     splash.connectors.recommerce:
         class:      Splash\Connectors\ReCommerce\Services\ReCommerceConnector
-        autowire:   true
         calls:
             - setMetaDir: ["%kernel.cache_dir%"]
         tags:
             - { name: "splash.connector" }
             
     ################################################################################
-    # Enables Dependency Injection in Controller Actions
-    Splash\Connectors\ReCommerce\Controller\:
-        resource:   '../../Controller'
-        public:     true
+    # Enables Dependency Injection in Actions
+    Splash\Connectors\ReCommerce\Actions\:
+        resource:   '../../Actions'
         tags:
             - { name: 'controller.service_arguments' }
