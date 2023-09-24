@@ -199,15 +199,6 @@ class Address
      */
     public $relayCode;
 
-    /**
-     * Shipment identifier
-     *
-     * @var Shipment
-     *
-     * @ORM\OneToOne(targetEntity="App\Entity\Shipment", inversedBy="shippingAddress")
-     */
-    protected $shipment;
-
     //====================================================================//
     // DATA FAKER
     //====================================================================//
@@ -215,17 +206,14 @@ class Address
     /**
      * Address Faker
      *
-     * @param Shipment $shipment
-     *
      * @return Address
      */
-    public static function fake(Shipment $shipment): self
+    public static function fake(): self
     {
         $faker = Factory::create("fr_FR");
 
         $address = new self();
 
-        $address->setShipment($shipment);
         $address->firstname = $faker->firstName;
         $address->lastname = $faker->lastName;
         $address->company = $faker->company;
@@ -239,21 +227,5 @@ class Address
         $address->relayCode = $faker->randomNumber();
 
         return $address;
-    }
-
-    //====================================================================//
-    // GENERIC GETTERS & SETTERS
-    //====================================================================//
-
-    /**
-     * @param Shipment $shipment
-     *
-     * @return $this
-     */
-    public function setShipment(Shipment $shipment): self
-    {
-        $this->shipment = $shipment;
-
-        return $this;
     }
 }
