@@ -23,19 +23,19 @@ include:
 
 ################################################################
 # Set any variables we need
-variables:
-  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-  MYSQL_DATABASE:               symfony
-  MYSQL_ROOT_PASSWORD:          ReCommerce-Bundle
-  COMPOSER_MEMORY_LIMIT:        -1
-  SYMFONY_DEPRECATIONS_HELPER:  disabled
+#variables:
+#  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+#  MYSQL_DATABASE:               symfony
+#  MYSQL_ROOT_PASSWORD:          ReCommerce-Bundle
+#  COMPOSER_MEMORY_LIMIT:        -1
+#  SYMFONY_DEPRECATIONS_HELPER:  disabled
 
 ################################################################
 # Defined Pipeline Stages
-stages:
-  - Quality
-  - Functional
-  - Builds
+#stages:
+#  - Quality
+#  - Functional
+#  - Builds
 
 ################################################################
 # Quality Tests
