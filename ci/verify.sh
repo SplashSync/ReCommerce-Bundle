@@ -30,7 +30,7 @@ docker-compose up -d
 for ID in $(echo $CONTAINERS | tr "," "\n")
 do
     echo "===> Checks Container $ID"
-    docker-compose exec $ID bash ci/install.sh
+    docker-compose exec $ID composer update -q || composer update
     # Run Grumphp Test Suites
     docker-compose exec $ID php vendor/bin/grumphp run --testsuite=travis
     docker-compose exec $ID php vendor/bin/grumphp run --testsuite=csfixer
