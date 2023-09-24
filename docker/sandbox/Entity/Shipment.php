@@ -47,12 +47,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "denormalizationContext"={"groups"={"write"}}
  *     }
  * )
+ *
  * @ApiFilter(
  *     filterClass="ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter",
  *     properties={"status"}
  * )
  *
  * @ORM\Entity
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Shipment
@@ -63,7 +65,9 @@ class Shipment
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\Type("integer")
@@ -78,7 +82,9 @@ class Shipment
      * @var string
      *
      * @ORM\Column
+     *
      * @Assert\NotNull()
+     *
      * @Groups({"read", "write"})
      */
     public $orderId;
@@ -89,7 +95,9 @@ class Shipment
      * @var string
      *
      * @ORM\Column
+     *
      * @Assert\NotNull()
+     *
      * @Groups({"read", "write"})
      */
     public $warehouseId;
@@ -100,7 +108,9 @@ class Shipment
      * @var null|string
      *
      * @ORM\Column(nullable=true)
+     *
      * @Assert\Type("string")
+     *
      * @Groups({"read", "write"})
      */
     public $customerOrderId;
@@ -113,8 +123,11 @@ class Shipment
      * @ORM\Column
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({ "monoSku", "multiSku", "readyMadeBox" })
+     *
      * @Assert\Type("string")
+     *
      * @Groups({"read", "write"})
      */
     public $salesChannelLabel;
@@ -127,6 +140,7 @@ class Shipment
      * @ORM\Column
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({
      *     "palletCarrier", "other",
      *     "chrono18", "chrono13", "chronoRelais13", "chronoSamedi", "chronoClassicInternational", "chronoExpress",
@@ -134,7 +148,9 @@ class Shipment
      *     "upsExpressPlus", "upsStandard", "upsAccessPoint", "upsSameDay",
      *     "tntInternational", "tntEconomy"
      * })
+     *
      * @Assert\Type("string")
+     *
      * @Groups({"read", "write"})
      */
     public $carrierLabel;
@@ -147,8 +163,11 @@ class Shipment
      * @ORM\Column
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({ "parcel", "pallet" })
+     *
      * @Assert\Type("string")
+     *
      * @Groups({"read"})
      */
     public string $transportUnitTypeLabel = "parcel";
@@ -157,9 +176,11 @@ class Shipment
      * @var Address
      *
      * @Assert\Type("App\Entity\Address")
+     *
      * @Groups({"read", "write"})
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade={"all"})
+     *
      * @ORM\JoinColumn(referencedColumnName="id", unique=true, nullable=true)
      */
     public $shippingAddress;
@@ -170,6 +191,7 @@ class Shipment
      * @ORM\Column
      *
      * @Assert\Type("string")
+     *
      * @Assert\Choice({
      *     "failed",
      *     "draft",
@@ -194,6 +216,7 @@ class Shipment
      * @ORM\Column(type="datetime")
      *
      * @Assert\Type("DateTime")
+     *
      * @Groups({"read"})
      */
     public $created;
@@ -202,7 +225,9 @@ class Shipment
      * @var DateTime
      *
      * @ORM\Column(type="datetime")
+     *
      * @Assert\Type("DateTime")
+     *
      * @Groups({"read"})
      */
     public $modified;
@@ -213,8 +238,10 @@ class Shipment
      * @var Line[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("App\Entity\Line")
      * })
+     *
      * @Groups({"read"})
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Line", mappedBy="shipment", cascade={"all"})
@@ -227,6 +254,7 @@ class Shipment
      * @var null|Asset[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("App\Entity\Asset")
      * })
      *
@@ -242,6 +270,7 @@ class Shipment
      * @var Box[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("App\Entity\Box")
      * })
      *
@@ -255,6 +284,7 @@ class Shipment
      * @var TransportUnit[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("App\Entity\TransportUnit")
      * })
      *
@@ -270,6 +300,7 @@ class Shipment
      * @ORM\Column(type="array", nullable=true)
      *
      * @Assert\Type("array")
+     *
      * @Groups({"read"})
      */
     public $_embedded = array(
@@ -284,6 +315,7 @@ class Shipment
      * @ORM\Column(type="array", nullable=true)
      *
      * @Assert\Type("array")
+     *
      * @Groups({"read"})
      */
     public $preparationRule = array(
@@ -297,6 +329,7 @@ class Shipment
      * @var null|int
      *
      * @Assert\Type("int")
+     *
      * @Groups({"read"})
      */
     protected $countBoxes;
@@ -307,6 +340,7 @@ class Shipment
      * @var null|int
      *
      * @Assert\Type("int")
+     *
      * @Groups({"read"})
      */
     protected $countTransportUnits;

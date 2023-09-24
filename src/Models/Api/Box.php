@@ -30,7 +30,9 @@ class Box
      * @var string
      *
      * @JMS\SerializedName("id")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      */
     public $id;
@@ -41,7 +43,9 @@ class Box
      * @var string
      *
      * @JMS\SerializedName("name")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write"})
      */
     public $name;
@@ -52,6 +56,7 @@ class Box
      * @Assert\Type("DateTime")
      *
      * @JMS\SerializedName("created")
+     *
      * @JMS\Groups ({"Read"})
      */
     public $created;
@@ -62,6 +67,7 @@ class Box
      * @Assert\Type("array")
      *
      * @JMS\SerializedName("lineItems")
+     *
      * @JMS\Groups ({"Write"})
      */
     public $lineItems = array();

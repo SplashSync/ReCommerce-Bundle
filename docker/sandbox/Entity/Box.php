@@ -52,7 +52,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "denormalizationContext"={"groups"={"write"}}
  *     }
  * )
+ *
  * @ORM\Entity
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Box
@@ -76,9 +78,11 @@ class Box
      * @var string
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="string")
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @ApiProperty(identifier=true)
@@ -93,6 +97,7 @@ class Box
      * @var Shipment
      *
      * @ORM\Id
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Shipment", inversedBy="boxes")
      *
      * @ApiProperty(identifier=true)
@@ -114,7 +119,9 @@ class Box
      * @var DateTime
      *
      * @ORM\Column(type="datetime")
+     *
      * @Assert\Type("DateTime")
+     *
      * @Groups({"read"})
      */
     public $created;

@@ -32,11 +32,15 @@ class Shipment
      * Unique identifier representing a Shipment.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("id")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write", "List"})
      */
     protected $id;
@@ -45,11 +49,15 @@ class Shipment
      * The order ID this shipment belongs to.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("orderId")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
      */
     protected $orderId;
@@ -60,10 +68,13 @@ class Shipment
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("warehouseId")
+     *
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     *
      * @JMS\Type("string")
      */
     protected $warehouseId;
@@ -76,9 +87,11 @@ class Shipment
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("customerOrderId")
+     *
      * @JMS\Type("string")
      *
      * @SPL\Microdata({"http://schema.org/Order", "alternateName"})
+     *
      * @SPL\Logged()
      */
     protected $customerOrderId;
@@ -89,16 +102,21 @@ class Shipment
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({
      *     "monoSku": "Mono SKU",
      *     "multiSku": "Multi SKU",
      *     "readyMadeBox": "Ready Made Box",
      *     })
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("salesChannelLabel")
+     *
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     *
      * @JMS\Type("string")
+     *
      * @SPL\Logged()
      */
     protected $salesChannelLabel;
@@ -109,6 +127,7 @@ class Shipment
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({
      *     "chrono18": "Chronopost 18",
      *     "chrono13": "Chronopost 13",
@@ -125,10 +144,13 @@ class Shipment
      *     "tntEconomy": "TNT Economy",
      *     "other": "Autre",
      * })
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("carrierLabel")
+     *
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     *
      * @JMS\Type("string")
      *
      * @SPL\Microdata({"http://schema.org/ParcelDelivery", "identifier"})
@@ -141,14 +163,18 @@ class Shipment
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({
      *     "parcel": "Colis",
      *     "pallet": "Pallette"
      * })
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("transportUnitTypeLabel")
+     *
      * @JMS\Groups ({"Read", "Write", "List", "Required"})
+     *
      * @JMS\Type("string")
      *
      * @SPL\Microdata({"http://schema.org/ParcelDelivery", "alternateName"})
@@ -159,10 +185,13 @@ class Shipment
      * @var Address
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Address")
      *
      * @JMS\SerializedName("shippingAddress")
+     *
      * @JMS\Type("Splash\Connectors\ReCommerce\Models\Api\Address")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $shippingAddress;
@@ -171,7 +200,9 @@ class Shipment
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
+     *
      * @Assert\Choice({
      *     "failed":        "Failed",
      *     "draft":         "Draft",
@@ -187,7 +218,9 @@ class Shipment
      * })
      *
      * @JMS\SerializedName("status")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "List"})
      *
      * @SPL\Microdata({"http://schema.org/Order", "orderStatus"})
@@ -198,10 +231,13 @@ class Shipment
      * @var DateTime
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("\DateTime")
      *
      * @JMS\SerializedName("created")
+     *
      * @JMS\Type("DateTime")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/DataFeedItem", "dateCreated"})
@@ -212,10 +248,13 @@ class Shipment
      * @var DateTime
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("\DateTime")
      *
      * @JMS\SerializedName("modified")
+     *
      * @JMS\Type("DateTime")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/DataFeedItem", "dateModified"})
@@ -228,12 +267,16 @@ class Shipment
      * @var Line[]
      *
      * @Assert\NotNull()
+     *
      * @Assert\All({
+     *
      *   @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Line")
      * })
      *
      * @JMS\SerializedName("lines")
+     *
      * @JMS\Type("array<Splash\Connectors\ReCommerce\Models\Api\Line>")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $lines;
@@ -244,11 +287,14 @@ class Shipment
      * @var null|Asset[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("Splash\Connectors\ReCommerce\Models\Api\Asset")
      * })
      *
      * @JMS\SerializedName("assets")
+     *
      * @JMS\Type("array<Splash\Connectors\ReCommerce\Models\Api\Asset>")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $assets;
@@ -261,7 +307,9 @@ class Shipment
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("countBoxes")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $countBoxes;
@@ -274,7 +322,9 @@ class Shipment
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("countTransportUnits")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $countTransportUnits;
@@ -289,7 +339,9 @@ class Shipment
      * @var string
      *
      * @JMS\SerializedName("reference")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Order", "orderNumber"})
@@ -303,7 +355,9 @@ class Shipment
      * @var null|string
      *
      * @JMS\SerializedName("salesChannelCode")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Order", "disambiguatingDescription"})
@@ -320,7 +374,9 @@ class Shipment
      * @var array
      *
      * @JMS\SerializedName("preparationRule")
+     *
      * @JMS\Type("array")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $preparationRule = array();
@@ -331,7 +387,9 @@ class Shipment
      * @var null|int
      *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read"})
+     *
      * @SPL\Microdata({"http://schema.org/Order", "maximumQuantityPerBox"})
      */
     protected $maximumQuantityPerBox;
@@ -342,7 +400,9 @@ class Shipment
      * @var null|bool
      *
      * @JMS\Type("bool")
+     *
      * @JMS\Groups ({"Read"})
+     *
      * @SPL\Microdata({"http://schema.org/Order", "mixedEanInBox"})
      */
     protected $mixedEanInBox;
@@ -353,7 +413,9 @@ class Shipment
      * @var null|string
      *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
+     *
      * @SPL\Microdata({"http://schema.org/Order", "prepareComments"})
      */
     protected $prepareComments;
@@ -386,7 +448,9 @@ class Shipment
      * @Assert\Type("array")
      *
      * @JMS\SerializedName("_embedded")
+     *
      * @JMS\Type("array")
+     *
      * @JMS\Groups ({"Read"})
      */
     private $embedded = array();

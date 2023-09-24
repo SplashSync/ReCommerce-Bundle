@@ -46,6 +46,7 @@ trait CRUDTrait
         //====================================================================//
         // Setup Assets Transformer
         AssetTransformer::configure($this->getVisitor(), $objectId);
+
         //====================================================================//
         // Return Hydrated Object
         return $response;
@@ -64,6 +65,7 @@ trait CRUDTrait
         if (!$response) {
             return null;
         }
+
         //====================================================================//
         // Execute Post Update Status Changes
         return $this->postUpdateStatus() ? $response : null;

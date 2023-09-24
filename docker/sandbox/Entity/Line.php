@@ -33,10 +33,13 @@ class Line
      * @var string
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -56,10 +59,13 @@ class Line
      * The attached-to ProductCode's reference
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
+     *
      * @ORM\Column
      */
     public $productCodeReference;
@@ -68,10 +74,13 @@ class Line
      * Quantity of the given ProductCode for this Shipment
      *
      * @var int
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("int")
      *
      * @Groups({"read"})
+     *
      * @ORM\Column
      */
     public $quantity;
@@ -80,9 +89,11 @@ class Line
      * Optional EAN customisation for this line. If not set, you must use the attached ProductCode EAN
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
+     *
      * @ORM\Column
      */
     public $ean;
@@ -91,9 +102,11 @@ class Line
      * Optional label customisation for this line
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
+     *
      * @ORM\Column
      */
     public $label;
@@ -102,9 +115,11 @@ class Line
      * Optional article code customisation for this line
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
+     *
      * @ORM\Column
      */
     public $articleCode;
@@ -115,7 +130,9 @@ class Line
      * @var array
      *
      * @Assert\Type("array")
+     *
      * @Groups({"read"})
+     *
      * @ORM\Column(type="array")
      */
     public $accessories = array();

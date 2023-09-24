@@ -34,7 +34,9 @@ class Asset
      * @Assert\Type("integer")
      *
      * @JMS\SerializedName("id")
+     *
      * @JMS\Type("integer")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "identifier"})
@@ -48,13 +50,17 @@ class Asset
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("url")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Type("url")
+     *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "url"})
      */
     public $url;
@@ -65,10 +71,13 @@ class Asset
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("name")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "alternateName"})
@@ -81,7 +90,9 @@ class Asset
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
+     *
      * @Assert\Choice({
      *     "orderSummary": "Order Summary",
      *     "transportDocument": "Transport Document",
@@ -90,7 +101,9 @@ class Asset
      * })
      *
      * @JMS\SerializedName("tag")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "name"})
@@ -101,11 +114,15 @@ class Asset
      * Asset Splash Definition Array
      *
      * @var null|array
+     *
      * @JMS\SerializedName("file")
+     *
      * @JMS\Type("array")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Type("stream")
+     *
      * @SPL\Microdata({"http://schema.org/DigitalDocument", "description"})
      */
     protected $file;

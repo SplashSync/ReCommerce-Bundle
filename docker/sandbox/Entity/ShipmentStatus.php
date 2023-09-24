@@ -50,6 +50,7 @@ class ShipmentStatus
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      */
     public $reasonMessage;

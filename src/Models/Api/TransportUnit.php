@@ -47,10 +47,13 @@ class TransportUnit
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("id")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      */
     public $id;
@@ -61,11 +64,15 @@ class TransportUnit
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({ "parcel", "pallet" })
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("type")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $type = "parcel";
@@ -76,10 +83,13 @@ class TransportUnit
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("trackingNumber")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $trackingNumber;
@@ -91,10 +101,13 @@ class TransportUnit
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("name")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read", "Write", "Required"})
      */
     public $name;
@@ -105,7 +118,9 @@ class TransportUnit
      * @Assert\Type("array")
      *
      * @JMS\SerializedName("boxes")
+     *
      * @JMS\Groups ({"Write", "Required"})
+     *
      * @JMS\Type("array")
      */
     public $boxes = array();
@@ -118,7 +133,9 @@ class TransportUnit
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("countBoxes")
+     *
      * @JMS\Groups ({"Read"})
+     *
      * @JMS\Type("int")
      */
     public $countBoxes;
@@ -131,7 +148,9 @@ class TransportUnit
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("height")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read", "Write"})
      */
     public $height = 0;
@@ -144,7 +163,9 @@ class TransportUnit
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("width")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read", "Write"})
      */
     public $width = 0;
@@ -157,7 +178,9 @@ class TransportUnit
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("depth")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups({"Read", "Write"})
      */
     public $depth = 0;
@@ -170,7 +193,9 @@ class TransportUnit
      * @Assert\Type("float")
      *
      * @JMS\SerializedName("weight")
+     *
      * @JMS\Type("float")
+     *
      * @JMS\Groups({"Read", "Write", "Required"})
      */
     public $weight = 0.0;
@@ -181,6 +206,7 @@ class TransportUnit
      * @Assert\Type("DateTime")
      *
      * @JMS\SerializedName("created")
+     *
      * @JMS\Groups({"Read"})
      */
     public $created;

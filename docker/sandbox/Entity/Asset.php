@@ -35,7 +35,9 @@ class Asset
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\Type("integer")
@@ -73,6 +75,7 @@ class Asset
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @ORM\Column
@@ -87,7 +90,9 @@ class Asset
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
+     *
      * @Assert\Choice({
      *     "orderSummary": "Order Summary",
      *     "transportDocument": "Transport Document",

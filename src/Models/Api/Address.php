@@ -45,11 +45,15 @@ class Address
      * Client's firstname.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("firstname")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      */
     public $firstname;
@@ -58,11 +62,15 @@ class Address
      * Client's lastname.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("lastname")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      */
     public $lastname;
@@ -75,7 +83,9 @@ class Address
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("company")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Organization", "legalName"})
@@ -90,10 +100,13 @@ class Address
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("email")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Type("email")
+     *
      * @SPL\Microdata({"http://schema.org/ContactPoint", "email"})
      */
     public $email;
@@ -106,10 +119,13 @@ class Address
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("phoneNumber")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "telephone"})
+     *
      * @SPL\Type("phone")
      */
     public $phoneNumber;
@@ -120,10 +136,13 @@ class Address
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("address1")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "streetAddress"})
@@ -138,7 +157,9 @@ class Address
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("address2")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "postOfficeBoxNumber"})
@@ -151,10 +172,13 @@ class Address
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("postalCode")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "postalCode"})
@@ -167,10 +191,13 @@ class Address
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("city")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "addressLocality"})
@@ -185,7 +212,9 @@ class Address
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("relayCode")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "description"})
@@ -198,7 +227,9 @@ class Address
      * @var string
      *
      * @JMS\SerializedName("name")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "alternateName"})
@@ -211,13 +242,17 @@ class Address
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("countryId")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Type("country")
+     *
      * @SPL\Microdata({"http://schema.org/PostalAddress", "addressCountry"})
      */
     protected $countryId;

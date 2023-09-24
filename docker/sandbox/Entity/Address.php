@@ -33,7 +33,9 @@ class Address
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\Type("integer")
@@ -46,7 +48,9 @@ class Address
      * Client's firstname.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -59,7 +63,9 @@ class Address
      * Client's lastname.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -72,6 +78,7 @@ class Address
      * Client's company.
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -84,6 +91,7 @@ class Address
      * Client's email.
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -96,6 +104,7 @@ class Address
      * Client's phone number.
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -108,7 +117,9 @@ class Address
      * First line of the address street.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -121,6 +132,7 @@ class Address
      * Optional second line of the address street.
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -133,7 +145,9 @@ class Address
      * Address zip code.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -146,7 +160,9 @@ class Address
      * Address city.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -159,7 +175,9 @@ class Address
      * Address country as ISO_3166-1 alpha-3.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})
@@ -172,6 +190,7 @@ class Address
      * Optional relay unique code where to send the shipment in case of pickup delivery mode.
      *
      * @var null|string
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read"})

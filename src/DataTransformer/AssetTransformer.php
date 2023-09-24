@@ -83,6 +83,7 @@ class AssetTransformer
         // Ensure Cache Exists
         self::$apcu = self::$apcu ?? new ApcuAdapter();
         self::$cacheAsset = $asset;
+
         //====================================================================//
         // Load Splash Image from Cache or API
         try {
@@ -91,6 +92,7 @@ class AssetTransformer
                 //====================================================================//
                 // Setup Cache Item
                 $item->expiresAfter(self::$cacheTtl);
+
                 //====================================================================//
                 // Load Splash Image from Api
                 return self::getMetadataFromApi(self::$cacheAsset);
@@ -103,6 +105,7 @@ class AssetTransformer
         if ($fromCache) {
             return $fromCache;
         }
+
         //====================================================================//
         // Loading Splash Image Fail
         try {

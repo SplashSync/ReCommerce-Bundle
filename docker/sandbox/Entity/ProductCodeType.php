@@ -36,7 +36,9 @@ class ProductCodeType
      * Unique identifier representing a ProductCodeType.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @ApiProperty(identifier=true)
@@ -47,7 +49,9 @@ class ProductCodeType
      * Human-readable name of ProductCodeType.
      *
      * @var string
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      */
     public $name;
@@ -56,7 +60,9 @@ class ProductCodeType
      * Whether ProductCode attached to this ProductCodeType require a serial number while processing
      *
      * @var bool
+     *
      * @Assert\NotNull()
+     *
      * @Assert\Type("bool")
      */
     public $expectingSerial;

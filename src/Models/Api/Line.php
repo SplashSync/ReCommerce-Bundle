@@ -31,10 +31,13 @@ class Line
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("id")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/partOfInvoice", "identifier"})
@@ -47,10 +50,13 @@ class Line
      * @var string
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("productCodeReference")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Product", "ref"})
@@ -63,10 +69,13 @@ class Line
      * @var int
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("int")
      *
      * @JMS\SerializedName("quantity")
+     *
      * @JMS\Type("int")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/QuantitativeValue", "value"})
@@ -81,7 +90,9 @@ class Line
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("ean")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Product", "gint13"})
@@ -96,7 +107,9 @@ class Line
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("label")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/partOfInvoice", "description"})
@@ -111,7 +124,9 @@ class Line
      * @Assert\Type("string")
      *
      * @JMS\SerializedName("articleCode")
+     *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Product", "additionalProperty"})
@@ -124,6 +139,7 @@ class Line
      * @var string
      *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
      *
      * @SPL\Microdata({"http://schema.org/Product", "sku"})
@@ -138,6 +154,7 @@ class Line
      * @Assert\NotNull()
      *
      * @JMS\SerializedName("accessories")
+     *
      * @JMS\Type("array<array>")
      */
     protected $accessories;
@@ -148,6 +165,7 @@ class Line
      * @var null|bool
      *
      * @JMS\Type("bool")
+     *
      * @JMS\Groups ({"Read"})
      */
     protected $accessoryLine;
@@ -158,7 +176,9 @@ class Line
      * @var null|string
      *
      * @JMS\Type("string")
+     *
      * @JMS\Groups ({"Read"})
+     *
      * @SPL\Type("inline")
      */
     protected ?string $accessoriesSkus;

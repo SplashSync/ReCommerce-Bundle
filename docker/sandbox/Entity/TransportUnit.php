@@ -71,6 +71,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @ORM\Entity
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class TransportUnit
@@ -81,10 +82,13 @@ class TransportUnit
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
      *
      * @ApiProperty(identifier=true)
@@ -112,7 +116,9 @@ class TransportUnit
      * @ORM\Column
      *
      * @Assert\NotNull()
+     *
      * @Assert\Choice({ "parcel", "pallet" })
+     *
      * @Assert\Type("string")
      *
      * @Groups({"read", "write"})
@@ -203,6 +209,7 @@ class TransportUnit
      * @ORM\Column(type="datetime")
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("DateTime")
      *
      * @Groups({"read"})
@@ -215,6 +222,7 @@ class TransportUnit
      * @var Box[]
      *
      * @Assert\All({
+     *
      *   @Assert\Type("App\Entity\Box")
      * })
      *
@@ -228,6 +236,7 @@ class TransportUnit
      * @var array
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("array")
      *
      * @Groups({"write"})
@@ -240,6 +249,7 @@ class TransportUnit
      * @var int
      *
      * @Assert\NotNull()
+     *
      * @Assert\Type("int")
      *
      * @Groups({"read"})
