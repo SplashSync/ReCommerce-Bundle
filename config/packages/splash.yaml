@@ -1,0 +1,40 @@
+parameters:
+    # Adds a fallback configuration if the env var is not set.
+    env(RECOMMERCE_URL):            'ThisIsApiUrl'
+    env(RECOMMERCE_API_KEY):        'ThisIsApiKey'
+
+splash:
+
+    ################################################################################
+    # List of Available Connector Connections
+    ################################################################################
+    connections:
+        
+        ########################################################################
+        # Recommerce SandBox
+        sandBox:
+            id:                 ThisIsSandBoxWsId
+            key:                ThisIsNotASecretKeyForSandBox
+            name:               ReCommerce Sandbox
+            connector:          recommerce
+            ########################################################################
+            # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN RECOMMERCE CONTACT
+            ########################################################################
+            config:
+                WsHost:         http://sandbox.recommerce.local
+                ApiKey:         ThisIsSecretApiKey
+                isSandbox:      true
+
+        ########################################################################
+        # Recommerce Staging
+        staging:
+            id:                 ThisIsStagingWsId
+            key:                ThisIsNotASecretKeyForStaging
+            name:               ReCommerce Staging
+            connector:          recommerce
+            ########################################################################
+            # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN RECOMMERCE CONTACT
+            ########################################################################
+            config:
+                WsHost:         '%env(resolve:RECOMMERCE_URL)%'
+                ApiKey:         '%env(resolve:RECOMMERCE_API_KEY)%'
