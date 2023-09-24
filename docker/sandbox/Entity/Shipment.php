@@ -168,9 +168,9 @@ class Shipment
      *
      * @Assert\Type("string")
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
-    public string $transportUnitTypeLabel = "parcel";
+    public string $transportUnitTypeLabel;
 
     /**
      * @var Address
@@ -181,9 +181,9 @@ class Shipment
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade={"all"})
      *
-     * @ORM\JoinColumn(referencedColumnName="id", unique=true, nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    public $shippingAddress;
+    public Address $shippingAddress;
 
     /**
      * @var string
@@ -398,6 +398,7 @@ class Shipment
     {
         $this->status = "draft";
         $this->shippingAddress = Address::fake($this);
+
         $this->lines = new ArrayCollection(array(
             Line::fake($this),
             Line::fake($this),
