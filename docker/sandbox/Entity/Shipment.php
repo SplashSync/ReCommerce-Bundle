@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "download":      {
  *              "method": "GET",
  *              "path": "/shipment/{id}/asset/{asset}/download",
- *              "controller": {"App\Controller\AssetController", "downloadAction"},
+ *              "controller": "App\Controller\AssetController::downloadAction",
  *          },
  *     },
  *     attributes={

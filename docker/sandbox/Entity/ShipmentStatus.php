@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={
  *          "status":   {
  *              "path": "/shipment/{id}/status/{status}",
- *              "controller": {"App\Controller\StatusController", "indexAction"},
+ *              "controller": "App\Controller\StatusController::indexAction",
  *              "method": "patch",
  *              "read": false,
  *              "validate": false

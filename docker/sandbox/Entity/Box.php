@@ -30,21 +30,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      collectionOperations={
  *          "get":      {
  *              "path": "/shipment/{shipment}/box",
- *              "controller": {"App\Controller\BoxController", "listAction"},
+ *              "controller": "App\Controller\BoxController::listAction"
  *          },
  *          "post":     {
  *              "path": "/shipment/{shipment}/box",
- *              "controller": {"App\Controller\BoxController", "postAction"},
+ *              "controller": "App\Controller\BoxController::postAction"
  *          }
  *     },
  *     itemOperations={
  *          "get":      {
  *              "path": "/shipment/{shipment}/box/{name}",
- *              "controller": {"App\Controller\BoxController", "getAction"},
+ *              "controller": "App\Controller\BoxController::getAction"
  *          },
  *          "delete":   {
  *              "path": "/shipment/{shipment}/box/{name}",
- *              "controller": {"App\Controller\BoxController", "deleteAction"},
+ *              "controller": "App\Controller\BoxController::deleteAction"
  *          }
  *     },
  *     attributes={
