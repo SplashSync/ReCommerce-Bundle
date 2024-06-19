@@ -278,10 +278,13 @@ class Address
      */
     public function getCountryId(): string
     {
+        $alpha2Code = null;
         //====================================================================//
         // Convert ISO Country Code from Alpha-3 to Alpha-2
-        $alpha2Code = Countries::getAlpha2Code($this->countryId);
+        if (Countries::alpha3CodeExists($this->countryId)) {
+            $alpha2Code = Countries::getAlpha2Code($this->countryId);
+        }
 
-        return $alpha2Code ? $alpha2Code : $this->countryId;
+        return $alpha2Code ?: $this->countryId;
     }
 }
