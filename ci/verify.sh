@@ -18,22 +18,22 @@
 
 ################################################################################
 # Docker Compose Container you want to check
-CONTAINERS="php-8.0,php-8.1"
+CONTAINERS="php-8.1,php-8.2"
 
 ################################################################################
 # Start Docker Compose Stack
 echo '===> Start Docker Stack'
-docker-compose up -d
+docker compose up -d
 
 ################################################################################
 # Walk on Docker Compose Container
 for ID in $(echo $CONTAINERS | tr "," "\n")
 do
     echo "===> Checks Container $ID"
-    docker-compose exec $ID composer update -q || composer update
+    docker compose exec $ID composer update -q || composer update
     # Run Grumphp Test Suites
-    docker-compose exec $ID php vendor/bin/grumphp run --testsuite=travis
-    docker-compose exec $ID php vendor/bin/grumphp run --testsuite=csfixer
-    docker-compose exec $ID php vendor/bin/grumphp run --testsuite=phpstan
+    docker compose exec $ID php vendor/bin/grumphp run --testsuite=travis
+    docker compose exec $ID php vendor/bin/grumphp run --testsuite=csfixer
+    docker compose exec $ID php vendor/bin/grumphp run --testsuite=phpstan
 done
 
