@@ -278,11 +278,11 @@ trait TransportUnitsTrait
      * Find Transport Units in Loaded List
      *
      * @param API\TransportUnit[] $currentUnits
-     * @param API\TransportUnit   $expectedUnit
+     * @param Api\TransportUnit   $expectedUnit
      *
-     * @return null|API\TransportUnit
+     * @return null|Api\TransportUnit
      */
-    private function findTransportUnit(array &$currentUnits, API\TransportUnit $expectedUnit): ?API\TransportUnit
+    private function findTransportUnit(array &$currentUnits, Api\TransportUnit $expectedUnit): ?Api\TransportUnit
     {
         foreach ($currentUnits as $index => $unit) {
             if ($unit->getCheckSum() == $expectedUnit->getCheckSum()) {

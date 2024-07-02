@@ -20,7 +20,6 @@ use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
 use Splash\Connectors\ReCommerce\Models\Api;
-use Splash\Connectors\ReCommerce\Models\Api\Shipment;
 use Splash\Connectors\ReCommerce\Services\ReCommerceConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\ListsTrait;
@@ -90,7 +89,7 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
     protected array $in;
 
     /**
-     * @phpstan-var  Shipment
+     * @phpstan-var  Api\Shipment
      */
     protected object $object;
 

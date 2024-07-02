@@ -216,9 +216,9 @@ trait BoxesTrait
      * @param API\Box[] $boxes
      * @param string    $boxName
      *
-     * @return null|API\Box
+     * @return null|Api\Box
      */
-    private function findBox(array &$boxes, string $boxName): ?API\Box
+    private function findBox(array &$boxes, string $boxName): ?Api\Box
     {
         foreach ($boxes as $index => $box) {
             if ($box->name == $boxName) {
